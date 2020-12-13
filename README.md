@@ -1,4 +1,4 @@
-# Project-Nu-Name-To-P6i-Change-Thai-Jse
+# Decoder ?
 AA bharvanu bhulta nai
 
 ### [Project Definations](https://drive.google.com/file/d/18djoxaUr7eOjBMaJscG3Lhm1R-fKQVrP/view?usp=sharing)
@@ -22,7 +22,7 @@ AA bharvanu bhulta nai
 
 
 ### Priority
- 1. Decoder(Pastebin + Stress Testing + Compile + Discussion + Upcoming Contest)
+ 1. Decoder (Pastebin + Stress Testing + Compile + Discussion + Upcoming Contest)
  2. Blockchain [1](https://github.com/amoazeni75/blockchain), [2](https://github.com/scatterbrain-d/Smoola-blockchain)
  3. 107 - Competitive programming discussion forum and help portal - SPS
  4. [28 - Interactive simulation of various data structures - JMP](https://github.com/algorithm-visualizer/algorithm-visualizer)
