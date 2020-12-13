@@ -4,6 +4,7 @@ AA bharvanu bhulta nai
 ### [Project Definations](https://drive.google.com/file/d/18djoxaUr7eOjBMaJscG3Lhm1R-fKQVrP/view?usp=sharing)
 
 ### Selected
+ - [ ]  **PasteCode** (pastebin clone)
  - [ ] 15 - Online Shopping Cart - AAM
  - [ ] 46 - Online Mobile Recharge Portal - MSB
  - [ ] 49 - Student Record Management System - MSB
