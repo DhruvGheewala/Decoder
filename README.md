@@ -11,6 +11,7 @@ AA bharvanu bhulta nai
  - 49 - Student Record Management System - MSB
  - 58 - farmer's social network - to share crop's treatment and cultivate data to show best results - PKP
  - 63 - using centralized blockchain for registry - land, degree certificates and more - PKP
+ - 74 - system to provide links to best online resources for a topic to learn - based on recommendation provided by others - PKP
  - 77 - Online event management system - PMJ
  - 106 - classroom facilitator: A doubt solving platform - SPS
  - 107 - Competitive programming discussion forum and help portal - SPS
