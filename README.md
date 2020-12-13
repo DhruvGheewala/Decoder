@@ -22,8 +22,8 @@ AA bharvanu bhulta nai
 
 
 ### Priority
- 1. 107 - Competitive programming discussion forum and help portal - SPS
- 2. 
- 3. 
+ 1. Decoder(Pastebin + Stress Testing + Compile + Discussion)
+ 2. Blockchain [1](https://github.com/amoazeni75/blockchain), [2](https://github.com/scatterbrain-d/Smoola-blockchain)
+ 3. 107 - Competitive programming discussion forum and help portal - SPS
  4. 
  5. 
