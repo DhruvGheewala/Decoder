@@ -12,6 +12,4 @@
    - Efficient solution created by user ( code which may fail on some test case)
    - random test case generator file
  - Upcoming contest information
- - Using APIs from websites like codeforces.com, clist.by system will provide upcoming contest information. this information will contain time for contest, division of contest, link to contest etc.
- - Ranklist
-   - Using api system will show rankings (rank based on rating) of participants of our college 
+   - Using APIs from websites like codeforces.com, clist.by system will provide upcoming contest information. this information will contain time for contest, division of contest, link to contest etc. 
