@@ -1,29 +1,9 @@
-# Decoder ?
-AA bharvanu bhulta nai
+# Decoder - A Competitive Programming Portal
+ - Decoder is software that provides all help, tools and information related to competitive programming at the same place. Decoder contains an online compiler for some of the languages, allowing users to share code with others by sharing a link to the code. Along with the compiler it has a stress testing environment which uses system automated test cases for your code and checks efficiency and correctness of your code against these test cases. This software will also utilise APIs provided by some known competitive programming platforms to fetch the details about upcoming contests and Rankings of students in our college. Decoder also has a discussion forum to discuss topics related to competitive programming. Users can ask doubts regarding any topics and other users can comment and reply. It'll also contain resources (links and references) to learn competitive programming. Link to university's coding clubs contest (previous as well as upcoming if there are any).
 
-### [Project Definations](https://drive.google.com/file/d/18djoxaUr7eOjBMaJscG3Lhm1R-fKQVrP/view?usp=sharing)
-
-### Selected
- - 15 - Online Shopping Cart - AAM
- - [28 - Interactive simulation of various data structures - JMP](https://github.com/algorithm-visualizer/algorithm-visualizer)
- - 46 - Online Mobile Recharge Portal - MSB
- - 49 - Student Record Management System - MSB
- - 58 - farmer's social network - to share crop's treatment and cultivate data to show best results - PKP
- - 63 - using centralized blockchain for registry - land, degree certificates and more - PKP
- - 74 - system to provide links to best online resources for a topic to learn - based on recommendation provided by others - PKP
- - 77 - Online event management system - PMJ
- - 106 - classroom facilitator: A doubt solving platform - SPS
- - 107 - Competitive programming discussion forum and help portal - SPS
- - 112 - Online question paper generator system - SPS
- - 120 - File Compression Decompression - MSB
- - **PasteBin Clone**
- - [BlockChain - 1](https://github.com/amoazeni75/blockchain)
- - [BlockChain - 2](https://github.com/scatterbrain-d/Smoola-blockchain)
-
-
-### Priority
- 1. Decoder (Pastebin + Stress Testing + Compile + Discussion + Upcoming Contest)
- 2. Blockchain [1](https://github.com/amoazeni75/blockchain), [2](https://github.com/scatterbrain-d/Smoola-blockchain)
- 3. 107 - Competitive programming discussion forum and help portal - SPS
- 4. [28 - Interactive simulation of various data structures - JMP](https://github.com/algorithm-visualizer/algorithm-visualizer)
- 5. 58 - farmer's social network - to share crop's treatment and cultivate data to show best results - PKP
+## Functionality
+ - Compile and Run Your Code
+ - Nice CodeEditor
+ - Code Sharing via link and Some of the permissions
+ - Discussion Forum
+ - Stress Testing, Stress testing is useful when your code fails on some testcases and you want to find them.
