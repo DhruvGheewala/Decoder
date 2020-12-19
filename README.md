@@ -6,4 +6,11 @@
  - Nice CodeEditor
  - Code Sharing via link and Some of the permissions
  - Discussion Forum
- - Stress Testing, Stress testing is useful when your code fails on some testcases and you want to find them.
+ - Stress Testing
+   - Stress testing is useful to find test cases on which user's code fails.
+   - User will have to provide brute force code (always generates the correct output for test cases)
+   - Efficient solution created by user ( code which may fail on some test case)
+   - random test case generator file
+ - Upcoming contest information
+ - Using APIs from websites like codeforces.com, clist.by system will provide upcoming contest information. this information will contain time for contest, division of contest, link to contest etc.
+ - Ranklist, Using api from websit system will show rankigs of participants 
