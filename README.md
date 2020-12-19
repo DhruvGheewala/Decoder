@@ -13,4 +13,5 @@
    - random test case generator file
  - Upcoming contest information
  - Using APIs from websites like codeforces.com, clist.by system will provide upcoming contest information. this information will contain time for contest, division of contest, link to contest etc.
- - Ranklist, Using api from websit system will show rankigs of participants 
+ - Ranklist
+   - Using api from websit system will show rankigs of participants
