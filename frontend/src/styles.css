@@ -15,10 +15,19 @@ body, html {
   height: 100%;
   min-height: 100%;
   font-family: Arial, Helvetica, sans-serif;
+  overflow-x: hidden;
 }
 
+.img1 {
+  background-image: url('./assets/images/bg1.jpg');
+  background-size: cover;
+}
 .img2 {
   background-image: url('./assets/images/bg2.jpg');
+  background-size: cover;
+}
+.img3 {
+  background-image: url('./assets/images/bg3.png');
   background-size: cover;
 }
 .bg-black {
@@ -29,13 +38,10 @@ a:hover {
   cursor: pointer;
 }
 /* full height */
-.full1 {
+.full {
   height: 100%;
 }
-/* remaining height */
-.full2 {
-  height: 87%;
-}
+
 .font1 {
   font-family: 'Roboto Slab', monospace, sans-serif;
 }
