@@ -7,9 +7,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HeaderComponent implements OnInit {
 
-  title:string = "</Decoder>";
+  title: string = "</Decoder>";
+  brandClass: string = "navbar-brand text-warning";
+  colorClass: string[] = ["text-primary", "text-success", "text-danger", "text-warning", "text-info"];
   constructor() { }
   ngOnInit(): void {
+  }
+  brandHover() {
+    let id = Math.floor((Math.random() * 5) + 1) - 1;
+    console.log(id);
+    this.brandClass = "navbar-brand " + this.colorClass[id];
+    console.log(this.brandClass);
   }
 
 }
