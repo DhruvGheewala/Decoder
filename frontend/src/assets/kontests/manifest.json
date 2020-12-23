@@ -1,0 +1,17 @@
+{
+   "author": "Ali Osm",
+   "browser_action": {
+      "default_icon": "icons/logo.png",
+      "default_popup": "index.html",
+      "default_title": "KONTESTS"
+   },
+   "description": "Competitive Programming Contests Schedule",
+   "homepage_url": "https://kontests.net",
+   "incognito": "spanning",
+   "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAgCpJbnhns/1wc/oyw1MyZiRFL6yq17FP8lvythR3TgT2xwLz1tZuLtoGOGHCYKFLAzk8016Ys6TAQ4/DrlpU6Mxp/5gK5Rlmh94XomKqhoF3D2bKmZ6hiSZ9u7cfZHcFnyZeShbchenrdhPFlpeLArO86kqd/87Q8Dq52RRrYQ723kWZy9pYKKMQaXMGHh+Q/gcts1DrdlYvMqTPTlLfj21f7luTzR6n/Yrg1oJf1Am6+/dTELwYLjHyT4LetCiTQNv08JaVa1e6V7+0cAgVJwfySmzv6CvfEU7Ad38Qpjza2K4Hvfu0CXhtiMRMQOxlqLbhO0AYUW6IuYaslUwZeQIDAQAB",
+   "manifest_version": 2,
+   "name": "KONTESTS",
+   "permissions": [ "https://www.kontests.net/api/*" ],
+   "update_url": "https://clients2.google.com/service/update2/crx",
+   "version": "3.1"
+}
