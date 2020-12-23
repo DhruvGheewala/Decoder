@@ -37,7 +37,7 @@ npm install
 ## How to run ?
 ```
 cd backend
-node index.js
+nodemon
    
 cd frontend
 ng serve -o
