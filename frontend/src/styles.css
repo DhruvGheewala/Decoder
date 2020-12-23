@@ -17,6 +17,14 @@ body, html {
   font-family: Arial, Helvetica, sans-serif;
 }
 
+.img2 {
+  background-image: url('./assets/images/bg2.jpg');
+  background-size: cover;
+}
+.bg-black {
+  background-color: #000;
+}
+
 a:hover {
   cursor: pointer;
 }
