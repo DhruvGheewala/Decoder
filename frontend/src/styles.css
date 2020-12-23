@@ -20,8 +20,13 @@ body, html {
 a:hover {
   cursor: pointer;
 }
-.full {
+/* full height */
+.full1 {
   height: 100%;
+}
+/* remaining height */
+.full2 {
+  height: 87%;
 }
 .font1 {
   font-family: 'Roboto Slab', monospace, sans-serif;
@@ -32,7 +37,7 @@ a:hover {
 .font3 {
   font-family: Arial, Helvetica, sans-serif;
 }
-.code {
+.font-code {
   font-family: Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace, serif;
 }
 
