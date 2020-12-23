@@ -1,6 +1,6 @@
 <div class="font1 bg-dark">
     <nav class="navbar navbar-expand-sm">
-        <a class="navbar-brand text-warning"> {{title}} </a>
+        <a (mouseover)="brandHover()" [ngClass]="brandClass"> {{title}} </a>
         <ul class="navbar-nav">
             <li class="nav-item">
                 <a class="nav-link text-white" routerLink="./">Home</a>
@@ -15,7 +15,7 @@
                 <a class="nav-link text-white" routerLink="./">Upcoming Contests</a>
             </li>
         </ul>
-       
+
         <div *ngIf="false; then thenBlock else elseBlock"></div>
         <ng-template #thenBlock>
             <ul class="navbar-nav ml-auto">
