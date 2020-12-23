@@ -1,1 +1,52 @@
 /* You can add global styles to this file, and also import other style files */
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@350&display=swap');
+/* @import "~bootstrap/dist/css/bootstrap.min.css"; */
+
+* {
+  font-weight: normal;
+  /* border: 2px solid black; */
+}
+
+body, html {
+  font-size: 1.2em;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  min-height: 100%;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+a:hover {
+  cursor: pointer;
+}
+.full {
+  height: 100%;
+}
+.font1 {
+  font-family: 'Roboto Slab', monospace, sans-serif;
+}
+.font2 {
+  font-family: Verdana, Geneva, Tahoma, sans-serif
+}
+.font3 {
+  font-family: Arial, Helvetica, sans-serif;
+}
+.code {
+  font-family: Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace, serif;
+}
+
+.hcenter {
+  display: flex;
+  justify-content: center;
+}
+.vcenter {
+  display: flex;
+  align-items: center;
+}
+.center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
