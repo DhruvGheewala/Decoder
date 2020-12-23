@@ -5,7 +5,7 @@
 - [Functionality](#functionality)
 - [Installation](#installtion)
 - [How to run?](#how-to-run-)
-- [Scrrenshorts](#screenshots)
+- [Scrrenshots](#screenshots)
 
 ## Functionality
  - Register, Login / Logout
