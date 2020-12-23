@@ -10,14 +10,21 @@ export class HeaderComponent implements OnInit {
   title: string = "</Decoder>";
   brandClass: string = "navbar-brand text-warning";
   colorClass: string[] = ["text-primary", "text-success", "text-danger", "text-warning", "text-info"];
+
   constructor() { }
   ngOnInit(): void {
   }
-  brandHover() {
-    let id = Math.floor((Math.random() * 5) + 1) - 1;
-    console.log(id);
-    this.brandClass = "navbar-brand " + this.colorClass[id];
-    console.log(this.brandClass);
+
+  /**
+  * Returns a random integer between min (inclusive) and max (inclusive).
+  */
+  rnd(min, max) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min + 1)) + min;
   }
 
+  brandHover() {
+    this.brandClass = "navbar-brand " + this.colorClass[this.rnd(0, this.colorClass.length - 1)];
+  }
 }
