@@ -103,7 +103,6 @@ export class UpcomingContestComponent implements OnInit, AfterViewInit {
       const stime = new Date(data.start_time);
       const etime = new Date(data.end_time);
       const duration = this.secondToHumanReadable(data.duration);
-      console.log(duration);
 
       content += this.makeColumn(no, [data.name, stime, etime, duration]);
       no++;
