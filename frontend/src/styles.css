@@ -33,6 +33,9 @@ body, html {
 .bg-black {
   background-color: #000;
 }
+.bg-white {
+  background-color: #fff;
+}
 
 a:hover {
   cursor: pointer;
