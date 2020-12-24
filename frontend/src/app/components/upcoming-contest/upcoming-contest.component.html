@@ -1,21 +1,9 @@
-<div>
-    <div>
-        <div *ngFor="let data of all_data">
-            <div class="row">
-                <div class="col">
-                    {{data.name}}
-                </div>
-                <div class="col">
-                    {{data.url}}
-                </div>
-                <div class="col">
-                    {{data.site}}
-                </div>
-                <div class="col">
-                    {{data.start_time}}
-                    {{data.end_time}}
-                </div>
-            </div>
-        </div>
-    </div>
+<div class="hcenter row">
+    <ul class="nav nav-pills col-12" #pill>
+        <li class="nav-link" *ngFor="let key of upcomingContestKeys">
+            <a class="nav-link" aria-current="page" (click)="onPillClick($event)" clickable>{{key}}</a>
+        </li>
+    </ul>
+
+    <div #siteData class="col-12"></div>
 </div>
