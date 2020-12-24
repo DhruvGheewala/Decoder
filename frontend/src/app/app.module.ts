@@ -11,14 +11,14 @@ import { UpcomingContestComponent } from './components/upcoming-contest/upcoming
 import { AboutUsComponent } from './components/about-us/about-us.component';
 import { ContactComponent } from './components/contact/contact.component';
 import { LoginComponent } from './components/login/login.component';
-import { LogoutComponent } from './components/logout/logout.component';
 import { BlogViewComponent } from './components/blog/blog-view/blog-view.component';
 import { BlogCreateComponent } from './components/blog/blog-create/blog-create.component';
 import { BlogEditComponent } from './components/blog/blog-edit/blog-edit.component';
 import { BlogListComponent } from './components/blog/blog-list/blog-list.component';
-
-import { HttpClientModule } from "@angular/common/http";
 import { IdeComponent } from './components/ide/ide.component';
+import { HttpClientModule } from "@angular/common/http";
+import { RegisterComponent } from './components/register/register.component';
+import { ProfileComponent } from './components/profile/profile.component';
 
 @NgModule({
   declarations: [
@@ -31,12 +31,13 @@ import { IdeComponent } from './components/ide/ide.component';
     AboutUsComponent,
     ContactComponent,
     LoginComponent,
-    LogoutComponent,
     BlogViewComponent,
     BlogCreateComponent,
     BlogEditComponent,
     BlogListComponent,
-    IdeComponent
+    IdeComponent,
+    RegisterComponent,
+    ProfileComponent
   ],
   imports: [
     BrowserModule,
