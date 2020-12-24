@@ -18,6 +18,7 @@ import { BlogEditComponent } from './components/blog/blog-edit/blog-edit.compone
 import { BlogListComponent } from './components/blog/blog-list/blog-list.component';
 
 import { HttpClientModule } from "@angular/common/http";
+import { IdeComponent } from './components/ide/ide.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import { HttpClientModule } from "@angular/common/http";
     BlogViewComponent,
     BlogCreateComponent,
     BlogEditComponent,
-    BlogListComponent
+    BlogListComponent,
+    IdeComponent
   ],
   imports: [
     BrowserModule,
