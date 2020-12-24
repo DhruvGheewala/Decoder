@@ -1,7 +1,7 @@
 import { registerLocaleData } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { AboutUsComponent } from './components/about-us/about-us.component';
+import { AboutComponent } from './components/about/about.component';
 import { BlogCreateComponent } from './components/blog/blog-create/blog-create.component';
 import { BlogEditComponent } from './components/blog/blog-edit/blog-edit.component';
 import { BlogListComponent } from './components/blog/blog-list/blog-list.component';
@@ -69,11 +69,11 @@ const routes: Routes = [
     component: ProfileComponent,
   },
   {
-    path: 'about-us',
-    component: AboutUsComponent,
+    path: 'about',
+    component: AboutComponent,
   },
   {
-    path: 'contact-us',
+    path: 'contact',
     component: ContactComponent,
   },
   {

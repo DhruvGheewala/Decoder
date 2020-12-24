@@ -8,7 +8,6 @@ import { FooterComponent } from './components/footer/footer.component';
 import { HomeComponent } from './components/home/home.component';
 import { ErrorComponent } from './components/error/error.component';
 import { UpcomingContestComponent } from './components/upcoming-contest/upcoming-contest.component';
-import { AboutUsComponent } from './components/about-us/about-us.component';
 import { ContactComponent } from './components/contact/contact.component';
 import { LoginComponent } from './components/login/login.component';
 import { BlogViewComponent } from './components/blog/blog-view/blog-view.component';
@@ -19,6 +18,7 @@ import { IdeComponent } from './components/ide/ide.component';
 import { HttpClientModule } from "@angular/common/http";
 import { RegisterComponent } from './components/register/register.component';
 import { ProfileComponent } from './components/profile/profile.component';
+import { AboutComponent } from './components/about/about.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +28,6 @@ import { ProfileComponent } from './components/profile/profile.component';
     HomeComponent,
     ErrorComponent,
     UpcomingContestComponent,
-    AboutUsComponent,
     ContactComponent,
     LoginComponent,
     BlogViewComponent,
@@ -37,7 +36,8 @@ import { ProfileComponent } from './components/profile/profile.component';
     BlogListComponent,
     IdeComponent,
     RegisterComponent,
-    ProfileComponent
+    ProfileComponent,
+    AboutComponent
   ],
   imports: [
     BrowserModule,
