@@ -1,1 +1,29 @@
-<p>login works!</p>
+<div class="full">
+    <div class="full center">
+        <div>
+            <div class="h3 text-danger">Login</div>
+            <div class="font-italic">
+                Don't have an account
+                <a routerLink="/register" class="link">create one</a>
+            </div>
+            <form class="pt-3 was-validated" method="post">
+
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <input type="text" id="name" formControlName="user"
+                        class="form-control form-control-sm custom-width" placeholder="Your name" required>
+                    <!-- <small *ngIf="hasError('user')" class="text-danger font-italic">Username required!</small> -->
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" formControlName="password"
+                        class="form-control form-control-sm custom-width" placeholder="Your password" required>
+                    <!-- <small *ngIf="hasError('password')" class="text-danger font-italic">password required!</small> -->
+                </div>
+
+                <button class="btn btn-primary btn-sm">Submit</button>
+            </form>
+        </div>
+    </div>
+</div>

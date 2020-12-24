@@ -1,1 +1,35 @@
-<p>contact works!</p>
+<div class="full">
+    <div class="center full">
+        <div>
+            <div class="h3 text-danger">Contact Us</div>
+            <form class="was-validated">
+
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <input type="text" id="name" formControlName="user"
+                        class="form-control form-control-sm custom-width" placeholder="Your name" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" formControlName="email"
+                        class="form-control form-control-sm custom-width" placeholder="Your email" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="subject">Subject</label>
+                    <input type="password" id="subject" formControlName="password"
+                        class="form-control form-control-sm custom-width" placeholder="Subject" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="message">Message</label>
+                    <textarea class="form-control form-control-sm custom-width" rows="5" placeholder="Your message here"
+                        id="message" required></textarea>
+                </div>
+
+                <button class="btn btn-primary btn-sm">Submit</button>
+            </form>
+        </div>
+    </div>
+</div>

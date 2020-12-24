@@ -40,6 +40,17 @@ body, html {
 a:hover {
   cursor: pointer;
 }
+.link {
+  cursor: pointer;
+  color: blue !important;
+}
+
+.text-blue {
+  color: #33C9FF;
+}
+.text-white {
+  color: #fff;
+}
 /* full height */
 .full {
   height: 100%;
