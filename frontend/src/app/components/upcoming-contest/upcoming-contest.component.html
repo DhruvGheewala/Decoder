@@ -1,1 +1,19 @@
-<p>upcoming-contest works!</p>
+<div class="container">
+    <div *ngFor="let data of all_data">
+        <div class="row">
+            <div class="col">
+                {{data.name}}
+            </div>
+            <div class="col">
+                {{data.url}}
+            </div>
+            <div class="col">
+                {{data.site}}
+            </div>
+            <div class="col">
+                {{data.start_time}}
+                {{data.end_time}}
+            </div>
+        </div>
+    </div>
+</div>

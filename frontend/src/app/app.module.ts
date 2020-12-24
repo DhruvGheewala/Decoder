@@ -9,6 +9,8 @@ import { HomeComponent } from './components/home/home.component';
 import { ErrorComponent } from './components/error/error.component';
 import { UpcomingContestComponent } from './components/upcoming-contest/upcoming-contest.component';
 
+import { HttpClientModule } from "@angular/common/http";
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -20,7 +22,8 @@ import { UpcomingContestComponent } from './components/upcoming-contest/upcoming
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    HttpClientModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
