@@ -1,13 +1,14 @@
 /* You can add global styles to this file, and also import other style files */
 
-@import url('https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@350&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@350&display=swap");
 @import "../node_modules/font-awesome/css/font-awesome.css";
 * {
   font-weight: normal;
   /* border: 2px solid black; */
 }
 
-body, html {
+body,
+html {
   font-size: 1.2em;
   margin: 0;
   padding: 0;
@@ -19,15 +20,15 @@ body, html {
 }
 
 .img1 {
-  background-image: url('./assets/images/bg1.jpg');
+  background-image: url("./assets/images/bg1.jpg");
   background-size: cover;
 }
 .img2 {
-  background-image: url('./assets/images/bg2.jpg');
+  background-image: url("./assets/images/bg2.jpg");
   background-size: cover;
 }
 .img3 {
-  background-image: url('./assets/images/bg3.png');
+  background-image: url("./assets/images/bg3.png");
   background-size: cover;
 }
 .bg-black {
@@ -46,7 +47,7 @@ a:hover {
 }
 
 .text-blue {
-  color: #33C9FF;
+  color: #33c9ff;
 }
 .text-white {
   color: #fff;
@@ -57,16 +58,17 @@ a:hover {
 }
 
 .font1 {
-  font-family: 'Roboto Slab', monospace, sans-serif;
+  font-family: "Roboto Slab", monospace, sans-serif;
 }
 .font2 {
-  font-family: Verdana, Geneva, Tahoma, sans-serif
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 .font3 {
   font-family: Arial, Helvetica, sans-serif;
 }
 .font-code {
-  font-family: Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace, serif;
+  font-family: Menlo, Monaco, Consolas, "Liberation Mono", "Courier New",
+    monospace, serif;
 }
 
 .hcenter {
