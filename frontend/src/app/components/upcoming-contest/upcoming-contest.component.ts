@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { AfterViewInit } from '@angular/core';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-upcoming-contest',
@@ -27,7 +28,7 @@ export class UpcomingContestComponent implements OnInit, AfterViewInit {
   upcomingContestObject = {};
   hideSpinner: boolean = false;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private router: Router) { }
   ngOnInit(): void {
     try {
       this.http.get<any>(this.urls[1]).subscribe((data) => {
@@ -35,8 +36,7 @@ export class UpcomingContestComponent implements OnInit, AfterViewInit {
         this.updateContestData();
       });
     } catch (error) {
-      // Todo: this.router.navigate, navigate to error component on api call error(kushal)
-      document.location.href = '/error';
+      this.router.navigate(['/error']);
     }
   }
 
@@ -123,7 +123,7 @@ export class UpcomingContestComponent implements OnInit, AfterViewInit {
       let stime = this.normalizeDate(data.start_time);
       let etime = this.normalizeDate(data.end_time);
 
-      add_to_calendar += `&dates=${stime}/${etime}`;  
+      add_to_calendar += `&dates=${stime}/${etime}`;
       add_to_calendar += `&text=${data["name"].split(' ').join('%20')}`;
       add_to_calendar += `&location=${data['url']}`;
 

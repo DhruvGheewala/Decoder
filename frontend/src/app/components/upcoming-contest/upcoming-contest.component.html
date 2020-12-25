@@ -1,15 +1,16 @@
-
 <div *ngIf="!hideSpinner" class="full center">
     <div id="loader"></div>
 </div>
 
-<div class="center">
-    <div class="container-fluid" id="info">
-        <ul class="nav nav-pills center mt-2 col-12" #pill>
-            <li class="nav-link" *ngFor="let key of upcomingContestKeys; index as i">
-                <a class="nav-link" aria-current="page" (click)="onPillClick($event)" [id]='i' clickable>{{key}}</a>
-            </li>
-        </ul>
-        <section #siteData></section>
+<div style="margin-top: 100;">
+    <div class="center contInfo">
+        <div class="container-fluid" id="info">
+            <ul class="nav nav-pills center mt-2 col-12" #pill>
+                <li class="nav-link" *ngFor="let key of upcomingContestKeys; index as i">
+                    <a class="nav-link" aria-current="page" (click)="onPillClick($event)" [id]='i' clickable>{{key}}</a>
+                </li>
+            </ul>
+            <section #siteData></section>
+        </div>
     </div>
 </div>
