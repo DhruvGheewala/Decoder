@@ -1,7 +1,10 @@
+// Modules
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
 import { AppRoutingModule } from './app-routing.module';
+import { HttpClientModule } from "@angular/common/http";
+
+// Components
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
@@ -15,7 +18,6 @@ import { BlogCreateComponent } from './components/blog/blog-create/blog-create.c
 import { BlogEditComponent } from './components/blog/blog-edit/blog-edit.component';
 import { BlogListComponent } from './components/blog/blog-list/blog-list.component';
 import { IdeComponent } from './components/ide/ide.component';
-import { HttpClientModule } from "@angular/common/http";
 import { RegisterComponent } from './components/register/register.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { AboutComponent } from './components/about/about.component';

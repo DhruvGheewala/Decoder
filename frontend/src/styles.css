@@ -82,3 +82,7 @@ a:hover {
   justify-content: center;
   align-items: center;
 }
+
+section {
+  height: 100vh;
+}
