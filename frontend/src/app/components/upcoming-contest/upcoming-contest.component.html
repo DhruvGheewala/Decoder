@@ -1,4 +1,7 @@
-<div class="hcenter row">
+<div *ngIf="!hideSpinner" class="full center">
+    <div id="loader"></div>
+</div>
+<div class="hcenter row" id="info">
     <ul class="nav nav-pills col-12" #pill>
         <li class="nav-link" *ngFor="let key of upcomingContestKeys">
             <a class="nav-link" aria-current="page" (click)="onPillClick($event)" clickable>{{key}}</a>
