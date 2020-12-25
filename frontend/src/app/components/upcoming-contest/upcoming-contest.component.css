@@ -1,3 +1,8 @@
+.contInfo {
+  overflow: auto;
+  height: 100%;
+  margin-top: 500;
+}
 #loader {
   color: rgb(238, 195, 76);
   font-size: 90px;
