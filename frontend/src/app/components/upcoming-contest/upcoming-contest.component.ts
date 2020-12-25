@@ -30,21 +30,13 @@ export class UpcomingContestComponent implements OnInit, AfterViewInit {
   constructor(private http: HttpClient) { }
   ngOnInit(): void {
     try {
-
+      this.http.get<any>(this.urls[1]).subscribe((data) => {
+        this.allData = data;
+        this.updateContestData();
+      });
     } catch (error) {
+      // Todo: this.router.navigate, navigate to error component on api call error(kushal)
       document.location.href = '/error';
-    }
-    this.http.get<any>(this.urls[1]).subscribe((data) => {
-      if (data) {
-        this.hideSpinner = true;
-        showData();
-      }
-      this.allData = data;
-      this.updateContestData();
-    });
-    function showData() {
-      document.getElementById('info')
-        .style.display = 'block';
     }
   }
 
@@ -60,20 +52,13 @@ export class UpcomingContestComponent implements OnInit, AfterViewInit {
       this.upcomingContestObject[data.site].push(data);
     });
     this.upcomingContestKeys = Object.keys(this.upcomingContestObject);
-  }
 
-  removeActiveFromPill() {
-    for (let i = 0; i < this.pillElem.children.length; i++) {
-      let par = this.pillElem.children[i];
-      let elem = par.children[0];
-      let className = elem.className;
-      let ind = className.indexOf('active');
-
-      if (ind >= 0) {
-        let newClassName = className.substring(0, ind) + className.substring(ind + 'active'.length);
-        elem.className = newClassName;
-      }
-    }
+    setTimeout(() => {
+      this.hideSpinner = true;
+      document.getElementById('info').style.display = 'block';
+      let elem = document.getElementById('0');
+      elem.click();
+    }, 1000);
   }
 
   /**
@@ -100,21 +85,94 @@ export class UpcomingContestComponent implements OnInit, AfterViewInit {
     }
   }
 
+  dateToHumanReadable(date: Date) {
+    let year = date.getFullYear();
+
+    let month: any = date.getMonth() + 1;
+    month = month < 10 ? `0${month}` : month;
+
+    let day: any = date.getDate();
+    day = day < 10 ? `0${day}` : day;
+
+    let hour: any = date.getHours();
+    hour = hour < 10 ? `0${hour}` : hour;
+
+    let minute: any = date.getMinutes();
+    minute = minute < 10 ? `0${minute}` : minute;
+
+    return `${day}/${month}/${year} at ${hour}:${minute}`;
+  }
+
+  normalizeDate(date: string) {
+    return date
+      .split('-').join('')
+      .split(':').join('')
+      .split('.').join('');
+  }
+
+  contestToHumanReadable(data) {
+    let res = `
+    <a href="${data.url}" title="Contest announcement page" target="_blank" class="link">
+      ${data.name}
+    </a>`;
+
+    let add_to_calendar: string;
+    if (data["status"] == "BEFORE") {
+      add_to_calendar = 'https://calendar.google.com/event?action=TEMPLATE';
+
+      let stime = this.normalizeDate(data.start_time);
+      let etime = this.normalizeDate(data.end_time);
+
+      add_to_calendar += `&dates=${stime}/${etime}`;  
+      add_to_calendar += `&text=${data["name"].split(' ').join('%20')}`;
+      add_to_calendar += `&location=${data['url']}`;
+
+      res = `
+      <a href="${add_to_calendar}" data-toggle="tooltip" title="Add to calendar" target="_blank">
+        <i class="fa fa-calendar-plus-o" aria-hidden="true"></i>
+      </a>
+      ${res}`;
+    } else {
+      res = `
+      <i class="fa fa-circle" style="color: green" title="Running contest" aria-hidden="true"></i>
+      ${res}`;
+    }
+    return res;
+  }
+
+  classNames = ['btn-secondary', 'text-white'];
+  removeActiveFromPill() {
+
+    this.classNames.forEach(c => {
+      for (let i = 0; i < this.pillElem.children.length; i++) {
+        let par = this.pillElem.children[i];
+        let elem = par.children[0];
+        let className = elem.className;
+        let ind = className.indexOf(c);
+
+        if (ind >= 0) {
+          let newClassName = className.substring(0, ind) + className.substring(ind + c.length);
+          elem.className = newClassName;
+        }
+      }
+    });
+  }
+
   onPillClick(e: any) {
-    console.log(e);
     this.removeActiveFromPill();
     let elem = e.toElement;
-    elem.className += " active";
+    this.classNames.forEach(c => elem.className += ` ${c}`);
 
     const site = elem.innerText;
     let no = 1;
     let content = "";
     for (let data of this.upcomingContestObject[site]) {
-      const stime = new Date(data.start_time);
-      const etime = new Date(data.end_time);
+      const contest = this.contestToHumanReadable(data);
+      const stime = this.dateToHumanReadable(new Date(data.start_time));
+      const etime = this.dateToHumanReadable(new Date(data.end_time));
       const duration = this.secondToHumanReadable(data.duration);
 
-      content += this.makeColumn(no, [data.name, stime, etime, duration]);
+      content += this.makeColumn(no, [contest, stime, etime, duration]);
       no++;
     }
 
@@ -130,18 +188,21 @@ export class UpcomingContestComponent implements OnInit, AfterViewInit {
    */
   makeTable(thead: string, tbody: string) {
     return `
-    <table class="table">
+    <table class="table table-striped border mt-3">
       ${thead}
       ${tbody}
     </table>`;
   }
+
+  // Todo: add calendar
+  // <i class="far fa-calendar-plus"></i>
 
   /**
    * @param head Arrays of Columns
    */
   makeHead(head): string {
     let content: string = "";
-    head.forEach(title => content += `<th scope="col">${title}</th>\n`);
+    head.forEach(title => content += `<th class="font-weight-bold" scope="col">${title}</th>\n`);
 
     return `
     <thead>
