@@ -24,41 +24,95 @@ export class UpcomingContestComponent implements OnInit, AfterViewInit {
   siteDataElem = null;
 
   allData = null;
-  upcomingContestKeys = new Array();
+  selectedPill = '';
   upcomingContestObject = {};
   hideSpinner: boolean = false;
+  upcomingContestKeys = new Array();
+  tableHeads = ['#', 'Contest', 'Start Time', 'End Time', 'Duration'];
 
   constructor(private http: HttpClient, private router: Router) { }
   ngOnInit(): void {
     try {
       this.http.get<any>(this.urls[1]).subscribe((data) => {
         this.allData = data;
-        this.updateContestData();
+        this.contestDataFetched();
       });
     } catch (error) {
       this.router.navigate(['/error']);
     }
   }
-
   ngAfterViewInit(): void {
     this.pillElem = this.pillElemRef.nativeElement;
     this.siteDataElem = this.siteDataElemRef.nativeElement;
   }
 
-  updateContestData() {
+  /**
+   * This method will be called when data is fetched from API.
+   * This method will generate upcomingContestKeys & upcomingContestObject
+   */
+  contestDataFetched() {
     this.allData.forEach(data => {
       if (!this.upcomingContestObject[data.site])
         this.upcomingContestObject[data.site] = new Array();
-      this.upcomingContestObject[data.site].push(data);
+      this.upcomingContestObject[data.site].push(this.generateColumn(data));
     });
+
     this.upcomingContestKeys = Object.keys(this.upcomingContestObject);
+    this.selectedPill = this.upcomingContestKeys[0];
 
     setTimeout(() => {
       this.hideSpinner = true;
       document.getElementById('info').style.display = 'block';
       let elem = document.getElementById('0');
       elem.click();
-    }, 1000);
+    }, 500);
+  }
+
+  /**
+   * This method will return object according to create table
+   * @param _data
+   * data: contains data to be printed in a row(contest details)
+   * 
+   * url: url for that contest
+   * 
+   * isRunning: true if contest is running else false
+   * 
+   * calendarLink: Google Calendar Link to add this event for reminder
+   */
+  generateColumn(_data: any) {
+    return {
+      data: [
+        _data.name,
+        this.dateToHumanReadable(new Date(_data.start_time)),
+        this.dateToHumanReadable(new Date(_data.end_time)),
+        this.secondToHumanReadable(_data.duration)
+      ],
+      url: _data.url,
+      isRunning: (_data.status === "CODING"),
+      calendarLink: this.getCalendarLink(_data)
+    };
+  }
+
+  /**
+   * Returns a human readable format of date
+   * @param date Date
+   */
+  dateToHumanReadable(date: Date) {
+    let year = date.getFullYear();
+
+    let month: any = date.getMonth() + 1;
+    month = month < 10 ? `0${month}` : month;
+
+    let day: any = date.getDate();
+    day = day < 10 ? `0${day}` : day;
+
+    let hour: any = date.getHours();
+    hour = hour < 10 ? `0${hour}` : hour;
+
+    let minute: any = date.getMinutes();
+    minute = minute < 10 ? `0${minute}` : minute;
+
+    return `${day}/${month}/${year} at ${hour}:${minute}`;
   }
 
   /**
@@ -85,64 +139,44 @@ export class UpcomingContestComponent implements OnInit, AfterViewInit {
     }
   }
 
-  dateToHumanReadable(date: Date) {
-    let year = date.getFullYear();
+  /**
+   * Returns google calendar link according to given data
+   * @param data 
+   */
+  getCalendarLink(data): string {
+    const stime = this.normalizeDate(data.start_time);
+    const etime = this.normalizeDate(data.end_time);
 
-    let month: any = date.getMonth() + 1;
-    month = month < 10 ? `0${month}` : month;
-
-    let day: any = date.getDate();
-    day = day < 10 ? `0${day}` : day;
-
-    let hour: any = date.getHours();
-    hour = hour < 10 ? `0${hour}` : hour;
-
-    let minute: any = date.getMinutes();
-    minute = minute < 10 ? `0${minute}` : minute;
-
-    return `${day}/${month}/${year} at ${hour}:${minute}`;
+    let res: string = 'https://calendar.google.com/event?action=TEMPLATE';
+    res += `&dates=${stime}/${etime}`;
+    res += `&text=${data.name.split(' ').join('%20')}`;
+    res += `&location=${data.url}`;
+    return res;
   }
 
+  /**
+   * Normalize the given date for google calendar link
+   * @param date 
+   */
   normalizeDate(date: string) {
     return date
       .split('-').join('')
       .split(':').join('')
       .split('.').join('');
   }
-
-  contestToHumanReadable(data) {
-    let res = `
-    <a href="${data.url}" title="Contest announcement page" target="_blank" class="link">
-      ${data.name}
-    </a>`;
-
-    let add_to_calendar: string;
-    if (data["status"] == "BEFORE") {
-      add_to_calendar = 'https://calendar.google.com/event?action=TEMPLATE';
-
-      let stime = this.normalizeDate(data.start_time);
-      let etime = this.normalizeDate(data.end_time);
-
-      add_to_calendar += `&dates=${stime}/${etime}`;
-      add_to_calendar += `&text=${data["name"].split(' ').join('%20')}`;
-      add_to_calendar += `&location=${data['url']}`;
-
-      res = `
-      <a href="${add_to_calendar}" data-toggle="tooltip" title="Add to calendar" target="_blank">
-        <i class="fa fa-calendar-plus-o" aria-hidden="true"></i>
-      </a>
-      ${res}`;
-    } else {
-      res = `
-      <i class="fa fa-circle" style="color: green" title="Running contest" aria-hidden="true"></i>
-      ${res}`;
-    }
-    return res;
+  
+  private classNames = ['btn-secondary', 'text-white'];
+  onPillClick(e: any) {
+    this.removeActiveFromPill();
+    let elem = e.toElement;
+    this.classNames.forEach(c => elem.className += ` ${c}`);
+    this.selectedPill = elem.innerText;
   }
 
-  classNames = ['btn-secondary', 'text-white'];
+  /**
+   * Removes active & similar class of bootstrap from previously selected pill
+   */
   removeActiveFromPill() {
-
     this.classNames.forEach(c => {
       for (let i = 0; i < this.pillElem.children.length; i++) {
         let par = this.pillElem.children[i];
@@ -156,87 +190,5 @@ export class UpcomingContestComponent implements OnInit, AfterViewInit {
         }
       }
     });
-  }
-
-  onPillClick(e: any) {
-    this.removeActiveFromPill();
-    let elem = e.toElement;
-    this.classNames.forEach(c => elem.className += ` ${c}`);
-
-    const site = elem.innerText;
-    let no = 1;
-    let content = "";
-    for (let data of this.upcomingContestObject[site]) {
-      const contest = this.contestToHumanReadable(data);
-      const stime = this.dateToHumanReadable(new Date(data.start_time));
-      const etime = this.dateToHumanReadable(new Date(data.end_time));
-      const duration = this.secondToHumanReadable(data.duration);
-
-      content += this.makeColumn(no, [contest, stime, etime, duration]);
-      no++;
-    }
-
-    const thead: string = this.makeHead(['#', 'Contest', 'Start Time', 'End Time', 'Duration']);
-    const tbody: string = this.makeBody(content);
-    const table = this.makeTable(thead, tbody);
-    this.siteDataElem.innerHTML = table;
-  }
-
-  /**
-   * @param thead Header of the table(use makeHead)
-   * @param tbody Body of the table(use makeBody)
-   */
-  makeTable(thead: string, tbody: string) {
-    return `
-    <table class="table table-striped border mt-3">
-      ${thead}
-      ${tbody}
-    </table>`;
-  }
-
-  // Todo: add calendar
-  // <i class="far fa-calendar-plus"></i>
-
-  /**
-   * @param head Arrays of Columns
-   */
-  makeHead(head): string {
-    let content: string = "";
-    head.forEach(title => content += `<th class="font-weight-bold" scope="col">${title}</th>\n`);
-
-    return `
-    <thead>
-      <tr>
-        ${content}
-      </tr>
-    </thead>`;
-  }
-
-  /**
-   * @param content Content inside body(use makeColumn)
-   */
-  makeBody(content: string): string {
-    return `
-    <tbody>
-      ${content}
-    </tbody>`;
-  }
-
-  /**
-   * Array from contest, exp: no = 1, data = ["xyz", "abc", ...]
-   * @param no Serial number
-   * @param contest Name of the contest
-   * @param stime Starting time of contest
-   * @param etime Finish time of contest
-   * @param duration Time duration for contest
-   */
-  makeColumn(no: number, data) {
-    let content: string = `<th scope="row">${no}</th>\n`;
-    data.forEach(d => content += `<td>${d}</td>\n`);
-
-    return `
-    <tr>
-      ${content}
-    </tr>`;
   }
 }

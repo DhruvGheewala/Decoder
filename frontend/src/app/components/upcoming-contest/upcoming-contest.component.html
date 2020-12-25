@@ -3,14 +3,57 @@
 </div>
 
 <div style="margin-top: 100;">
-    <div class="center contInfo">
-        <div class="container-fluid" id="info">
-            <ul class="nav nav-pills center mt-2 col-12" #pill>
-                <li class="nav-link" *ngFor="let key of upcomingContestKeys; index as i">
-                    <a class="nav-link" aria-current="page" (click)="onPillClick($event)" [id]='i' clickable>{{key}}</a>
-                </li>
-            </ul>
-            <section #siteData></section>
-        </div>
+    <div class="center contInfo" id="info">
+        <ul class="nav nav-pills center mt-2 col-12" #pill>
+            <li class="nav-link" *ngFor="let key of upcomingContestKeys; index as i">
+                <a class="nav-link" aria-current="page" (click)="onPillClick($event)" [id]='i' clickable>{{key}}</a>
+            </li>
+        </ul>
+        <section #siteData>
+            <table class="table table-striped border mt-3">
+                <thead>
+                    <tr>
+                        <th class="font-weight-bold" scope="col" *ngFor="let head of tableHeads">
+                            {{head}}
+                        </th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr *ngFor="let column of upcomingContestObject[selectedPill]; index as i">
+                        <th scope="row">{{i + 1}}</th>
+                        <th *ngFor="let data of column.data; first as f">
+                            <!-- First Column -->
+                            <div *ngIf='f; else elseBlock'>
+                                <!-- Running Contest -->
+                                <div *ngIf='column.isRunning; else ifelseBlock'>
+                                    <i class="fa fa-circle" style="color: green" title="Running contest"
+                                        aria-hidden="true"></i>
+                                    <a [href]='column.url' title="Contest announcement page" target="_blank"
+                                        class="link">
+                                        {{data}}
+                                    </a>
+                                </div>
+
+                                <!-- Future Contest -->
+                                <ng-template #ifelseBlock>
+                                    <a [href]='column.calendarLink' data-toggle="tooltip" title="Add to calendar"
+                                        target="_blank">
+                                        <i class="fa fa-calendar-plus-o" aria-hidden="true"></i>
+                                    </a>
+                                    <a [href]='column.url' title="Contest announcement page" target="_blank"
+                                        class="link">
+                                        {{data}}
+                                    </a>
+                                </ng-template>
+                            </div>
+
+                            <!-- Other Column -->
+                            <ng-template #elseBlock>{{data}}</ng-template>
+                        </th>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
     </div>
 </div>
