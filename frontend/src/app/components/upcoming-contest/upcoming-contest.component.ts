@@ -25,6 +25,7 @@ export class UpcomingContestComponent implements OnInit, AfterViewInit {
   allData = null;
   upcomingContestKeys = new Array();
   upcomingContestObject = {};
+  hideSpinner: boolean = false;
 
   constructor(private http: HttpClient) { }
   ngOnInit(): void {
@@ -34,9 +35,17 @@ export class UpcomingContestComponent implements OnInit, AfterViewInit {
       document.location.href = '/error';
     }
     this.http.get<any>(this.urls[1]).subscribe((data) => {
+      if (data) {
+        this.hideSpinner = true;
+        showData();
+      }
       this.allData = data;
       this.updateContestData();
     });
+    function showData() {
+      document.getElementById('info')
+        .style.display = 'block';
+    }
   }
 
   ngAfterViewInit(): void {
@@ -84,7 +93,7 @@ export class UpcomingContestComponent implements OnInit, AfterViewInit {
       return `${minutes} Min`;
     } else if (hours < 24) {
       return `${hours} Hrs`;
-    } else if(days < 365) {
+    } else if (days < 365) {
       return `${days} Day`;
     } else {
       return `${years} Yrs`;
@@ -92,6 +101,7 @@ export class UpcomingContestComponent implements OnInit, AfterViewInit {
   }
 
   onPillClick(e: any) {
+    console.log(e);
     this.removeActiveFromPill();
     let elem = e.toElement;
     elem.className += " active";
