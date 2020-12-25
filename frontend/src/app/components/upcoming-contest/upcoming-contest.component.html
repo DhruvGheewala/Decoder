@@ -2,8 +2,8 @@
     <div id="loader"></div>
 </div>
 
-<div class="center">
-    <div class="container-fluid" id="info">
+<div style="margin-top: 100;">
+    <div class="center contInfo" id="info">
         <ul class="nav nav-pills center mt-2 col-12" #pill>
             <li class="nav-link" *ngFor="let key of upcomingContestKeys; index as i">
                 <a class="nav-link" aria-current="page" (click)="onPillClick($event)" [id]='i' clickable>{{key}}</a>

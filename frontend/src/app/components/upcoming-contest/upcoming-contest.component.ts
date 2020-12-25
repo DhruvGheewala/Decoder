@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { AfterViewInit } from '@angular/core';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-upcoming-contest',
@@ -29,7 +30,7 @@ export class UpcomingContestComponent implements OnInit, AfterViewInit {
   upcomingContestKeys = new Array();
   tableHeads = ['#', 'Contest', 'Start Time', 'End Time', 'Duration'];
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private router: Router) { }
   ngOnInit(): void {
     try {
       this.http.get<any>(this.urls[1]).subscribe((data) => {
@@ -37,8 +38,7 @@ export class UpcomingContestComponent implements OnInit, AfterViewInit {
         this.contestDataFetched();
       });
     } catch (error) {
-      // Todo: this.router.navigate, navigate to error component on api call error(kushal)
-      document.location.href = '/error';
+      this.router.navigate(['/error']);
     }
   }
   ngAfterViewInit(): void {
@@ -164,7 +164,7 @@ export class UpcomingContestComponent implements OnInit, AfterViewInit {
       .split(':').join('')
       .split('.').join('');
   }
-
+  
   private classNames = ['btn-secondary', 'text-white'];
   onPillClick(e: any) {
     this.removeActiveFromPill();
