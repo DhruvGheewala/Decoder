@@ -1,40 +1,29 @@
 <div class="full">
     <div class="row full">
-        <div class="col center">
-            <div class="card">
-                <img class="card-img-top" src="../../../assets/images/dhruv_gheewala.jpg" alt="Dhruv_Gheewala">
-                <div class="card-body">
-                    <h4 class="card-title">Dhruv Gheewala</h4>
-                    <p class="card-text">
-                        Some example text some example text. John Doe is an architect and engineer
-                    </p>
-                    <a href="https://github.com/DhruvGheewala" class="btn btn-primary">See Profile</a>
+        <div class="col center" *ngFor="let user of members">
+            <div class="w-75">
+                <div>
+                    <img height="150em" class="rounded-circle center" [src]="user.img" [alt]="user.name">
                 </div>
-            </div>
-        </div>
-        <div class="col center">
-            <div class="card">
-                <img class="card-img-top" src="../../../assets/images/dhiraj-01.jpg" alt="dhiraj">
-                <div class="card-body">
-                    <h4 class="card-title">Dhiraj Govindvira</h4>
-                    <p class="card-text">
-                        Some example text some example text. John Doe is an architect and engineer
-                    </p>
-                    <a href="https://github.com/Dhiraj-01" class="btn btn-primary">See Profile</a>
-                </div>
-            </div>
-        </div>
-        <div class="col center">
-            <div class="card">
-                <img class="card-img-top" src="../../../assets/images/kushal_pandya.jpg" alt="kushal">
-                <div class="card-body">
-                    <h4 class="card-title">Kushal Pandya</h4>
-                    <p class="card-text">
-                        Some example text some example text. John Doe is an architect and engineer
-                    </p>
-                    <a href="https://github.com/kushalp13" class="btn btn-primary">See Profile</a>
+                <div class="mt-2">
+                    <h4>{{user.name}}</h4>
+                    <p>{{user.info}}</p>
+                    <a [href]="user.github" class="btn btn-sm btn-primary">See Profile</a>
                 </div>
             </div>
         </div>
     </div>
+
+    <!-- <div class="col center">
+        <div class="card w-75">
+            <img class="card-img-top" src="../../../assets/images/dhiraj-01.jpg" alt="dhiraj">
+            <div class="card-body">
+                <h4 class="card-title">Dhiraj Govindvira</h4>
+                <p class="card-text">
+                    Some example text some example text. John Doe is an architect and engineer
+                </p>
+                <a href="https://github.com/Dhiraj-01" class="btn btn-sm btn-primary">See Profile</a>
+            </div>
+        </div>
+    </div> -->
 </div>
