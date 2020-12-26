@@ -164,7 +164,7 @@ export class UpcomingContestComponent implements OnInit, AfterViewInit {
       .split(':').join('')
       .split('.').join('');
   }
-  
+
   private classNames = ['btn-secondary', 'text-white'];
   onPillClick(e: any) {
     this.removeActiveFromPill();

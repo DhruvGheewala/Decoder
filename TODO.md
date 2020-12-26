@@ -1,4 +1,8 @@
 # Frontend
- - IDEComponent
+
+- More Functions in IDE, make chnages in UI
+- start work on blogs
+
 # Backend
- - Nothing !!
+
+- complete compile-run in backend
