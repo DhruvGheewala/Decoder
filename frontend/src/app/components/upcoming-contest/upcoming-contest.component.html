@@ -29,6 +29,7 @@
                                 <div *ngIf='column.isRunning; else ifelseBlock'>
                                     <i class="fa fa-circle" style="color: green" title="Running contest"
                                         aria-hidden="true"></i>
+                                    &nbsp;
                                     <a [href]='column.url' title="Contest announcement page" target="_blank"
                                         class="link">
                                         {{data}}
@@ -41,6 +42,7 @@
                                         target="_blank">
                                         <i class="fa fa-calendar-plus-o" aria-hidden="true"></i>
                                     </a>
+                                    &nbsp;
                                     <a [href]='column.url' title="Contest announcement page" target="_blank"
                                         class="link">
                                         {{data}}
