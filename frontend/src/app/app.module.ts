@@ -22,6 +22,10 @@ import { RegisterComponent } from './components/register/register.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { AboutComponent } from './components/about/about.component';
 
+// Service
+import { UserService } from "./service/user.service";
+import { AdminService } from "./service/admin.service";
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -46,7 +50,7 @@ import { AboutComponent } from './components/about/about.component';
     AppRoutingModule,
     HttpClientModule,
   ],
-  providers: [],
+  providers: [AdminService, UserService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
