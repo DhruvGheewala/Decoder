@@ -1,5 +1,4 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { AfterViewInit } from '@angular/core';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 
@@ -8,89 +7,82 @@ import { Router } from '@angular/router';
   templateUrl: './upcoming-contest.component.html',
   styleUrls: ['./upcoming-contest.component.css']
 })
-export class UpcomingContestComponent implements OnInit, AfterViewInit {
-
-  @ViewChild("pill") pillElemRef: ElementRef;
-  @ViewChild("siteData") siteDataElemRef: ElementRef;
+export class UpcomingContestComponent implements OnInit {
 
   headers = new HttpHeaders().set('Content-Type', 'application/json');
-
   private urls = [
     'https://www.kontests.net/api/v1/sites',
     'https://www.kontests.net/api/v1/all'
   ];
 
-  pillElem = null;
-  siteDataElem = null;
-
-  allData = null;
-  selectedPill = '';
-  upcomingContestObject = {};
   hideSpinner: boolean = false;
-  upcomingContestKeys = new Array();
-  tableHeads = ['#', 'Contest', 'Start Time', 'End Time', 'Duration'];
+
+  sites = null;
+  allData = null;
+  copyAllData = null;
 
   constructor(private http: HttpClient, private router: Router) { }
+  
   ngOnInit(): void {
-    try {
-      this.http.get<any>(this.urls[1]).subscribe((data) => {
-        this.allData = data;
-        this.contestDataFetched();
-      });
-    } catch (error) {
-      this.router.navigate(['/error']);
-    }
-  }
-  ngAfterViewInit(): void {
-    this.pillElem = this.pillElemRef.nativeElement;
-    this.siteDataElem = this.siteDataElemRef.nativeElement;
-  }
-
-  /**
-   * This method will be called when data is fetched from API.
-   * This method will generate upcomingContestKeys & upcomingContestObject
-   */
-  contestDataFetched() {
-    this.allData.forEach(data => {
-      if (!this.upcomingContestObject[data.site])
-        this.upcomingContestObject[data.site] = new Array();
-      this.upcomingContestObject[data.site].push(this.generateColumn(data));
-    });
-
-    this.upcomingContestKeys = Object.keys(this.upcomingContestObject);
-    this.selectedPill = this.upcomingContestKeys[0];
 
     setTimeout(() => {
       this.hideSpinner = true;
-      document.getElementById('info').style.display = 'block';
-      let elem = document.getElementById('0');
-      elem.click();
-    }, 500);
+    }, 1000);
+
+    try {
+      this.http.get<any>(this.urls[1]).subscribe((data) => {
+        this.allData = this.copyAllData = data;
+        this.sites = new Set();
+        data.forEach(d => {
+          this.sites.add(d.site);
+        });
+        // console.log(this.allData);
+        // console.log(this.sites);
+        
+      });
+    } catch (err) {
+      this.router.navigate(['/error']);
+    }
+  }
+  
+  getSiteData(event) {
+    console.log(event);
+    
+    let site = event.target.outerText;
+    console.log(site);
+    
+    if(site === 'All') {
+      this.allData = this.copyAllData;
+    }
+    else
+    {
+      this.allData = [];
+      this.copyAllData.forEach(data => {
+        if(data.site === site) {
+          this.allData.push(data);
+        }
+      });
+    }
   }
 
-  /**
-   * This method will return object according to create table
-   * @param _data
-   * data: contains data to be printed in a row(contest details)
-   * 
-   * url: url for that contest
-   * 
-   * isRunning: true if contest is running else false
-   * 
-   * calendarLink: Google Calendar Link to add this event for reminder
-   */
-  generateColumn(_data: any) {
-    return {
-      data: [
-        _data.name,
-        this.dateToHumanReadable(new Date(_data.start_time)),
-        this.dateToHumanReadable(new Date(_data.end_time)),
-        this.secondToHumanReadable(_data.duration)
-      ],
-      url: _data.url,
-      isRunning: (_data.status === "CODING"),
-      calendarLink: this.getCalendarLink(_data)
-    };
+  filter(query: string)
+  {
+    query = query.toLowerCase().trim();
+    let terms: string[] = query.split(' ');
+  
+    let searchData = [];
+    this.copyAllData.forEach(b => {
+      let ok: boolean = false;
+      terms.forEach(term => {
+        if (b.name.toLocaleLowerCase().includes(term)) {
+          ok = true;
+        }
+      });
+      if (ok) {
+        searchData.push(b);
+      }
+    });
+    this.allData = searchData;
   }
 
   /**
@@ -98,6 +90,8 @@ export class UpcomingContestComponent implements OnInit, AfterViewInit {
    * @param date Date
    */
   dateToHumanReadable(date: Date) {
+    date = new Date(date);
+    
     let year = date.getFullYear();
 
     let month: any = date.getMonth() + 1;
@@ -112,7 +106,7 @@ export class UpcomingContestComponent implements OnInit, AfterViewInit {
     let minute: any = date.getMinutes();
     minute = minute < 10 ? `0${minute}` : minute;
 
-    return `${day}/${month}/${year} at ${hour}:${minute}`;
+    return `${day}-${month}-${year} at ${hour}:${minute}`;
   }
 
   /**
@@ -144,51 +138,18 @@ export class UpcomingContestComponent implements OnInit, AfterViewInit {
    * @param data 
    */
   getCalendarLink(data): string {
-    const stime = this.normalizeDate(data.start_time);
-    const etime = this.normalizeDate(data.end_time);
+
+    let normalizeDate = (date: string) => {
+      return date.split('-').join('').split(':').join('').split('.').join('');
+    };
+
+    const stime = normalizeDate(data.start_time);
+    const etime = normalizeDate(data.end_time);
 
     let res: string = 'https://calendar.google.com/event?action=TEMPLATE';
     res += `&dates=${stime}/${etime}`;
     res += `&text=${data.name.split(' ').join('%20')}`;
     res += `&location=${data.url}`;
     return res;
-  }
-
-  /**
-   * Normalize the given date for google calendar link
-   * @param date 
-   */
-  normalizeDate(date: string) {
-    return date
-      .split('-').join('')
-      .split(':').join('')
-      .split('.').join('');
-  }
-
-  private classNames = ['btn-secondary', 'text-white'];
-  onPillClick(e: any) {
-    this.removeActiveFromPill();
-    let elem = e.toElement;
-    this.classNames.forEach(c => elem.className += ` ${c}`);
-    this.selectedPill = elem.innerText;
-  }
-
-  /**
-   * Removes active & similar class of bootstrap from previously selected pill
-   */
-  removeActiveFromPill() {
-    this.classNames.forEach(c => {
-      for (let i = 0; i < this.pillElem.children.length; i++) {
-        let par = this.pillElem.children[i];
-        let elem = par.children[0];
-        let className = elem.className;
-        let ind = className.indexOf(c);
-
-        if (ind >= 0) {
-          let newClassName = className.substring(0, ind) + className.substring(ind + c.length);
-          elem.className = newClassName;
-        }
-      }
-    });
   }
 }
