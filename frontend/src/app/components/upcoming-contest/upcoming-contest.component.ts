@@ -20,7 +20,7 @@ export class UpcomingContestComponent implements OnInit {
   sites = null;
   allData = null;
   copyAllData = null;
-
+  prvBtn = null;
   constructor(private http: HttpClient, private router: Router) { }
   
   ngOnInit(): void {
@@ -38,16 +38,30 @@ export class UpcomingContestComponent implements OnInit {
         });
         // console.log(this.allData);
         // console.log(this.sites);
-        
       });
+      document.getElementById('All').click();
     } catch (err) {
       this.router.navigate(['/error']);
     }
   }
   
   getSiteData(event) {
+    let classNames = ["btn-dark"];
+    if(this.prvBtn)
+    {
+      classNames.forEach(c => {
+          let className = this.prvBtn.className;
+          let ind = className.indexOf(c);
+          if (ind >= 0) {
+            let newClassName = className.substring(0, ind) + className.substring(ind + c.length);
+            this.prvBtn.className = newClassName;
+          }
+      });
+    }
+    this.prvBtn = event.toElement;
+    classNames.forEach(c => this.prvBtn.className += ` ${c}`);
+
     console.log(event);
-    
     let site = event.target.outerText;
     console.log(site);
     
