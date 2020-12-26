@@ -2,58 +2,52 @@
     <div id="loader"></div>
 </div>
 
-<div class="hcenter" style="min-height: 100vh;">
-    <div class="container-fluid" id="info">
-        <ul class="nav nav-pills center mt-2 col-12" #pill>
-            <li class="nav-link" *ngFor="let key of upcomingContestKeys; index as i">
-                <a class="nav-link" aria-current="page" (click)="onPillClick($event)" [id]='i' clickable>{{key}}</a>
-            </li>
-        </ul>
-        <div #siteData>
-            <table class="table table-striped border mt-3">
-                <thead>
-                    <tr>
-                        <th class="font-weight-bold" scope="col" *ngFor="let head of tableHeads">
-                            {{head}}
-                        </th>
-                    </tr>
-                </thead>
-
-                <tbody>
-                    <tr *ngFor="let column of upcomingContestObject[selectedPill]; index as i">
-                        <th scope="row">{{i + 1}}</th>
-                        <th *ngFor="let data of column.data; first as f">
-                            <!-- First Column -->
-                            <div *ngIf='f; else elseBlock'>
-                                <!-- Running Contest -->
-                                <div *ngIf='column.isRunning; else ifelseBlock'>
-                                    <i class="fa fa-circle" style="color: green" title="Running contest"
-                                        aria-hidden="true"></i>
-                                    <a [href]='column.url' title="Contest announcement page" target="_blank"
-                                        class="link">
-                                        {{data}}
-                                    </a>
-                                </div>
-
-                                <!-- Future Contest -->
-                                <ng-template #ifelseBlock>
-                                    <a [href]='column.calendarLink' data-toggle="tooltip" title="Add to calendar"
-                                        target="_blank">
-                                        <i class="fa fa-calendar-plus-o" aria-hidden="true"></i>
-                                    </a>
-                                    <a [href]='column.url' title="Contest announcement page" target="_blank"
-                                        class="link">
-                                        {{data}}
-                                    </a>
-                                </ng-template>
-                            </div>
-
-                            <!-- Other Column -->
-                            <ng-template #elseBlock>{{data}}</ng-template>
-                        </th>
-                    </tr>
-                </tbody>
-            </table>
+<div class="full p-3">
+    <div>
+        <div class="row m-2">
+            <button class="col btn btn-dark ml-2" (click)="getSiteData($event)">
+                All
+            </button>
+            <button class="col btn border ml-2 btn-muted" *ngFor="let site of sites" (click)="getSiteData($event)">
+                {{site}}
+            </button>
+            <div class="col col-sm-2">
+                <input type="text" class="form-control" #searchEle placeholder="search" (keyup)="filter(searchEle.value)">
+            </div>
         </div>
+    </div>
+    <div class="full p-3">
+        <table class="table table-striped border">
+            <thead>
+                <tr>
+                    <th scope="col col-sm-1" class="font-weight-bold font1">#</th>
+                    <th scope="col col-sm-6" class="font-weight-bold font-code">Contest</th>
+                    <th scope="col col-sm-2" class="font-weight-bold font-code">Start time</th>
+                    <th scope="col col-sm-2" class="font-weight-bold font-code">End time</th>
+                    <th scope="col col-sm-1" class="font-weight-bold font-code">Duration</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let data of allData; let i = index">
+                    <td>{{i + 1}}</td>
+                    <td>
+                        <div *ngIf="data.status === 'CODING'; then ifBlock else elseBlock"></div>
+                        <ng-template #ifBlock>
+                            <i class="fa fa-circle text-success" title="Running contest" aria-hidden="true"></i> 
+                        </ng-template>
+                        <ng-template #elseBlock>
+                            <a [href]="getCalendarLink(data)" target="_blank">
+                                <i class="fa fa-calendar-plus-o" title="Add to calender" aria-hidden="true"></i>
+                            </a>
+                        </ng-template>
+
+                        <a class="link ml-1" [href]="data.url" target="_blank"> {{data.name}} </a>
+                    </td>
+                    <td>{{dateToHumanReadable(data.start_time)}}</td>
+                    <td>{{dateToHumanReadable(data.end_time)}}</td>
+                    <td>{{secondToHumanReadable(data.duration)}}</td>
+                </tr>
+            </tbody>
+        </table>
     </div>
 </div>
