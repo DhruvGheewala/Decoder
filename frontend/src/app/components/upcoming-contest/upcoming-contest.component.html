@@ -12,11 +12,12 @@
                 {{site}}
             </button>
             <div class="col col-sm-2">
-                <input type="text" class="form-control" #searchEle placeholder="search" (keyup)="filter(searchEle.value)">
+                <input type="text" class="form-control" #searchEle placeholder="search"
+                    (keyup)="filter(searchEle.value)">
             </div>
         </div>
     </div>
-    <div class="full p-3">
+    <div class="p-3">
         <table class="table table-striped border">
             <thead>
                 <tr>
@@ -33,19 +34,19 @@
                     <td>
                         <div *ngIf="data.status === 'CODING'; then ifBlock else elseBlock"></div>
                         <ng-template #ifBlock>
-                            <i class="fa fa-circle text-success" title="Running contest" aria-hidden="true"></i> 
+                            <i class="fa fa-circle text-success" title="Running contest" aria-hidden="true"></i>
                         </ng-template>
                         <ng-template #elseBlock>
                             <a [href]="getCalendarLink(data)" target="_blank">
                                 <i class="fa fa-calendar-plus-o" title="Add to calender" aria-hidden="true"></i>
                             </a>
                         </ng-template>
-
                         <a class="link ml-1" [href]="data.url" target="_blank"> {{data.name}} </a>
+                        <small>({{data.site}})</small>
                     </td>
-                    <td>{{dateToHumanReadable(data.start_time)}}</td>
-                    <td>{{dateToHumanReadable(data.end_time)}}</td>
-                    <td>{{secondToHumanReadable(data.duration)}}</td>
+                    <td class="font5">{{dateToHumanReadable(data.start_time)}}</td>
+                    <td class="font5">{{dateToHumanReadable(data.end_time)}}</td>
+                    <td class="font5">{{secondToHumanReadable(data.duration)}}</td>
                 </tr>
             </tbody>
         </table>

@@ -1,7 +1,10 @@
 /* You can add global styles to this file, and also import other style files */
 
 @import url("https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@350&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@350&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
 @import "../node_modules/font-awesome/css/font-awesome.css";
+
 * {
   font-weight: normal;
   /* border: 2px solid black; */
@@ -66,9 +69,14 @@ a:hover {
 .font3 {
   font-family: Arial, Helvetica, sans-serif;
 }
+.font4 {
+  font-family: 'Roboto', sans-serif;
+}
+.font5 {
+  font-family: 'Open Sans', sans-serif;
+}
 .font-code {
-  font-family: Menlo, Monaco, Consolas, "Liberation Mono", "Courier New",
-    monospace, serif;
+  font-family: Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace, serif;
 }
 
 .hcenter {

@@ -15,27 +15,26 @@ export class UpcomingContestComponent implements OnInit {
     'https://www.kontests.net/api/v1/all'
   ];
 
+  prvBtn = null;
   hideSpinner: boolean = false;
 
   sites = null;
   allData = null;
-  copyAllData = null;
-  prvBtn = null;
+  copyAllData1 = null; // copy of all data receive from api
+  copyAllData2 = null; // copy of allData variable => used for search
+
   constructor(private http: HttpClient, private router: Router) { }
-  
+
   ngOnInit(): void {
-
-    setTimeout(() => {
-      this.hideSpinner = true;
-    }, 1000);
-
     try {
       this.http.get<any>(this.urls[1]).subscribe((data) => {
-        this.allData = this.copyAllData = data;
+        this.allData = this.copyAllData1 = data;
+        this.copyAllData2 = this.allData;
         this.sites = new Set();
         data.forEach(d => {
           this.sites.add(d.site);
         });
+        this.hideSpinner = true;
         // console.log(this.allData);
         // console.log(this.sites);
       });
@@ -44,18 +43,17 @@ export class UpcomingContestComponent implements OnInit {
       this.router.navigate(['/error']);
     }
   }
-  
+
   getSiteData(event) {
     let classNames = ["btn-dark"];
-    if(this.prvBtn)
-    {
+    if (this.prvBtn) {
       classNames.forEach(c => {
-          let className = this.prvBtn.className;
-          let ind = className.indexOf(c);
-          if (ind >= 0) {
-            let newClassName = className.substring(0, ind) + className.substring(ind + c.length);
-            this.prvBtn.className = newClassName;
-          }
+        let className = this.prvBtn.className;
+        let ind = className.indexOf(c);
+        if (ind >= 0) {
+          let newClassName = className.substring(0, ind) + className.substring(ind + c.length);
+          this.prvBtn.className = newClassName;
+        }
       });
     }
     this.prvBtn = event.toElement;
@@ -64,28 +62,28 @@ export class UpcomingContestComponent implements OnInit {
     console.log(event);
     let site = event.target.outerText;
     console.log(site);
-    
-    if(site === 'All') {
-      this.allData = this.copyAllData;
+
+    if (site === 'All') {
+      this.allData = this.copyAllData1;
+      this.copyAllData2 = this.allData;
     }
-    else
-    {
+    else {
       this.allData = [];
-      this.copyAllData.forEach(data => {
-        if(data.site === site) {
+      this.copyAllData1.forEach(data => {
+        if (data.site === site) {
           this.allData.push(data);
         }
       });
+      this.copyAllData2 = this.allData;
     }
   }
 
-  filter(query: string)
-  {
+  filter(query: string) {
     query = query.toLowerCase().trim();
     let terms: string[] = query.split(' ');
-  
+
     let searchData = [];
-    this.copyAllData.forEach(b => {
+    this.copyAllData2.forEach(b => {
       let ok: boolean = false;
       terms.forEach(term => {
         if (b.name.toLocaleLowerCase().includes(term)) {
@@ -101,11 +99,10 @@ export class UpcomingContestComponent implements OnInit {
 
   /**
    * Returns a human readable format of date
-   * @param date Date
    */
-  dateToHumanReadable(date: Date) {
+  dateToHumanReadable(date) {
     date = new Date(date);
-    
+
     let year = date.getFullYear();
 
     let month: any = date.getMonth() + 1;
