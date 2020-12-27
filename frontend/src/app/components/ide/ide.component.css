@@ -1,0 +1,14 @@
+.codeEditor {
+  height: 100vh; /* Todo: Doing nothing, change height */
+}
+
+.input-output {
+  margin-top: 5px;
+  display: block;
+  overflow: hidden;
+  resize: none;
+}
+
+i {
+  margin-left: 3px;
+}

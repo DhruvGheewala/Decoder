@@ -1,1 +1,39 @@
-<p>about works!</p>
+<div class="full">
+    <div class="row full">
+        <div class="col center" *ngFor="let user of members">
+            <div class="w-75">
+                <div>
+                    <img height="150em" class="rounded-circle center" [src]="user.img" [alt]="user.name">
+                </div>
+                <div class="mt-2">
+                    <h4>{{user.name}}</h4>
+                    <p>{{user.info}}</p>
+                    <div>
+                        <a [href]="user.github" target="_blank">
+                            <i class="fa fa-github fa-2x" style="color: black;"></i>
+                        </a>
+                        <a [href]="user.linkedin" target="_blank" class="ml-3">
+                            <i class="fa fa-linkedin-square fa-2x" aria-hidden="true" style="color:  #0e76a8;"></i>
+                        </a>
+                        <a [href]="user.instagram" target="_blank" class="ml-3">
+                            <i class="fa fa-instagram fa-2x" aria-hidden="true" style="color: rgb(245, 82, 109);"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- <div class="col center">
+        <div class="card w-75">
+            <img class="card-img-top" src="../../../assets/images/dhiraj-01.jpg" alt="dhiraj">
+            <div class="card-body">
+                <h4 class="card-title">Dhiraj Govindvira</h4>
+                <p class="card-text">
+                    Some example text some example text. John Doe is an architect and engineer
+                </p>
+                <a href="https://github.com/Dhiraj-01" class="btn btn-sm btn-primary">See Profile</a>
+            </div>
+        </div>
+    </div> -->
+</div>

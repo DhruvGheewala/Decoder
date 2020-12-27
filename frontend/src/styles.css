@@ -1,13 +1,17 @@
 /* You can add global styles to this file, and also import other style files */
 
-@import url('https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@350&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@350&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@350&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
 @import "../node_modules/font-awesome/css/font-awesome.css";
+
 * {
   font-weight: normal;
   /* border: 2px solid black; */
 }
 
-body, html {
+body,
+html {
   font-size: 1.2em;
   margin: 0;
   padding: 0;
@@ -19,15 +23,15 @@ body, html {
 }
 
 .img1 {
-  background-image: url('./assets/images/bg1.jpg');
+  background-image: url("./assets/images/bg1.jpg");
   background-size: cover;
 }
 .img2 {
-  background-image: url('./assets/images/bg2.jpg');
+  background-image: url("./assets/images/bg2.jpg");
   background-size: cover;
 }
 .img3 {
-  background-image: url('./assets/images/bg3.png');
+  background-image: url("./assets/images/bg3.png");
   background-size: cover;
 }
 .bg-black {
@@ -40,19 +44,36 @@ body, html {
 a:hover {
   cursor: pointer;
 }
+.link {
+  cursor: pointer;
+  color: blue !important;
+}
+
+.text-blue {
+  color: #33c9ff;
+}
+.text-white {
+  color: #fff;
+}
 /* full height */
 .full {
-  height: 100%;
+  min-height: 91vh;
 }
 
 .font1 {
-  font-family: 'Roboto Slab', monospace, sans-serif;
+  font-family: "Roboto Slab", monospace, sans-serif;
 }
 .font2 {
-  font-family: Verdana, Geneva, Tahoma, sans-serif
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 .font3 {
   font-family: Arial, Helvetica, sans-serif;
+}
+.font4 {
+  font-family: 'Roboto', sans-serif;
+}
+.font5 {
+  font-family: 'Open Sans', sans-serif;
 }
 .font-code {
   font-family: Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace, serif;
@@ -70,4 +91,8 @@ a:hover {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+section {
+  min-height: 100vh;
 }
