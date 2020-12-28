@@ -1,16 +1,17 @@
 #### 🔴 **_Site Under Development_**
----
 
 <img src="./screenshots/logo.PNG" alt="Decoder"/>
 
-# Decoder - A Competitive Programming Portal
- - Decoder is software that provides all help, tools and information related to competitive programming at the same place. Decoder contains an online compiler for some of the languages, allowing users to share code with others by sharing a link to the code. Along with the compiler it has a stress testing environment which uses system automated test cases for your code and checks efficiency and correctness of your code against these test cases. This software will also utilise APIs provided by some known competitive programming platforms to fetch the details about upcoming contests and Rankings of students in our college. Decoder also has a discussion forum to discuss topics related to competitive programming. Users can ask doubts regarding any topics and other users can comment and reply. It'll also contain resources (links and references) to learn competitive programming. Link to university's coding clubs contest (previous as well as upcoming if there are any).
-
-## Content
+## Table of Contents
+- [Introduction](#decoder---a-competitive-programming-portal)
 - [Functionality](#functionality)
 - [Installation](#installtion)
 - [How to run?](#how-to-run-)
 - [Screenshots](#screenshots)
+
+
+## Decoder - A Competitive Programming Portal
+ - Decoder is software that provides all help, tools and information related to competitive programming at the same place. Decoder contains an online compiler for some of the languages, allowing users to share code with others by sharing a link to the code. Along with the compiler it has a stress testing environment which uses system automated test cases for your code and checks efficiency and correctness of your code against these test cases. This software will also utilise APIs provided by some known competitive programming platforms to fetch the details about upcoming contests and Rankings of students in our college. Decoder also has a discussion forum to discuss topics related to competitive programming. Users can ask doubts regarding any topics and other users can comment and reply. It'll also contain resources (links and references) to learn competitive programming. Link to university's coding clubs contest (previous as well as upcoming if there are any).
 
 ## Functionality
  - Register, Login / Logout
