@@ -47,3 +47,6 @@ ng serve -o
 ```
 
 ## Screenshots
+
+**Home**
+![home page](screenshots/home.PNG)
