@@ -1,5 +1,5 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
@@ -149,17 +149,13 @@ export class UpcomingContestComponent implements OnInit {
    * @param data 
    */
   getCalendarLink(data): string {
-
-    let normalizeDate = (date: string) => {
-      return date.split('-').join('').split(':').join('').split('.').join('');
-    };
-
+    const normalizeDate = (date: string) => { return date.split('-').join('').split(':').join('').split('.').join(''); };
     const stime = normalizeDate(data.start_time);
     const etime = normalizeDate(data.end_time);
 
     let res: string = 'https://calendar.google.com/event?action=TEMPLATE';
     res += `&dates=${stime}/${etime}`;
-    res += `&text=${data.name.split(' ').join('%20')}`;
+    res += `&text=${encodeURIComponent(data.name)}`;
     res += `&location=${data.url}`;
     return res;
   }

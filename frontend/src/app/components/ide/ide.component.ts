@@ -184,7 +184,8 @@ export class IdeComponent implements OnInit {
   }
 
   public sizeChanged(textArea) {
+    const maxHeight = 300;
     textArea.style.height = 'auto';
-    textArea.style.height = `${textArea.scrollHeight}px`;
+    textArea.style.height = `${Math.min(textArea.scrollHeight, maxHeight)}px`;
   }
 }

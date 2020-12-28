@@ -3,8 +3,7 @@
   color: blue !important;
 }
 .link:hover {
-  text-decoration: none;
-  font-style: italic;
+  text-decoration: underline;
   color: black !important;
 }
 
