@@ -1,4 +1,4 @@
-#### 🔴 **_Site Under Development ..._**
+#### 🔴 **_Site Under Development_**
 ---
 
 # Decoder - A Competitive Programming Portal
@@ -40,7 +40,7 @@ npm install
 ## How to run ?
 ```
 cd backend
-nodemon
+node index.js
    
 cd frontend
 ng serve -o
