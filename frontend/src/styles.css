@@ -3,7 +3,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@350&display=swap");
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@350&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
-@import "../node_modules/font-awesome/css/font-awesome.css";
+@import "../node_modules/@fortawesome/fontawesome-free/css/all.css";
 
 * {
   font-weight: normal;
@@ -22,6 +22,9 @@ html {
   overflow-x: hidden;
 }
 
+.icon-size {
+  font-size: 23px !important;
+}
 .img1 {
   background-image: url("./assets/images/bg1.jpg");
   background-size: cover;

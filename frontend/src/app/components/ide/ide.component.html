@@ -22,16 +22,16 @@
                                 [selected]='theme.name === preferedTheme ? "selected" : ""'>{{theme.caption}}
                             </option>
                         </select>
-                        <a class="btn-floating btn-sm btn-default"
+                        <a class="btn-floating btn-sm btn-default icon-size"
                             (click)="setUserChoice(modeSelect.value, themeSelect.value)"><i class="fa fa-cog"
                                 title="Set as default configuration" aria-hidden="true"></i></a>
                     </li>
 
                     <!-- Some features -->
                     <li class="list-group-item">
-                        <a class="btn-floating btn-sm btn-default ml-1" (click)="clearCode()"><i
+                        <a class="btn-floating btn-sm btn-default ml-1 icon-size" (click)="clearCode()"><i
                                 class="fa fa-trash"></i></a>
-                        <a class="btn-floating btn-sm btn-default ml-1" (click)="beautifyContent()"><i
+                        <a class="btn-floating btn-sm btn-default ml-1 icon-size" (click)="beautifyContent()"><i
                                 class="fa fa-indent"></i></a>
                     </li>
 
