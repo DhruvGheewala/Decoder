@@ -1,8 +1,7 @@
 // connect to database
-
 const mongoose = require('mongoose');
 
-mongoose.connect('mongodb://localhost:27017/Decoder', {
+mongoose.connect(process.env.DB_PATH, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useCreateIndex: true,
