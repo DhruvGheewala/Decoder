@@ -5,15 +5,16 @@
             <div class="col-8">
                 <div class="codeEditor my-2" #codeEditor></div>
             </div>
-
             <!-- Configurations, buttons -->
             <div class="col-4">
                 <ul class="list-group list-group-flush">
                     <li class="list-group-item">
                         <!-- Mode Selection -->
-                        <select class="mx-1" (change)="setMode(modeSelect.value)" [value]='preferedMode' #modeSelect>
-                            <option [value]='mode.name' *ngFor="let mode of availableModes"
-                                [selected]='mode.name === preferedMode ? "selected" : ""'>{{mode.caption}}</option>
+                        <select class="mx-1" (change)="setMode(modeSelect.value,  $event.target.selectedOptions[0].label
+                        )" [value]='preferedMode' #modeSelect>
+                            <option [value]='mode.name' [label]="mode.caption" *ngFor="let mode of availableModes"
+                                [selected]='mode.name === preferedMode ? "selected" : ""'>
+                                {{mode.caption}}</option>
                         </select>
 
                         <!-- Theme selection -->
@@ -22,8 +23,7 @@
                                 [selected]='theme.name === preferedTheme ? "selected" : ""'>{{theme.caption}}
                             </option>
                         </select>
-                        <a class="btn-floating btn-sm btn-default icon-size"
-                            (click)="setUserChoice(modeSelect.value, themeSelect.value)"><i class="fa fa-cog"
+                        <a class="btn-floating btn-sm btn-default" (click)="setUserChoice()"><i class="fa fa-cog"
                                 title="Set as default configuration" aria-hidden="true"></i></a>
                     </li>
 
@@ -37,10 +37,11 @@
 
                     <!-- Run Button -->
                     <li class="list-group-item"><button type="button" class="btn btn-outline-primary btn-sm"
-                            (click)="runClicked(runButton, inputArea, outputArea, modeSelect.value)"
-                            #runButton>Run</button></li>
+                            (click)="runClicked(runButton, inputArea, outputArea)" #runButton>Run</button></li>
                 </ul>
             </div>
+            <input type="file" (change)="onChangeFile($event.target.files)">
+            <button type="button" (click)="downloadCode()">Download</button>
         </div>
     </div>
 

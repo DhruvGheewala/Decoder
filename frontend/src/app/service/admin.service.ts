@@ -64,6 +64,11 @@ export class AdminService {
   // JSON object for modes
   private modes = [
     {
+      caption: 'C',
+      mode: 'ace/mode/c_cpp',
+      name: 'c_cpp'
+    },
+    {
       caption: 'C++',
       mode: 'ace/mode/c_cpp',
       name: 'c_cpp'

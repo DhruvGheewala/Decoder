@@ -9,10 +9,16 @@ export class UserService {
   headers = new HttpHeaders().set('Content-Type', 'application/json');
 
   // Defualt values
+
+  // api request url at backend
+  endpoint: string = 'http://localhost:8000/auth';
+
+
+  //TODO: Default template of cpp.
   private defaultMode = 'c_cpp';
   private defaultTheme = 'monokai';
 
-  // Todo: Fetched From server
+  // Todo: Fetched From server (fetch user's all data not only mode and theme)
   private userPreferedMode = undefined;
   private userPreferedTheme = undefined;
 
@@ -64,7 +70,10 @@ export class UserService {
       }
     ];
   }
-
+  
   private compileUrl = `${this.apiUrl}/code/compile`;
   getOutput(data) { return this.http.post<any>(this.compileUrl, data); }
+
+  // TODO: POST API CALL TO BACKEND
+  saveCode(code) {}
 }
