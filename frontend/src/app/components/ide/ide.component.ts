@@ -144,7 +144,6 @@ export class IdeComponent implements OnInit {
    * @param mode - this is selected programming language mode
    */
   setMode(mode: any, lang: any) {
-    console.log(lang);
     if (!mode)
       mode = this.userData.getMode();
     this.selectedLang = lang;
@@ -182,6 +181,10 @@ export class IdeComponent implements OnInit {
     this.userData.setTheme(theme);
   }
 
+  /**
+   * @param file - file to be read and loaded into code editor
+   * @description - reads the content of file and uplods it to code editor
+   */
   private loadFileToEditor(file: File) {
     let fileReader: FileReader = new FileReader();
     let self = this;
@@ -192,11 +195,17 @@ export class IdeComponent implements OnInit {
     fileReader.readAsText(file);
   }
 
+  /**
+   * @param fileList - list of file uploaded
+   * 
+   * @description -listen to change file event whenever user changes
+   * file function will validate file and acts according to user's selection
+   * 
+   */
   public onChangeFile(fileList: FileList): void {
     let file = fileList[0];
     let curExtension = "." + file.name.split(".").pop();
     let reqExtension = this.findExtension(this.getCurrentMode());
-    console.log(curExtension + " " + reqExtension);
     if (curExtension != reqExtension) {
       if (confirm("File extension does not match selected language! Are you sure?")) {
         this.loadFileToEditor(file);
@@ -209,35 +218,56 @@ export class IdeComponent implements OnInit {
 
 
   }
+  /**
+   * @param mode - current mode of code editor (i.e language)
+   * 
+   * @description - generates file extension according to current mode of
+   * code editor
+   * 
+   * @returns - extension of file 
+   */
   public findExtension(mode) {
-    let filename = '';
+    let extension = '';
     if (mode === "c_cpp") {
       if (this.selectedLang == "C") {
-        filename += ".c";
+        extension += ".c";
       } else {
-        filename += ".cpp";
+        extension += ".cpp";
       }
     } else if (mode === "python") {
-      filename += ".py"
+      extension += ".py"
     } else if (mode === "javascript") {
-      filename += ".js"
+      extension += ".js"
     } else {
-      filename += ".java";
+      extension += ".java";
     }
-    return filename;
+    return extension;
   }
+
+  /**
+   * @returns - current mode of code editor. (selected language)
+   */
   public getCurrentMode() {
     let mode: any = this.codeEditor.getSession().getMode();
     mode = mode.$id;
     mode = mode.substr(mode.lastIndexOf('/') + 1);
     return mode;
   }
+
+  /**
+   * @returns - current theme of code editor.
+   */
   public getCurretTheme() {
     let theme: any = this.codeEditor.getSession().getMode();
     theme = theme.$id;
     theme = theme.substr(theme.lastIndexOf('/') + 1);
     return theme;
   }
+
+  /**
+   * @description - downloads code inside code editor into
+   * user machine. (sample.[extension] file)
+   */
   public downloadCode() {
     let code = this.getCode();
     let filename = "code" + this.findExtension(this.getCurrentMode());
@@ -253,28 +283,23 @@ export class IdeComponent implements OnInit {
   }
 
   public runClicked(runButton, inputArea, outputArea) {
-    this.hitCompile = true;
+    const codeObj = {
+      code: this.getCode(),
+      language: this.getCurrentMode(),
+      stdin: inputArea.value
+    }
 
-    let mode = this.getCurrentMode();
-    const code = this.getCode();
+    this.hitCompile = true;
     runButton.disabled = true;
     inputArea.disabled = true;
 
-    // Todo: fetch output or error
-    setTimeout(() => {
+    // Todo: Compile Error
+    this.userData.compileRun(codeObj).subscribe((data) => {
+      this.hitCompile = false;
       runButton.disabled = false;
       inputArea.disabled = false;
-
-      outputArea.value = this.userData.getOutput({ code, mode });
-      this.hitCompile = false;
-      // this.sizeChanged(outputArea);
-    }, 5000);
-
+      
+      outputArea.value = data.stdout;
+    });
   }
-
-  // public sizeChanged(textArea) {
-  //   const maxHeight = 100;
-  //   textArea.style.height = 'auto';
-  //   textArea.style.height = `${Math.min(textArea.scrollHeight, maxHeight)}px`;
-  // }
 }

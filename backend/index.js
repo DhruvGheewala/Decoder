@@ -1,34 +1,22 @@
 require('dotenv').config();
 const express = require('express');
+const app = express();
 const bodyParser = require('body-parser');
 const cors = require('cors');
 
-const PORT = process.env.PORT;
-const mongoose = require('./config/db');
+const PORT = process.env.PORT || 3000;
+const mongoose = require('./db');
 
-const app = express();
-
+// Middlewares
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json());
 
-// const blogController = require('./controllers/blog');
-// const userController = require('./controllers/user');
-// const codeController = require('./controllers/code');
-
-// app.use('/blog', blogController);
-// app.use('/user', userController);
-// app.use('/code', codeController);
-
-app.get('/', (req, res) => {
-    res.send('Hello World!');
-});
+// Routes
+const codeRoute = require('./routes/code');
+app.use('/api/code', codeRoute);
 
 app.listen(PORT, (err) => {
-    if (err) {
-        console.log('error : connecting to port !!');
-    }
-    else {
-        console.log(`Server started at port : ${PORT}`);
-    }
+    if (err) return console.log(`error : connecting to port !!, ${JSON.stringify(err, undefined, 2)}`);
+    console.log(`Server is running on Port: ${PORT}`);
 });
