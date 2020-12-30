@@ -5,13 +5,13 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class UserService {
-  private apiUrl: string = 'http://localhost:8000/api';
+  private apiUrl: string = 'http://localhost:3000/api';
   headers = new HttpHeaders().set('Content-Type', 'application/json');
 
   // Defualt values
 
   // api request url at backend
-  endpoint: string = 'http://localhost:8000/auth';
+  endpoint: string = 'http://localhost:3000/auth';
 
 
   //TODO: Default template of cpp.
@@ -70,10 +70,10 @@ export class UserService {
       }
     ];
   }
-  
+
   private compileUrl = `${this.apiUrl}/code/compile`;
-  getOutput(data) { return this.http.post<any>(this.compileUrl, data); }
+  compileRun(data) { return this.http.post<any>(this.compileUrl, data); }
 
   // TODO: POST API CALL TO BACKEND
-  saveCode(code) {}
+  saveCode(code) { }
 }

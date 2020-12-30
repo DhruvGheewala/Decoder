@@ -143,7 +143,6 @@ export class IdeComponent implements OnInit {
    * @param mode - this is selected programming language mode
    */
   setMode(mode: any, lang: any) {
-    console.log(lang);
     if (!mode)
       mode = this.userData.getMode();
     this.selectedLang = lang;
@@ -206,7 +205,6 @@ export class IdeComponent implements OnInit {
     let file = fileList[0];
     let curExtension = "." + file.name.split(".").pop();
     let reqExtension = this.findExtension(this.getCurrentMode());
-    console.log(curExtension + " " + reqExtension);
     if (curExtension != reqExtension) {
       if (confirm("File extension does not match selected language! Are you sure?")) {
         this.loadFileToEditor(file);
@@ -284,24 +282,23 @@ export class IdeComponent implements OnInit {
   }
 
   public runClicked(runButton, inputArea, outputArea) {
-    var codeObj = {
+    const codeObj = {
       code: this.getCode(),
       language: this.getCurrentMode(),
-      stdin: inputArea
+      stdin: inputArea.value
     }
-    let mode = this.getCurrentMode();
-    const code = this.getCode();
+
     runButton.disabled = true;
     inputArea.disabled = true;
 
-    // Todo: fetch output or error
-    setTimeout(() => {
+    // Todo: Compile Error
+    this.userData.compileRun(codeObj).subscribe((data) => {
       runButton.disabled = false;
       inputArea.disabled = false;
-
-      outputArea.value = this.userData.getOutput({ code, mode });
+      outputArea.value = data.stdout;
+      console.log(data);
       this.sizeChanged(outputArea);
-    }, 5000);
+    });
   }
 
   public sizeChanged(textArea) {

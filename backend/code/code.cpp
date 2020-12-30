@@ -1,3 +1,10 @@
+/**
+  *  Author: dhruv_gheewala
+  *  Problem: Even Pair Sum
+  *  Date:   12.12.2020
+  *  Time:   18:12:22
+**/
+
 #if __has_include("debug.h")
     #include "debug.h"
 #else
@@ -35,7 +42,7 @@ template<int D, typename T> struct vec : public vector<vec<D - 1, T>>
 template<typename T> struct vec<1, T> : public vector<T> {vec(int n = 0, T val = T()) : vector<T>(n, val){}};
 
 const int inf = 1e15;
-const bool testcases = false;
+const bool testcases = true;
 
 void init_main()
 {
@@ -51,14 +58,21 @@ void init_main()
 
 void solve(int tc)
 {
-    string s;
-    cin >> s;
-    cout << "Hello " << s << endl;
+    int a, b;
+    cin >> a >> b;
+
+    int oddA = (a + 1) / 2;
+    int evenA = a / 2;
+
+    int oddB = (b + 1) / 2;
+    int evenB = b / 2;
+
+    cout << oddA * oddB + evenA * evenB << endl;
 }
 
 int32_t main(int32_t argc, char **argv)
 {
-    init_main();
+    // init_main();
 
     int TC = 1;
     if(testcases)

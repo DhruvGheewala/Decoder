@@ -1,2 +1,1 @@
-s = input()
-print('Hello ' + s)
+print('Hello world !!')

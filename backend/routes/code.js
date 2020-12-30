@@ -7,11 +7,11 @@ const fs = require('fs');
 const { cpp, node, python, java } = require('compile-run');
 const dir = './code';
 
-router.get('/compile', (req, res) => {
+router.post('/compile', (req, res) => {
     const lang = req.body.language;
     const code = req.body.code;
     const stdin = req.body.stdin;
-    const timeout = req.body.timeout || 15000;
+
     let runner = null;
     let filePath = dir + '/';
 
@@ -43,7 +43,7 @@ router.get('/compile', (req, res) => {
         });
 
         const startTime = new Date();
-        runner.runFile(filePath, { stdin: stdin, timeout: timeout }, (err, result) => {
+        runner.runFile(filePath, { stdin: stdin }, (err, result) => {
             const endTime = new Date();
             const compileTime = endTime.getTime() - startTime.getTime();
             if (err) return res.status(500).send({
