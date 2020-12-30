@@ -12,6 +12,10 @@ export class AboutComponent implements OnInit {
     {
       name: "Dhruv Gheewala",
       info: "Some example text some example text. John Doe is an architect and engineer",
+      // info: [
+      //   "- Student at DDU, Nadiad",
+      //   "- Competitive coder",
+      // ],
       github: "https://github.com/DhruvGheewala",
       linkedin: "https://www.linkedin.com/in/dhruvgheewala/",
       instagram: "https://www.instagram.com/dhruvgheewala1320/",
