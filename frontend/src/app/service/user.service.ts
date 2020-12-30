@@ -1,9 +1,13 @@
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
+  private apiUrl: string = 'http://localhost:8000/api';
+  headers = new HttpHeaders().set('Content-Type', 'application/json');
+
   // Defualt values
   private defaultMode = 'c_cpp';
   private defaultTheme = 'monokai';
@@ -17,7 +21,7 @@ export class UserService {
     theme: this.userPreferedTheme || this.defaultTheme
   };
 
-  constructor() { }
+  constructor(private http: HttpClient) { }
 
   getMode() { return this.choosen['mode']; }
   // Todo: update in sevrer
@@ -61,6 +65,6 @@ export class UserService {
     ];
   }
 
-  // Todo: run code on server
-  getOutput(codeData) { return 'Hello World !!'; }
+  private compileUrl = `${this.apiUrl}/code/compile`;
+  getOutput(data) { return this.http.post<any>(this.compileUrl, data); }
 }
