@@ -1,12 +1,8 @@
 # Frontend
-
-- More Functions in IDE, make chnages in UI
-  - add buttons
-    - download
-    - generate Sharable Link
-    - upload from file
-    - compile and run
 - start work on blogs
+- add IDE functionality
+    - copy button
+    - user setting
 
 # Backend
 
@@ -25,7 +21,9 @@
     email
     password
     info (small description, we can display in profile page)
-
+    setting {
+        mode, theme, code
+    }
 }
 
 - /blog/list?user=""

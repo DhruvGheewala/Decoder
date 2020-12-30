@@ -75,11 +75,12 @@ export class IdeComponent implements OnInit {
   preferedTheme: any;
 
   selectedLang: any;
-
+  hitCompile: boolean;
   fileContent: any = '';
 
   constructor(private adminData: AdminService, private userData: UserService) { }
   ngOnInit(): void {
+    this.hitCompile = false;
     // Pre-Requisites
     this.availableModes = this.adminData.getModes();
     this.availableThemes = this.adminData.getThemes();
@@ -115,7 +116,7 @@ export class IdeComponent implements OnInit {
   private getEditorOptions(): Partial<ace.Ace.EditorOptions> & { enableBasicAutocompletion?: boolean; } {
     const basicEditorOptions: Partial<ace.Ace.EditorOptions> = {
       highlightActiveLine: true,
-      minLines: 14,
+      minLines: 20,
       maxLines: 20,
       wrap: 1
     };
@@ -269,7 +270,7 @@ export class IdeComponent implements OnInit {
    */
   public downloadCode() {
     let code = this.getCode();
-    let filename = "sample" + this.findExtension(this.getCurrentMode());
+    let filename = "code" + this.findExtension(this.getCurrentMode());
     let a = document.createElement('a');
     let blob = new Blob([code], { type: 'text' });
     let url = URL.createObjectURL(blob);
@@ -288,22 +289,17 @@ export class IdeComponent implements OnInit {
       stdin: inputArea.value
     }
 
+    this.hitCompile = true;
     runButton.disabled = true;
     inputArea.disabled = true;
 
     // Todo: Compile Error
     this.userData.compileRun(codeObj).subscribe((data) => {
+      this.hitCompile = false;
       runButton.disabled = false;
       inputArea.disabled = false;
+      
       outputArea.value = data.stdout;
-      console.log(data);
-      this.sizeChanged(outputArea);
     });
-  }
-
-  public sizeChanged(textArea) {
-    const maxHeight = 300;
-    textArea.style.height = 'auto';
-    textArea.style.height = `${Math.min(textArea.scrollHeight, maxHeight)}px`;
   }
 }
