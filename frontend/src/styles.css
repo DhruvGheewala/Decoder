@@ -20,10 +20,15 @@ html {
   min-height: 100%;
   font-family: Arial, Helvetica, sans-serif;
   overflow-x: hidden;
+  /* overflow-y: hidden; */
+}
+
+::-webkit-scrollbar {
+  width: 0px;
 }
 
 .icon-size {
-  font-size: 23px !important;
+  font-size: 25px !important;
 }
 .img1 {
   background-image: url("./assets/images/bg1.jpg");
@@ -98,4 +103,8 @@ a:hover {
 
 section {
   min-height: 100vh;
+}
+
+.hide {
+  display: none;
 }

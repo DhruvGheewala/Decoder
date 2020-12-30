@@ -75,11 +75,12 @@ export class IdeComponent implements OnInit {
   preferedTheme: any;
 
   selectedLang: any;
-
+  hitCompile: boolean;
   fileContent: any = '';
 
   constructor(private adminData: AdminService, private userData: UserService) { }
   ngOnInit(): void {
+    this.hitCompile = false;
     // Pre-Requisites
     this.availableModes = this.adminData.getModes();
     this.availableThemes = this.adminData.getThemes();
@@ -115,7 +116,7 @@ export class IdeComponent implements OnInit {
   private getEditorOptions(): Partial<ace.Ace.EditorOptions> & { enableBasicAutocompletion?: boolean; } {
     const basicEditorOptions: Partial<ace.Ace.EditorOptions> = {
       highlightActiveLine: true,
-      minLines: 14,
+      minLines: 20,
       maxLines: 20,
       wrap: 1
     };
@@ -239,7 +240,7 @@ export class IdeComponent implements OnInit {
   }
   public downloadCode() {
     let code = this.getCode();
-    let filename = "sample" + this.findExtension(this.getCurrentMode());
+    let filename = "code" + this.findExtension(this.getCurrentMode());
     let a = document.createElement('a');
     let blob = new Blob([code], { type: 'text' });
     let url = URL.createObjectURL(blob);
@@ -252,6 +253,8 @@ export class IdeComponent implements OnInit {
   }
 
   public runClicked(runButton, inputArea, outputArea) {
+    this.hitCompile = true;
+
     let mode = this.getCurrentMode();
     const code = this.getCode();
     runButton.disabled = true;
@@ -263,13 +266,15 @@ export class IdeComponent implements OnInit {
       inputArea.disabled = false;
 
       outputArea.value = this.userData.getOutput({ code, mode });
-      this.sizeChanged(outputArea);
+      this.hitCompile = false;
+      // this.sizeChanged(outputArea);
     }, 5000);
+
   }
 
-  public sizeChanged(textArea) {
-    const maxHeight = 300;
-    textArea.style.height = 'auto';
-    textArea.style.height = `${Math.min(textArea.scrollHeight, maxHeight)}px`;
-  }
+  // public sizeChanged(textArea) {
+  //   const maxHeight = 100;
+  //   textArea.style.height = 'auto';
+  //   textArea.style.height = `${Math.min(textArea.scrollHeight, maxHeight)}px`;
+  // }
 }
