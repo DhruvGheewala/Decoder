@@ -181,6 +181,10 @@ export class IdeComponent implements OnInit {
     this.userData.setTheme(theme);
   }
 
+  /**
+   * @param file - file to be read and loaded into code editor
+   * @description - reads the content of file and uplods it to code editor
+   */
   private loadFileToEditor(file: File) {
     let fileReader: FileReader = new FileReader();
     let self = this;
@@ -191,6 +195,13 @@ export class IdeComponent implements OnInit {
     fileReader.readAsText(file);
   }
 
+  /**
+   * @param fileList - list of file uploaded
+   * 
+   * @description -listen to change file event whenever user changes
+   * file function will validate file and acts according to user's selection
+   * 
+   */
   public onChangeFile(fileList: FileList): void {
     let file = fileList[0];
     let curExtension = "." + file.name.split(".").pop();
@@ -208,35 +219,56 @@ export class IdeComponent implements OnInit {
 
 
   }
+  /**
+   * @param mode - current mode of code editor (i.e language)
+   * 
+   * @description - generates file extension according to current mode of
+   * code editor
+   * 
+   * @returns - extension of file 
+   */
   public findExtension(mode) {
-    let filename = '';
+    let extension = '';
     if (mode === "c_cpp") {
       if (this.selectedLang == "C") {
-        filename += ".c";
+        extension += ".c";
       } else {
-        filename += ".cpp";
+        extension += ".cpp";
       }
     } else if (mode === "python") {
-      filename += ".py"
+      extension += ".py"
     } else if (mode === "javascript") {
-      filename += ".js"
+      extension += ".js"
     } else {
-      filename += ".java";
+      extension += ".java";
     }
-    return filename;
+    return extension;
   }
+
+  /**
+   * @returns - current mode of code editor. (selected language)
+   */
   public getCurrentMode() {
     let mode: any = this.codeEditor.getSession().getMode();
     mode = mode.$id;
     mode = mode.substr(mode.lastIndexOf('/') + 1);
     return mode;
   }
+
+  /**
+   * @returns - current theme of code editor.
+   */
   public getCurretTheme() {
     let theme: any = this.codeEditor.getSession().getMode();
     theme = theme.$id;
     theme = theme.substr(theme.lastIndexOf('/') + 1);
     return theme;
   }
+
+  /**
+   * @description - downloads code inside code editor into
+   * user machine. (sample.[extension] file)
+   */
   public downloadCode() {
     let code = this.getCode();
     let filename = "sample" + this.findExtension(this.getCurrentMode());
@@ -252,6 +284,11 @@ export class IdeComponent implements OnInit {
   }
 
   public runClicked(runButton, inputArea, outputArea) {
+    var codeObj = {
+      code: this.getCode(),
+      language: this.getCurrentMode(),
+      stdin: inputArea
+    }
     let mode = this.getCurrentMode();
     const code = this.getCode();
     runButton.disabled = true;
