@@ -1,5 +1,5 @@
-<div class="full">
-    <div class="m-3">
+<div class="full m-3">
+    <div>
         <div class="row">
             <!-- CodeEditor -->
             <div class="col-10">
@@ -72,33 +72,10 @@
                         </div>
                     </div>
 
-                    <!-- <div class="row">
-                        <div class="dropdown">
-                            <button class="btn btn-outline-dark btn-sm dropdown-toggle" type="button"
-                                data-toggle="dropdown">
-                                User Settings
-                                <span class="caret"></span></button>
-                            <ul class="dropdown-menu">
-                                <li>
-                                    <a class="btn-floating btn-sm btn-default icon-size" title="">
-                                        <i class="fas fa-user-cog"></i>
-                                    </a>
-                                    Save setting
-                                </li>
-                                <li>
-                                    <a class="btn-floating btn-sm btn-default icon-size" title="">
-                                        <i class="fas fa-save"></i>
-                                    </a>
-                                    Save as template
-                                </li>
-                            </ul>
-                        </div>
-                    </div> -->
-
                     <!-- Run Button -->
                     <div class="row mt-2">
                         <button type="button" class="col btn btn-outline-primary btn-sm"
-                            (click)="runClicked(runButton, inputArea, outputArea)" #runButton>
+                            (click)="runClicked(runButton, inputArea, outputArea, errArea)" #runButton>
                             Compile & Run
                         </button>
                     </div>
@@ -150,8 +127,8 @@
                         Error
                     </span>
                 </div>
-                <textarea class="font-code form-control" disabled="true" rows="5"
-                    aria-label="output-textarea"></textarea>
+                <textarea class="font-code form-control text-danger" disabled="true" rows="5"
+                    aria-label="output-textarea" #errArea></textarea>
             </div>
         </div>
     </div>

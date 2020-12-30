@@ -35,13 +35,7 @@ router.post('/compile', (req, res) => {
         message: 'Supported languages: C/C++, Python & Java'
     });
 
-    fs.writeFile(filePath, code, (err) => {
-        if (err) return res.status(500).send({
-            type: 'Internal Server Error',
-            status: 500,
-            message: err
-        });
-
+    fs.writeFile(filePath, code, () => {
         const startTime = new Date();
         runner.runFile(filePath, { stdin: stdin }, (err, result) => {
             const endTime = new Date();
@@ -54,7 +48,7 @@ router.post('/compile', (req, res) => {
 
             result.manualCompilationTime = compileTime;
             res.send(result);
-        })
+        });
     });
 });
 

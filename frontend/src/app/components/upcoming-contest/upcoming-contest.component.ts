@@ -59,9 +59,7 @@ export class UpcomingContestComponent implements OnInit {
     this.prvBtn = event.toElement;
     classNames.forEach(c => this.prvBtn.className += ` ${c}`);
 
-    console.log(event);
     let site = event.target.outerText;
-    console.log(site);
 
     if (site === 'All') {
       this.allData = this.copyAllData1;

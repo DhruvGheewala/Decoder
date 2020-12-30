@@ -282,7 +282,7 @@ export class IdeComponent implements OnInit {
     document.body.removeChild(a);
   }
 
-  public runClicked(runButton, inputArea, outputArea) {
+  public runClicked(runButton, inputArea, outputArea, errArea) {
     const codeObj = {
       code: this.getCode(),
       language: this.getCurrentMode(),
@@ -293,12 +293,28 @@ export class IdeComponent implements OnInit {
     runButton.disabled = true;
     inputArea.disabled = true;
 
-    // Todo: Compile Error
     this.userData.compileRun(codeObj).subscribe((data) => {
       this.hitCompile = false;
       runButton.disabled = false;
       inputArea.disabled = false;
-      
+
+      let err = '';
+      if (data.errorType) {
+        err += `${data.errorType} error\n`;
+        err += '===================\n';
+
+        err += `Signal: ${data.signal}\n`;
+        err += '===================\n';
+
+        err += `Exit Code: ${data.exitCode}\n`;
+        err += '===================\n';
+      }
+
+      if (data.stderr) {
+        err += `Stderror: ${data.stderr}`;
+        err += '===================\n';
+      }
+      errArea.value = err;
       outputArea.value = data.stdout;
     });
   }
