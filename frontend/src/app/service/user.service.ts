@@ -5,10 +5,16 @@ import { Injectable } from '@angular/core';
 })
 export class UserService {
   // Defualt values
+
+  // api request url at backend
+  endpoint: string = 'http://localhost:8000/auth';
+
+
+  //TODO: Default template of cpp.
   private defaultMode = 'c_cpp';
   private defaultTheme = 'monokai';
 
-  // Todo: Fetched From server
+  // Todo: Fetched From server (fetch user's all data not only mode and theme)
   private userPreferedMode = undefined;
   private userPreferedTheme = undefined;
 
@@ -61,6 +67,11 @@ export class UserService {
     ];
   }
 
-  // Todo: run code on server
+  // Todo: run code on server (method name should be related to compile and run not only output)
   getOutput(codeData) { return 'Hello World !!'; }
+
+  // TODO: POST API CALL TO BACKEND
+  saveCode(code) {
+
+  }
 }

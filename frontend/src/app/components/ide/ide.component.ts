@@ -74,6 +74,10 @@ export class IdeComponent implements OnInit {
   preferedMode: any;
   preferedTheme: any;
 
+  selectedLang: any;
+
+  fileContent: any = '';
+
   constructor(private adminData: AdminService, private userData: UserService) { }
   ngOnInit(): void {
     // Pre-Requisites
@@ -96,7 +100,7 @@ export class IdeComponent implements OnInit {
 
     // Mode
     this.preferedMode = this.userData.getMode();
-    this.setMode(this.preferedMode);
+    this.setMode(this.preferedMode, "");
 
     // for the scope fold feature
     this.codeEditor.setShowFoldWidgets(true);
@@ -112,16 +116,21 @@ export class IdeComponent implements OnInit {
     const basicEditorOptions: Partial<ace.Ace.EditorOptions> = {
       highlightActiveLine: true,
       minLines: 14,
-      maxLines: Infinity
+      maxLines: 20,
+      wrap: 1
     };
-    const extraEditorOptions = { enableBasicAutocompletion: true };
+    const extraEditorOptions = {
+      enableBasicAutocompletion: true,
+      enableLiveAutocompletion: true,
+      autoScrollEditorIntoView: true,
+    };
     const mergedOptions = Object.assign(basicEditorOptions, extraEditorOptions);
     return mergedOptions;
   }
 
   /**
    * Sets the theme of IDE to provided theme, default if null
-   * @param theme 
+   * @param theme - selected theme of type any
    */
   setTheme(theme: any) {
     if (!theme)
@@ -131,16 +140,18 @@ export class IdeComponent implements OnInit {
 
   /**
    * Sets the mode of editor to provided mode, default if null
-   * @param mode 
+   * @param mode - this is selected programming language mode
    */
-  setMode(mode: any) {
+  setMode(mode: any, lang: any) {
+    console.log(lang);
     if (!mode)
-      this.userData.getMode();
+      mode = this.userData.getMode();
+    this.selectedLang = lang;
     this.codeEditor.getSession().setMode(`ace/mode/${mode}`);
   }
 
   /**
-   * This method will beautify the content of editor
+   * Beautify the content of editor
    */
   public beautifyContent() {
     if (this.codeEditor && this.editorBeautify) {
@@ -150,7 +161,7 @@ export class IdeComponent implements OnInit {
   }
 
   /**
-   * This method will clear the editor, & returns the code
+   * Clear the editor
    */
   public clearCode() {
     const code = this.getCode();
@@ -159,16 +170,89 @@ export class IdeComponent implements OnInit {
   }
 
   /**
-   * This method will retuns the code writen in editor
+   * @returns - code written by user inside code-editor
    */
   public getCode() { return this.codeEditor.getValue(); }
 
-  public setUserChoice(mode: string, theme: string) {
+  public setUserChoice() {
+    let mode = this.getCurrentMode();
+    let theme = this.getCurretTheme();
     this.userData.setMode(mode);
     this.userData.setTheme(theme);
   }
 
-  public runClicked(runButton, inputArea, outputArea, mode) {
+  private loadFileToEditor(file: File) {
+    let fileReader: FileReader = new FileReader();
+    let self = this;
+    fileReader.onload = function (x) {
+      self.fileContent = fileReader.result;
+      self.codeEditor.setValue(self.fileContent);
+    }
+    fileReader.readAsText(file);
+  }
+
+  public onChangeFile(fileList: FileList): void {
+    let file = fileList[0];
+    let curExtension = "." + file.name.split(".").pop();
+    let reqExtension = this.findExtension(this.getCurrentMode());
+    console.log(curExtension + " " + reqExtension);
+    if (curExtension != reqExtension) {
+      if (confirm("File extension does not match selected language! Are you sure?")) {
+        this.loadFileToEditor(file);
+      } else {
+        alert("File upload discarded! Upload new file..");
+      }
+    } else {
+      this.loadFileToEditor(file);
+    }
+
+
+  }
+  public findExtension(mode) {
+    let filename = '';
+    if (mode === "c_cpp") {
+      if (this.selectedLang == "C") {
+        filename += ".c";
+      } else {
+        filename += ".cpp";
+      }
+    } else if (mode === "python") {
+      filename += ".py"
+    } else if (mode === "javascript") {
+      filename += ".js"
+    } else {
+      filename += ".java";
+    }
+    return filename;
+  }
+  public getCurrentMode() {
+    let mode: any = this.codeEditor.getSession().getMode();
+    mode = mode.$id;
+    mode = mode.substr(mode.lastIndexOf('/') + 1);
+    return mode;
+  }
+  public getCurretTheme() {
+    let theme: any = this.codeEditor.getSession().getMode();
+    theme = theme.$id;
+    theme = theme.substr(theme.lastIndexOf('/') + 1);
+    return theme;
+  }
+  public downloadCode() {
+    let code = this.getCode();
+    let filename = "sample" + this.findExtension(this.getCurrentMode());
+    let a = document.createElement('a');
+    let blob = new Blob([code], { type: 'text' });
+    let url = URL.createObjectURL(blob);
+    a.setAttribute('href', url)
+    a.setAttribute('download', filename)
+    a.style.display = 'none';
+    document.body.appendChild(a);
+    a.click()
+    document.body.removeChild(a);
+  }
+
+  public runClicked(runButton, inputArea, outputArea) {
+    let mode = this.getCurrentMode();
     const code = this.getCode();
     runButton.disabled = true;
     inputArea.disabled = true;
