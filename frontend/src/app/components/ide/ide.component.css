@@ -1,5 +1,6 @@
 .codeEditor {
   height: 100vh; /* Todo: Doing nothing, change height */
+  font-family: consolas;
 }
 
 .input-output {
