@@ -1,9 +1,13 @@
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
+  private apiUrl: string = 'http://localhost:8000/api';
+  headers = new HttpHeaders().set('Content-Type', 'application/json');
+
   // Defualt values
 
   // api request url at backend
@@ -23,7 +27,7 @@ export class UserService {
     theme: this.userPreferedTheme || this.defaultTheme
   };
 
-  constructor() { }
+  constructor(private http: HttpClient) { }
 
   getMode() { return this.choosen['mode']; }
   // Todo: update in sevrer
@@ -66,12 +70,10 @@ export class UserService {
       }
     ];
   }
-
-  // Todo: run code on server (method name should be related to compile and run not only output)
-  getOutput(codeData) { return 'Hello World !!'; }
+  
+  private compileUrl = `${this.apiUrl}/code/compile`;
+  getOutput(data) { return this.http.post<any>(this.compileUrl, data); }
 
   // TODO: POST API CALL TO BACKEND
-  saveCode(code) {
-
-  }
+  saveCode(code) {}
 }

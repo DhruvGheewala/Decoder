@@ -1,16 +1,17 @@
 # Frontend
+
 - More Functions in IDE, make chnages in UI
-    - add buttons
-        - download
-        - generate Sharable Link
-        - upload from file
-        - compile and run
+  - add buttons
+    - download
+    - generate Sharable Link
+    - upload from file
+    - compile and run
 - start work on blogs
 
 # Backend
-- complete compile-run in backend
 
 # Flow
+
 ```
 3 database
 1. user
