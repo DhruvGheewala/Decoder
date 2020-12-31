@@ -76,12 +76,14 @@ export class IdeComponent implements OnInit {
 
   selectedLang: any;
   hitCompile: boolean;
+  isError: boolean;
   fileContent: any = '';
 
   constructor(private adminData: AdminService, private userData: UserService) { }
   ngOnInit(): void {
     $('[data-toggle="tooltip"]').tooltip();
     this.hitCompile = false;
+    this.isError = false;
     // Pre-Requisites
     this.availableModes = this.adminData.getModes();
     this.availableThemes = this.adminData.getThemes();
@@ -236,8 +238,6 @@ export class IdeComponent implements OnInit {
     } else {
       this.loadFileToEditor(file);
     }
-
-
   }
   /**
    * @param mode - current mode of code editor (i.e language)
@@ -311,6 +311,8 @@ export class IdeComponent implements OnInit {
     }
 
     this.hitCompile = true;
+    this.isError = false;
+
     runButton.disabled = true;
     inputArea.disabled = true;
 
@@ -320,20 +322,26 @@ export class IdeComponent implements OnInit {
       inputArea.disabled = false;
 
       let err = '';
+      console.log(errArea);
+
       if (data.errorType) {
-        err += `${data.errorType} error\n`;
-        err += '===================\n';
 
-        err += `Signal: ${data.signal}\n`;
-        err += '===================\n';
+        this.isError = true;
+        console.log(data.errorType);
 
-        err += `Exit Code: ${data.exitCode}\n`;
-        err += '===================\n';
+        err += `- ${data.errorType} error\n`;
+        // err += '===================\n';
+
+        // err += `- Signal : ${data.signal}\n`;
+        // err += '===================\n';
+
+        // err += `- Exit Code : ${data.exitCode}\n`;
+        // err += '===================\n';
       }
 
       if (data.stderr) {
-        err += `Stderror: ${data.stderr}`;
-        err += '===================\n';
+        err += `\nStderr : ${data.stderr}`;
+        // err += '===================\n';
       }
       errArea.value = err;
       outputArea.value = data.stdout;

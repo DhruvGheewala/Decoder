@@ -9,3 +9,7 @@
   overflow: hidden;
   resize: none;
 }
+
+.font-small {
+  font-size: 0.9em;
+}

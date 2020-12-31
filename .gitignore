@@ -1,3 +1,6 @@
+# custom
+backend/code/Decoder.*
+
 # Logs
 logs
 *.log
