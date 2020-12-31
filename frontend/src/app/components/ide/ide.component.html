@@ -1,13 +1,96 @@
-<div class="full m-3">
+<div class="full m-2">
     <div>
         <div class="row">
             <!-- CodeEditor -->
-            <div class="col-10">
+            <div class="col">
+                <div class="border">
+                    <div class="row center">
+                        <div class="col-sm-3">
+                            <div class="ml-2 font-code font-weight-bold icon-size" data-toggle="Decoder"
+                                title="Share your code">
+                                <i class="fas fa-code"></i>
+                                Code
+                            </div>
+                        </div>
+                        <div class="col-sm-9">
+                            <div class="row center">
+                                <div class="col text-right">
+                                    <a class="btn-floating btn-sm btn-default icon-size" data-toggle="tooltip"
+                                        title="Share your code">
+                                        <i class="fas fa-share-square"></i>
+                                    </a>
+                                    <a class="btn-floating btn-sm btn-default icon-size" data-toggle="tooltip"
+                                        (click)="beautifyContent()" title="Indent your code">
+                                        <i class="fa fa-indent"></i>
+                                    </a>
+                                    <label for="codeUpload" class="btn-floating btn-sm btn-default icon-size"
+                                        data-toggle="tooltip" title="Upload code">
+                                        <i class="fas fa-upload"></i>
+                                    </label>
+                                    <a class="btn-floating btn-sm btn-default icon-size" data-toggle="tooltip"
+                                        (click)="downloadCode()" title="Download code">
+                                        <i class="fas fa-download"></i>
+                                    </a>
+                                    <input type="file" id="codeUpload" class="hide"
+                                        (change)="onChangeFile($event.target.files)" />
+
+                                    <a class="btn-floating btn-sm btn-default icon-size" data-toggle="tooltip"
+                                        (click)="copyToClipboard('')" title="copy code">
+                                        <i class="fas fa-copy"></i>
+                                    </a>
+                                    <a class="btn-floating btn-sm btn-default icon-size" data-toggle="tooltip"
+                                        title="save user settings">
+                                        <i class="fas fa-user-cog"></i>
+                                    </a>
+                                    <a class="btn-floating btn-sm btn-default icon-size" data-toggle="tooltip"
+                                        title="save as template">
+                                        <i class="fas fa-save"></i>
+                                    </a>
+                                </div>
+                                <div class="col-sm-2">
+                                    <div class="">
+                                        <!-- <small>Language</small> -->
+                                        <select class="form-control form-control-sm"
+                                            (change)="setMode(modeSelect.value,  $event.target.selectedOptions[0].label)"
+                                            [value]='preferedMode' #modeSelect>
+                                            <option [value]='mode.name' [label]="mode.caption"
+                                                *ngFor="let mode of availableModes"
+                                                [selected]='mode.name === preferedMode ? "selected" : ""'>
+                                                {{mode.caption}}
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-sm-2">
+                                    <div class="">
+                                        <!-- <small>Theme</small> -->
+                                        <select class="form-control form-control-sm"
+                                            (change)="setTheme(themeSelect.value)" #themeSelect>
+                                            <option [value]='theme.name' *ngFor="let theme of availableThemes"
+                                                [selected]='theme.name === preferedTheme ? "selected" : ""'>
+                                                {{theme.caption}}
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-sm-2">
+                                    <button type="button" class="col btn btn-outline-primary btn-sm"
+                                        (click)="runClicked(runButton, inputArea, outputArea, errArea)" #runButton>
+                                        <i class="fas fa-play"></i>
+                                        <span class="ml-1"> Run </span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <div class="codeEditor" #codeEditor></div>
             </div>
+
             <!-- Configurations, buttons -->
-            <div class="col-2">
+            <!-- <div class="col-2">
                 <div class="p-2">
+
                     <div class="row">
                         <small>Language</small>
                         <select class="form-control form-control-sm"
@@ -21,7 +104,6 @@
                     </div>
 
                     <div class="row">
-                        <!-- Theme selection -->
                         <small>Theme</small>
                         <select class="form-control form-control-sm" (change)="setTheme(themeSelect.value)"
                             #themeSelect>
@@ -31,6 +113,41 @@
                             </option>
                         </select>
                     </div>
+
+                    <div class="row">
+                        <div class="col">
+                            <div class="row">
+                                <small>Options</small>
+                            </div>
+                            <div class="row">
+                                <div class="">
+                                    <a class="btn-floating btn-sm btn-default icon-size" data-toggle="tooltip"
+                                        title="Share your code">
+                                        <i class="fas fa-share-square"></i>
+                                    </a>
+                                    <a class="btn-floating btn-sm btn-default icon-size" data-toggle="tooltip"
+                                        (click)="beautifyContent()" title="Indent your code">
+                                        <i class="fa fa-indent"></i>
+                                    </a>
+                                    <label for="codeUpload" class="btn-floating btn-sm btn-default icon-size"
+                                        data-toggle="tooltip" title="Upload code">
+                                        <i class="fas fa-upload"></i>
+                                    </label>
+                                    <a class="btn-floating btn-sm btn-default icon-size" data-toggle="tooltip"
+                                        (click)="downloadCode()" title="Download code">
+                                        <i class="fas fa-download"></i>
+                                    </a>
+                                    <a class="btn-floating btn-sm btn-default icon-size" data-toggle="tooltip"
+                                        title="save user settings">
+                                        <i class="fas fa-user-cog"></i>
+                                    </a>
+                                    <input type="file" id="codeUpload" class="hide"
+                                        (change)="onChangeFile($event.target.files)" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
 
                     <div class="row">
                         <div class="col">
@@ -76,41 +193,67 @@
                         </div>
                     </div>
 
-                    <!-- Run Button -->
                     <div class="row mt-2">
-                        <button type="button" class="col btn btn-outline-primary btn-sm"
+                        <button type="button" class="col btn btn-primary btn-sm"
                             (click)="runClicked(runButton, inputArea, outputArea, errArea)" #runButton>
-                            Compile & Run
+                            <i class="fas fa-play"></i>
+                            <span class="ml-1"> Run </span>
                         </button>
                     </div>
 
                     <div class="row mt-2">
-                        <div *ngIf="hitCompile hcenter">
+                        <div *ngIf="hitCompile">
                             <i class="fas fa-circle-notch fa-spin"></i>
                             <span class="font-code">
-                                Compiling ...
+                                Running ...
                             </span>
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> -->
         </div>
     </div>
 
-    <div class="row m-1">
-        <div class="col">
-            <div class="input-output">
-                <div class="label-box border">
-                    <span class="mx-4 font-code font-weight-bold">
-                        <i class="fas fa-inbox"></i>
-                        Input
+    <div class="input-output" [ngClass]="isError ? '' : 'hide'">
+        <div class="label-box border">
+            <div class="row">
+                <div class="col">
+                    <span class="ml-2 font-code font-weight-bold">
+                        <i class="fas fa-bug"></i>
+                        Error
                     </span>
-                    <a class="btn-floating btn-sm btn-default icon-size" data-toggle="tooltip"
-                        (click)="copyToClipboard(inputArea)" title="Copy input">
+                </div>
+                <div class="col text-right">
+                    <a class="btn-floating btn-sm btn-default" data-toggle="tooltip" (click)="copyToClipboard(errArea)"
+                        title="Copy stderr">
                         <i class="fas fa-copy"></i>
                     </a>
                 </div>
-                <textarea class="font-code form-control" aria-label="input-textarea" rows="5" #inputArea
+            </div>
+        </div>
+        <textarea class="font-small font-code form-control text-danger" disabled="true" rows="10"
+            aria-label="output-textarea" #errArea></textarea>
+    </div>
+
+    <div class="row mt-1">
+        <div class="col">
+            <div class="input-output">
+                <div class="label-box border">
+                    <div class="row">
+                        <div class="col ml-2">
+                            <span class="font-code font-weight-bold">
+                                <i class="fas fa-inbox"></i> Input
+                            </span>
+                        </div>
+                        <div class="col text-right">
+                            <a class="btn-floating btn-sm btn-default" data-toggle="tooltip"
+                                (click)="copyToClipboard(inputArea)" title="copy input">
+                                <i class="fas fa-copy"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <textarea class="font-small font-code form-control" aria-label="input-textarea" rows="5" #inputArea
                     placeholder="Input here"></textarea>
             </div>
 
@@ -118,29 +261,23 @@
         <div class="col">
             <div class="input-output">
                 <div class="label-box border">
-                    <span class="mx-4 font-code font-weight-bold">
-                        <i class="fas fa-poll-h"></i>
-                        Output
-                    </span>
-                    <a class="btn-floating btn-sm btn-default icon-size" data-toggle="tooltip"
-                        (click)="copyToClipboard(outputArea)" title="Copy output">
-                        <i class="fas fa-copy"></i>
-                    </a>
+                    <div class="row">
+                        <div class="col ml-2">
+                            <span class="font-code font-weight-bold">
+                                <i class="fas fa-poll-h"></i>
+                                Output
+                            </span>
+                        </div>
+                        <div class="col text-right">
+                            <a class="btn-floating btn-sm btn-default" data-toggle="tooltip"
+                                (click)="copyToClipboard(outputArea)" title="copy output">
+                                <i class="fas fa-copy"></i>
+                            </a>
+                        </div>
+                    </div>
                 </div>
-                <textarea class="font-code form-control" disabled="true" rows="5" aria-label="output-textarea"
-                    #outputArea></textarea>
-            </div>
-        </div>
-        <div class="col">
-            <div class="input-output">
-                <div class="label-box border">
-                    <span class="mx-4 font-code font-weight-bold">
-                        <i class="fas fa-bug"></i>
-                        Error
-                    </span>
-                </div>
-                <textarea class="font-code form-control text-danger" disabled="true" rows="5"
-                    aria-label="output-textarea" #errArea></textarea>
+                <textarea class="font-small font-code form-control" disabled="true" rows="5"
+                    aria-label="output-textarea" #outputArea></textarea>
             </div>
         </div>
     </div>

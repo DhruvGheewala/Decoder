@@ -9,3 +9,11 @@
   overflow: hidden;
   resize: none;
 }
+
+.font-small {
+  font-size: 0.9em;
+}
+
+.bb {
+  /* border: 1px solid red; */
+}

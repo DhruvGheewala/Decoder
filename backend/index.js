@@ -13,7 +13,7 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json());
 
 // Routes
-const codeRoute = require('./routes/code');
+const codeRoute = require('./routes/code.routes');
 app.use('/api/code', codeRoute);
 
 app.listen(PORT, (err) => {
