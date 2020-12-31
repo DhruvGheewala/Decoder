@@ -5,7 +5,7 @@ function d() {
 }
 
 var name = `Dhiraj`;
-var fullName = `${name} ok Govindvira`;
+var fullName = `${name} Govindvira`;
 
 d(fullName.includes("dhiraj"));
 d(fullName[0]);

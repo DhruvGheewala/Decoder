@@ -17,10 +17,12 @@ import { BlogViewComponent } from './components/blog/blog-view/blog-view.compone
 import { BlogCreateComponent } from './components/blog/blog-create/blog-create.component';
 import { BlogEditComponent } from './components/blog/blog-edit/blog-edit.component';
 import { BlogListComponent } from './components/blog/blog-list/blog-list.component';
-import { IdeComponent } from './components/ide/ide.component';
 import { RegisterComponent } from './components/register/register.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { AboutComponent } from './components/about/about.component';
+import { CodeIdeComponent } from './components/code/code-ide/code-ide.component';
+import { CodeViewComponent } from './components/code/code-view/code-view.component';
+import { CodeRecentComponent } from './components/code/code-recent/code-recent.component';
 
 // Service
 import { UserService } from "./service/user.service";
@@ -40,10 +42,12 @@ import { AdminService } from "./service/admin.service";
     BlogCreateComponent,
     BlogEditComponent,
     BlogListComponent,
-    IdeComponent,
     RegisterComponent,
     ProfileComponent,
-    AboutComponent
+    AboutComponent,
+    CodeViewComponent,
+    CodeRecentComponent,
+    CodeIdeComponent
   ],
   imports: [
     BrowserModule,

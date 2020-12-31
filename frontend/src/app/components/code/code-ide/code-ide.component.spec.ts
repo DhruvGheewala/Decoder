@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { IdeComponent } from './ide.component';
+import { CodeIdeComponent } from './code-ide.component';
 
-describe('IdeComponent', () => {
-  let component: IdeComponent;
-  let fixture: ComponentFixture<IdeComponent>;
+describe('CodeIdeComponent', () => {
+  let component: CodeIdeComponent;
+  let fixture: ComponentFixture<CodeIdeComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ IdeComponent ]
+      declarations: [ CodeIdeComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(IdeComponent);
+    fixture = TestBed.createComponent(CodeIdeComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -59,10 +59,10 @@ import { UserService } from "src/app/service/user.service";
 declare var $: any;
 @Component({
   selector: 'app-ide',
-  templateUrl: './ide.component.html',
-  styleUrls: ['./ide.component.css']
+  templateUrl: './code-ide.component.html',
+  styleUrls: ['./code-ide.component.css']
 })
-export class IdeComponent implements OnInit {
+export class CodeIdeComponent implements OnInit {
   @ViewChild('codeEditor', { static: true }) private codeEditorElemRef: ElementRef;
 
   private codeEditor: ace.Ace.Editor;

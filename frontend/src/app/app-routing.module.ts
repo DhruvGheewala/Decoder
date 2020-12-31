@@ -8,7 +8,9 @@ import { BlogViewComponent } from './components/blog/blog-view/blog-view.compone
 import { ContactComponent } from './components/contact/contact.component';
 import { ErrorComponent } from './components/error/error.component';
 import { HomeComponent } from './components/home/home.component';
-import { IdeComponent } from './components/ide/ide.component';
+import { CodeRecentComponent } from './components/code/code-recent/code-recent.component';
+import { CodeViewComponent } from './components/code/code-view/code-view.component';
+import { CodeIdeComponent } from './components/code/code-ide/code-ide.component';
 import { LoginComponent } from './components/login/login.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { RegisterComponent } from './components/register/register.component';
@@ -25,11 +27,15 @@ const routes: Routes = [
   },
   {
     path: 'ide',
-    component: IdeComponent,
+    component: CodeIdeComponent,
   },
   {
-    path: 'ide:id',
-    component: IdeComponent,
+    path: 'code/view/:id',
+    component: CodeViewComponent,
+  },
+  {
+    path: 'code/recents',
+    component: CodeRecentComponent,
   },
   {
     path: 'upcoming-contest',
