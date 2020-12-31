@@ -1,31 +1,94 @@
-<div class="full m-3">
+<div class="full m-2">
     <div>
         <div class="row">
             <!-- CodeEditor -->
-            <div class="col-10">
-                <div class="label-box border">
-                    <div class="row">
-                        <div class="col">
-                            <span class="ml-2 font-code font-weight-bold">
+            <div class="col">
+                <div class="border">
+                    <div class="row center">
+                        <div class="col-sm-3">
+                            <div class="ml-2 font-code font-weight-bold icon-size" data-toggle="Decoder"
+                                title="Share your code">
                                 <i class="fas fa-code"></i>
                                 Code
-                            </span>
+                            </div>
                         </div>
-                        <div class="col text-right">
-                            <a class="btn-floating btn-sm btn-default" data-toggle="tooltip"
-                                (click)="copyToClipboard('')" title="copy code">
-                                <i class="fas fa-copy"></i>
-                            </a>
-                            <a class="btn-floating btn-sm btn-default" data-toggle="tooltip" title="save as template">
-                                <i class="fas fa-save"></i>
-                            </a>
+                        <div class="col-sm-9">
+                            <div class="row center">
+                                <div class="col text-right">
+                                    <a class="btn-floating btn-sm btn-default icon-size" data-toggle="tooltip"
+                                        title="Share your code">
+                                        <i class="fas fa-share-square"></i>
+                                    </a>
+                                    <a class="btn-floating btn-sm btn-default icon-size" data-toggle="tooltip"
+                                        (click)="beautifyContent()" title="Indent your code">
+                                        <i class="fa fa-indent"></i>
+                                    </a>
+                                    <label for="codeUpload" class="btn-floating btn-sm btn-default icon-size"
+                                        data-toggle="tooltip" title="Upload code">
+                                        <i class="fas fa-upload"></i>
+                                    </label>
+                                    <a class="btn-floating btn-sm btn-default icon-size" data-toggle="tooltip"
+                                        (click)="downloadCode()" title="Download code">
+                                        <i class="fas fa-download"></i>
+                                    </a>
+                                    <input type="file" id="codeUpload" class="hide"
+                                        (change)="onChangeFile($event.target.files)" />
+
+                                    <a class="btn-floating btn-sm btn-default icon-size" data-toggle="tooltip"
+                                        (click)="copyToClipboard('')" title="copy code">
+                                        <i class="fas fa-copy"></i>
+                                    </a>
+                                    <a class="btn-floating btn-sm btn-default icon-size" data-toggle="tooltip"
+                                        title="save user settings">
+                                        <i class="fas fa-user-cog"></i>
+                                    </a>
+                                    <a class="btn-floating btn-sm btn-default icon-size" data-toggle="tooltip"
+                                        title="save as template">
+                                        <i class="fas fa-save"></i>
+                                    </a>
+                                </div>
+                                <div class="col-sm-2">
+                                    <div class="">
+                                        <!-- <small>Language</small> -->
+                                        <select class="form-control form-control-sm"
+                                            (change)="setMode(modeSelect.value,  $event.target.selectedOptions[0].label)"
+                                            [value]='preferedMode' #modeSelect>
+                                            <option [value]='mode.name' [label]="mode.caption"
+                                                *ngFor="let mode of availableModes"
+                                                [selected]='mode.name === preferedMode ? "selected" : ""'>
+                                                {{mode.caption}}
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-sm-2">
+                                    <div class="">
+                                        <!-- <small>Theme</small> -->
+                                        <select class="form-control form-control-sm"
+                                            (change)="setTheme(themeSelect.value)" #themeSelect>
+                                            <option [value]='theme.name' *ngFor="let theme of availableThemes"
+                                                [selected]='theme.name === preferedTheme ? "selected" : ""'>
+                                                {{theme.caption}}
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-sm-2">
+                                    <button type="button" class="col btn btn-outline-primary btn-sm"
+                                        (click)="runClicked(runButton, inputArea, outputArea, errArea)" #runButton>
+                                        <i class="fas fa-play"></i>
+                                        <span class="ml-1"> Run </span>
+                                    </button>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
                 <div class="codeEditor" #codeEditor></div>
             </div>
+
             <!-- Configurations, buttons -->
-            <div class="col-2">
+            <!-- <div class="col-2">
                 <div class="p-2">
 
                     <div class="row">
@@ -41,7 +104,6 @@
                     </div>
 
                     <div class="row">
-                        <!-- Theme selection -->
                         <small>Theme</small>
                         <select class="form-control form-control-sm" (change)="setTheme(themeSelect.value)"
                             #themeSelect>
@@ -86,7 +148,7 @@
                         </div>
                     </div>
 
-                    <!--
+
                     <div class="row">
                         <div class="col">
                             <div class="row">
@@ -130,15 +192,10 @@
                             </div>
                         </div>
                     </div>
-                    -->
 
-                    <!-- <div class="row" style="height: 210px;"> </div> -->
-
-                    <!-- Run Button -->
                     <div class="row mt-2">
                         <button type="button" class="col btn btn-primary btn-sm"
                             (click)="runClicked(runButton, inputArea, outputArea, errArea)" #runButton>
-                            <!-- <i class="fas fa-play-circle"></i> -->
                             <i class="fas fa-play"></i>
                             <span class="ml-1"> Run </span>
                         </button>
@@ -153,7 +210,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> -->
         </div>
     </div>
 
