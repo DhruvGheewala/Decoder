@@ -56,7 +56,7 @@ import 'ace-builds/src-noconflict/ext-beautify';
 // Services
 import { AdminService } from "src/app/service/admin.service";
 import { UserService } from "src/app/service/user.service";
-
+declare var $: any;
 @Component({
   selector: 'app-ide',
   templateUrl: './ide.component.html',
@@ -80,6 +80,7 @@ export class IdeComponent implements OnInit {
 
   constructor(private adminData: AdminService, private userData: UserService) { }
   ngOnInit(): void {
+    $('[data-toggle="tooltip"]').tooltip();
     this.hitCompile = false;
     // Pre-Requisites
     this.availableModes = this.adminData.getModes();
@@ -118,7 +119,7 @@ export class IdeComponent implements OnInit {
       highlightActiveLine: true,
       minLines: 20,
       maxLines: 20,
-      wrap: 1
+      wrap: 110
     };
     const extraEditorOptions = {
       enableBasicAutocompletion: true,
@@ -179,6 +180,26 @@ export class IdeComponent implements OnInit {
     let theme = this.getCurretTheme();
     this.userData.setMode(mode);
     this.userData.setTheme(theme);
+  }
+
+  public copyToClipboard(element) {
+    const selBox = document.createElement('textarea');
+    selBox.style.position = 'fixed';
+    selBox.style.left = '0';
+    selBox.style.top = '0';
+    selBox.style.opacity = '0';
+    let txt;
+    if (element === '') {
+      txt = this.getCode();
+    } else {
+      txt = element.value;
+    }
+    selBox.value = txt;
+    document.body.appendChild(selBox);
+    selBox.focus();
+    selBox.select();
+    document.execCommand('copy');
+    document.body.removeChild(selBox);
   }
 
   /**
