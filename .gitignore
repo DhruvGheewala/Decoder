@@ -1,5 +1,6 @@
 # custom
 backend/code/Decoder.*
+backend/code/Decoder.js
 
 # Logs
 logs

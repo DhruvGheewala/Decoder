@@ -1,0 +1,1 @@
+.\dev-server.bat && .\dev-client.bat
