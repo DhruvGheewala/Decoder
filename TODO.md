@@ -1,10 +1,14 @@
 # Frontend
 - start work on blogs
-- add IDE functionality
-    - copy button
-    - user setting
+- dhiraj
+    - ide/view/:id
+
+- ide/view/list
+- profile/:user
+- blogs :0
 
 # Backend
+- create database
 
 # Flow
 

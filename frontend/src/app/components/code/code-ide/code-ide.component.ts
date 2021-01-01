@@ -1,4 +1,5 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { HostListener } from '@angular/core';
 
 // Ace Editor
 import * as ace from 'ace-builds';
@@ -57,12 +58,21 @@ import 'ace-builds/src-noconflict/ext-beautify';
 import { AdminService } from "src/app/service/admin.service";
 import { UserService } from "src/app/service/user.service";
 declare var $: any;
+
 @Component({
   selector: 'app-ide',
   templateUrl: './code-ide.component.html',
   styleUrls: ['./code-ide.component.css']
 })
 export class CodeIdeComponent implements OnInit {
+
+  @HostListener('document:keypress', ['$event'])
+  handleKeyboardEvent(event: KeyboardEvent) {
+    if (event.ctrlKey && event.code == "KeyB") {
+      document.getElementById("runButton").click();
+    }
+  }
+
   @ViewChild('codeEditor', { static: true }) private codeEditorElemRef: ElementRef;
 
   private codeEditor: ace.Ace.Editor;
@@ -75,19 +85,16 @@ export class CodeIdeComponent implements OnInit {
   preferedTheme: any;
 
   selectedLang: any;
-  hitCompile: boolean;
   isError: boolean;
   fileContent: any = '';
 
   constructor(private adminData: AdminService, private userData: UserService) { }
   ngOnInit(): void {
     $('[data-toggle="tooltip"]').tooltip();
-    this.hitCompile = false;
     this.isError = false;
     // Pre-Requisites
     this.availableModes = this.adminData.getModes();
     this.availableThemes = this.adminData.getThemes();
-
 
     ace.require('ace/ext/language_tools');
     this.editorBeautify = ace.require('ace/ext/beautify');
@@ -121,7 +128,7 @@ export class CodeIdeComponent implements OnInit {
       highlightActiveLine: true,
       minLines: 20,
       maxLines: 20,
-      wrap: 110
+      wrap: 150
     };
     const extraEditorOptions = {
       enableBasicAutocompletion: true,
@@ -137,8 +144,9 @@ export class CodeIdeComponent implements OnInit {
    * @param theme - selected theme of type any
    */
   setTheme(theme: any) {
-    if (!theme)
+    if (!theme) {
       theme = this.userData.getTheme();
+    }
     this.codeEditor.setTheme(`ace/theme/${theme}`);
   }
 
@@ -147,8 +155,9 @@ export class CodeIdeComponent implements OnInit {
    * @param mode - this is selected programming language mode
    */
   setMode(mode: any, lang: any) {
-    if (!mode)
+    if (!mode) {
       mode = this.userData.getMode();
+    }
     this.selectedLang = lang;
     this.codeEditor.getSession().setMode(`ace/mode/${mode}`);
   }
@@ -335,14 +344,12 @@ export class CodeIdeComponent implements OnInit {
       stdin: inputArea.value
     }
 
-    this.hitCompile = true;
     this.isError = false;
 
     runButton.disabled = true;
     inputArea.disabled = true;
 
     this.userData.compileRun(codeObj).subscribe((data) => {
-      this.hitCompile = false;
       runButton.disabled = false;
       inputArea.disabled = false;
 
@@ -372,4 +379,9 @@ export class CodeIdeComponent implements OnInit {
       outputArea.value = data.stdout;
     });
   }
+
+  uploadFileClick() {
+    document.getElementById("codeUpload").click();
+  }
+
 }
