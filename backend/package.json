@@ -7,6 +7,11 @@
     "start": "node index.js",
     "dev-start": "nodemon index.js"
   },
+  "nodemonConfig": {
+    "ignore": [
+      "code/"
+    ]
+  },
   "author": "",
   "license": "MIT",
   "dependencies": {
