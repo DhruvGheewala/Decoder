@@ -5,7 +5,7 @@
 
 * {
   font-weight: normal;
-  /* border: 2px solid black; */
+  overflow-x: hidden !important;
 }
 
 body,
@@ -17,7 +17,6 @@ html {
   height: 100%;
   min-height: 100%;
   font-family: Arial, Helvetica, sans-serif;
-  overflow-x: hidden;
 }
 
 /* Scrollbar */

@@ -59,4 +59,9 @@ router.post('/compile', (req, res) => {
     });
 });
 
+router.put('/view/:id?', (req, res) => {
+    const id = req.params.id; // value or undefined
+
+});
+
 module.exports = router;
