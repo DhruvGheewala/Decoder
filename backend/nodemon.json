@@ -1,5 +1,5 @@
 {
     "ignore": [
-        "code/*"
+        "./code/Decoder.*"
     ]
 }

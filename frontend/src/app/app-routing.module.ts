@@ -82,10 +82,6 @@ const routes: Routes = [
     component: ContactComponent,
   },
   {
-    path: 'error',
-    component: ErrorComponent,
-  },
-  {
     path: '**',
     component: ErrorComponent
   }
