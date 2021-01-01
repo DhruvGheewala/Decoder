@@ -5,10 +5,9 @@
                 <div class="border">
                     <div class="row center mt-2 mb-2 ml-0 mr-0">
                         <div class="col-sm-3">
-                            <div class="font-code font-weight-bold icon-size" data-toggle="Decoder"
-                                title="Share your code">
+                            <div class="font-weight-bold icon-size" data-toggle="Decoder" title="Share your code">
                                 <i class="fas fa-code"></i>
-                                Code
+                                code
                             </div>
                         </div>
                         <div class="col-sm-9">
@@ -49,7 +48,7 @@
                                 <div class="col-sm-2 ">
                                     <div class="">
                                         <!-- <small>Language</small> -->
-                                        <select data-toggle="tooltip" title="Language"
+                                        <select data-toggle="tooltip" title="Languages"
                                             class="form-control form-control-sm"
                                             (change)="setMode($event.target.selectedOptions[0].value, $event.target.selectedOptions[0].label)"
                                             [value]='preferedMode' #modeSelect>
@@ -59,6 +58,7 @@
                                                 {{mode.caption}}
                                             </option>
                                         </select>
+
                                         <!-- <select data-toggle="tooltip" title="Language"
                                             class="form-control form-control-sm"
                                             (change)="setMode(modeSelect.value,  $event.target.selectedOptions[0].label)"
@@ -117,8 +117,8 @@
                     </span>
                 </div>
                 <div class="col text-right">
-                    <a class="btn-floating btn-sm btn-default" data-toggle="tooltip" (click)="copyToClipboard(errArea)"
-                        title="Copy stderr">
+                    <a class="btn-floating btn-sm btn-default" data-toggle="tooltip" data-placement="left"
+                        (click)="copyToClipboard(errArea)" title="copy stderr">
                         <i class="fas fa-copy"></i>
                     </a>
                 </div>
@@ -138,7 +138,7 @@
                         </span>
                     </div>
                     <div class="col text-right">
-                        <a class="btn-floating btn-sm btn-default" data-toggle="tooltip"
+                        <a class="btn-floating btn-sm btn-default" data-toggle="tooltip" data-placement="left"
                             (click)="copyToClipboard(inputArea)" title="copy input">
                             <i class="fas fa-copy"></i>
                         </a>
@@ -160,7 +160,7 @@
                         </span>
                     </div>
                     <div class="col text-right">
-                        <a class="btn-floating btn-sm btn-default" data-toggle="tooltip"
+                        <a class="btn-floating btn-sm btn-default" data-toggle="tooltip" data-placement="left"
                             (click)="copyToClipboard(outputArea)" title="copy output">
                             <i class="fas fa-copy"></i>
                         </a>

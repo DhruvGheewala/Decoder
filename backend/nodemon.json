@@ -1,5 +1,0 @@
-{
-    "ignore": [
-        "./code/Decoder.*"
-    ]
-}
