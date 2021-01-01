@@ -1,5 +1,5 @@
 @ECHO OFF
-ECHO running backend
-start cmd /k "echo Backend && cd backend && nodemon index.js"
-ECHO running frontend
+ECHO Running Backend ...
+start cmd /k "echo Backend && cd backend && npm run dev-start"
+ECHO Running Frontend ...
 start cmd /k "echo Frontend && cd frontend && ng serve -o"

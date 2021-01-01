@@ -1,14 +1,24 @@
 # Frontend
-- start work on blogs
-- dhiraj
-    - ide/view/:id
 
-- ide/view/list
-- profile/:user
-- blogs :0
+- start work on blogs
+
+- add IDE functionality
+  - share code
+  - user setting
+
+- dhiraj
+  - ide/view/:id, frontend
+  - ide/view/list, frontend
+  - profile/:user, frontend
 
 # Backend
+
 - create database
+
+- Dhruv
+  - create api for code sharing,
+    - url: \*/api/code/view/:id
+    - data: { author: currentUserName, visibility: public/private }
 
 # Flow
 

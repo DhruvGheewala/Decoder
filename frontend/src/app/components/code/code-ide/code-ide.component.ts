@@ -74,17 +74,19 @@ export class CodeIdeComponent implements OnInit {
   }
 
   @ViewChild('codeEditor', { static: true }) private codeEditorElemRef: ElementRef;
+  @ViewChild('modeSelect', { static: true }) private modeSelectElemRef: ElementRef;
 
   private codeEditor: ace.Ace.Editor;
   private editorBeautify: any;
   private codeEditorElem: any;
+  private modeSelectElem: any;
 
   availableModes: any;
   availableThemes: any;
   preferedMode: any;
   preferedTheme: any;
 
-  selectedLang: any;
+  hitCompile: boolean;
   isError: boolean;
   fileContent: any = '';
 
@@ -99,7 +101,9 @@ export class CodeIdeComponent implements OnInit {
     ace.require('ace/ext/language_tools');
     this.editorBeautify = ace.require('ace/ext/beautify');
 
+    this.modeSelectElem = this.modeSelectElemRef.nativeElement;
     this.codeEditorElem = this.codeEditorElemRef.nativeElement;
+
     const editorOptions: Partial<ace.Ace.EditorOptions> = this.getEditorOptions();
 
     // Configuration
@@ -111,7 +115,10 @@ export class CodeIdeComponent implements OnInit {
 
     // Mode
     this.preferedMode = this.userData.getMode();
-    this.setMode(this.preferedMode, "");
+    this.availableModes.forEach(mode => {
+      if (mode.caption === this.preferedMode)
+        this.setMode(mode.name, this.preferedMode);
+    });
 
     // for the scope fold feature
     this.codeEditor.setShowFoldWidgets(true);
@@ -155,10 +162,9 @@ export class CodeIdeComponent implements OnInit {
    * @param mode - this is selected programming language mode
    */
   setMode(mode: any, lang: any) {
-    if (!mode) {
-      mode = this.userData.getMode();
-    }
-    this.selectedLang = lang;
+    // Todo: mode will be caption, we have to obtain name from it
+    // if (!mode) mode = this.userData.getMode();
+    this.preferedMode = lang;
     this.codeEditor.getSession().setMode(`ace/mode/${mode}`);
   }
 
@@ -239,27 +245,28 @@ export class CodeIdeComponent implements OnInit {
     let curExtension = "." + file.name.split(".").pop();
     let reqExtension = this.findExtension(this.getCurrentMode());
     if (curExtension != reqExtension) {
-      if (confirm("File extension does not match selected language! Are you sure?")) {
-        this.loadFileToEditor(file);
-      } else {
-        alert("File upload discarded! Upload new file..");
-        return;
-      }
-      // let newMode = this.findMode(curExtension);
-      // if (newMode === '') {
-      //   alert("Please select appropriate file!");
-      //   return;
-      // } else {
-      //   let lang = '';
-      //   if (curExtension == '.c') {
-      //     lang = 'C';
-      //   }
-      //   console.log(newMode);
-      //   this.setMode(newMode, lang);
-      // }
+      let found: Boolean = false;
+      this.availableModes.forEach(mode => {
+        if (this.languageData[mode.caption].extension === curExtension) {
+          found = true;
+          this.loadFileToEditor(file);
+          this.setMode(mode.name, mode.caption);
+        }
+      });
+
+      if (!found) alert(`You can't upload this file: ${file.name}`);
+      return;
     }
     this.loadFileToEditor(file);
   }
+
+  private languageData = {
+    'C': { 'extension': '.c' },
+    'C++': { 'extension': '.cpp' },
+    'Java': { 'extension': '.java' },
+    'JavaScript': { 'extension': '.js' },
+    'Python': { 'extension': '.py' }
+  };
   /**
    * @param mode - current mode of code editor (i.e language)
    * 
@@ -268,23 +275,7 @@ export class CodeIdeComponent implements OnInit {
    * 
    * @returns - extension of file 
    */
-  public findExtension(mode) {
-    let extension = '';
-    if (mode === "c_cpp") {
-      if (this.selectedLang == "C") {
-        extension += ".c";
-      } else {
-        extension += ".cpp";
-      }
-    } else if (mode === "python") {
-      extension += ".py"
-    } else if (mode === "javascript") {
-      extension += ".js"
-    } else {
-      extension += ".java";
-    }
-    return extension;
-  }
+  public findExtension(mode) { return this.languageData[this.preferedMode].extension; }
 
   public findMode(extension) {
     let mode = '';
@@ -357,23 +348,15 @@ export class CodeIdeComponent implements OnInit {
       console.log(errArea);
 
       if (data.errorType) {
-
         this.isError = true;
-        console.log(data.errorType);
-
         err += `- ${data.errorType} error\n`;
-        // err += '===================\n';
-
-        // err += `- Signal : ${data.signal}\n`;
-        // err += '===================\n';
-
-        // err += `- Exit Code : ${data.exitCode}\n`;
-        // err += '===================\n';
+        err += `- Signal : ${data.signal}\n`;
+        err += `- Exit Code : ${data.exitCode}\n`;
       }
 
       if (data.stderr) {
-        err += `\nStderr : ${data.stderr}`;
-        // err += '===================\n';
+        this.isError = true;
+        err += `\nStderr : \n${data.stderr}`;
       }
       errArea.value = err;
       outputArea.value = data.stdout;

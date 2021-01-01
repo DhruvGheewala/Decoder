@@ -49,13 +49,12 @@
                                 <div class="col-sm-2 ">
                                     <div class="">
                                         <!-- <small>Language</small> -->
-                                        <select data-toggle="tooltip" title="Language"
-                                            class="form-control form-control-sm"
-                                            (change)="setMode(modeSelect.value,  $event.target.selectedOptions[0].label)"
+                                        <select class="form-control form-control-sm"
+                                            (change)="setMode($event.target.selectedOptions[0].value, $event.target.selectedOptions[0].label)"
                                             [value]='preferedMode' #modeSelect>
-                                            <option [value]='mode.name' [label]="mode.caption"
+                                            <option [value]='mode.name' [label]='mode.caption'
                                                 *ngFor="let mode of availableModes"
-                                                [selected]='mode.name === preferedMode ? "selected" : ""'>
+                                                [selected]='mode.caption === preferedMode ? "selected" : ""'>
                                                 {{mode.caption}}
                                             </option>
                                         </select>
