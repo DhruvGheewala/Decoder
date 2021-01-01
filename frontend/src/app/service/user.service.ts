@@ -15,7 +15,7 @@ export class UserService {
 
 
   //TODO: Default template of cpp.
-  private defaultMode = 'c_cpp';
+  private defaultMode = 'C++';  // caption of language
   private defaultTheme = 'monokai';
 
   // Todo: Fetched From server (fetch user's all data not only mode and theme)

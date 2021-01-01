@@ -31,12 +31,8 @@ export class UpcomingContestComponent implements OnInit {
         this.allData = this.copyAllData1 = data;
         this.copyAllData2 = this.allData;
         this.sites = new Set();
-        data.forEach(d => {
-          this.sites.add(d.site);
-        });
+        data.forEach(d => this.sites.add(d.site));
         this.hideSpinner = true;
-        // console.log(this.allData);
-        // console.log(this.sites);
       });
       document.getElementById('All').click();
     } catch (err) {

@@ -1,10 +1,15 @@
 # Frontend
+
 - start work on blogs
 - add IDE functionality
-    - copy button
-    - user setting
+  - share code
+  - user setting
 
 # Backend
+
+- create api for code sharing,
+  - url: \*/api/code/view/:id
+  - data: { author: currentUserName, visibility: public/private }
 
 # Flow
 
