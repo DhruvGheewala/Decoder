@@ -234,10 +234,22 @@ export class CodeIdeComponent implements OnInit {
         this.loadFileToEditor(file);
       } else {
         alert("File upload discarded! Upload new file..");
+        return;
       }
-    } else {
-      this.loadFileToEditor(file);
+      // let newMode = this.findMode(curExtension);
+      // if (newMode === '') {
+      //   alert("Please select appropriate file!");
+      //   return;
+      // } else {
+      //   let lang = '';
+      //   if (curExtension == '.c') {
+      //     lang = 'C';
+      //   }
+      //   console.log(newMode);
+      //   this.setMode(newMode, lang);
+      // }
     }
+    this.loadFileToEditor(file);
   }
   /**
    * @param mode - current mode of code editor (i.e language)
@@ -265,6 +277,19 @@ export class CodeIdeComponent implements OnInit {
     return extension;
   }
 
+  public findMode(extension) {
+    let mode = '';
+    if (extension === ".c" || extension === '.cpp') {
+      mode = "c_cpp";
+    } else if (extension === ".py") {
+      mode = "python";
+    } else if (extension === ".js") {
+      mode = "javascript";
+    } else if (extension == ".java") {
+      mode = "java";
+    }
+    return mode;
+  }
   /**
    * @returns - current mode of code editor. (selected language)
    */
