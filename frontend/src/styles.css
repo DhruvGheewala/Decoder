@@ -22,7 +22,7 @@ html {
 
 /* Scrollbar */
 ::-webkit-scrollbar {
-  width: 5px;
+  width: 0px;
 }
 
 /* Scrollbar Track */
@@ -33,11 +33,13 @@ html {
 /* Scrollbar Scrollar */
 ::-webkit-scrollbar-thumb {
   background: #888;
+  background: #26272b;
 }
 
 /* Scrollbar Scrollar:hover */
 ::-webkit-scrollbar-thumb:hover {
   background: #555;
+  background: #26272b;
 }
 
 .icon-size {
