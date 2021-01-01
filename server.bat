@@ -1,3 +1,0 @@
-@ECHO OFF
-ECHO Running Backend ...
-start cmd /k "echo Backend && cd backend && npm start"

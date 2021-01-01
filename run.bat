@@ -1,1 +1,0 @@
-.\server.bat && .\client.bat

@@ -1,3 +1,0 @@
-@ECHO OFF
-ECHO Running Frontend ...
-start cmd /k "echo Frontend && cd frontend && ng serve -o"
