@@ -5,8 +5,10 @@
 
 * {
   font-weight: normal;
-  /* border: 2px solid black; */
 }
+/* .b {
+  border: 1px solid red;
+} */
 
 body,
 html {
@@ -20,27 +22,25 @@ html {
   overflow-x: hidden;
 }
 
-/* Scrollbar */
+/* Scrollbar
 ::-webkit-scrollbar {
   width: 0px;
 }
 
-/* Scrollbar Track */
 ::-webkit-scrollbar-track {
   background: #f1f1f1;
 }
 
-/* Scrollbar Scrollar */
 ::-webkit-scrollbar-thumb {
   background: #888;
   background: #26272b;
 }
 
-/* Scrollbar Scrollar:hover */
 ::-webkit-scrollbar-thumb:hover {
   background: #555;
   background: #26272b;
-}
+} 
+*/
 
 .icon-size {
   font-size: 20px !important;

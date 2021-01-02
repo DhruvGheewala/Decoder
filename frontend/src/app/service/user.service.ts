@@ -13,7 +13,6 @@ export class UserService {
   // api request url at backend
   endpoint: string = 'http://localhost:3000/auth';
 
-
   //TODO: Default template of cpp.
   private defaultMode = 'C++';  // caption of language
   private defaultTheme = 'monokai';

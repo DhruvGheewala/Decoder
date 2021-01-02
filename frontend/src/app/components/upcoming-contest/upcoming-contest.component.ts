@@ -18,7 +18,7 @@ export class UpcomingContestComponent implements OnInit {
   prvBtn = null;
   hideSpinner: boolean = false;
 
-  sites = null;
+  sites: Set<string>;
   allData = null;
   copyAllData1 = null; // copy of all data receive from api
   copyAllData2 = null; // copy of allData variable => used for search
@@ -80,7 +80,7 @@ export class UpcomingContestComponent implements OnInit {
     this.copyAllData2.forEach(b => {
       let ok: boolean = false;
       terms.forEach(term => {
-        if (b.name.toLocaleLowerCase().includes(term)) {
+        if (b.name.toLocaleLowerCase().includes(term) || b.site.toLocaleLowerCase().includes(term)) {
           ok = true;
         }
       });

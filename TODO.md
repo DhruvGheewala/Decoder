@@ -76,6 +76,7 @@
     output
     lang.
     author
+    theme
     visibility = public / private
     _id (unique id by mongodb)
 }
