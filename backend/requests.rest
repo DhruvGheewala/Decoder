@@ -1,0 +1,92 @@
+POST http://localhost:3000/api/code/save
+content-type: application/json
+
+{
+    "code": "print('Hello World')", 
+    "author": "Dhruv_Gheewala", 
+    "output": "Hello World", 
+    "language": "Python"
+}
+
+###
+
+POST http://localhost:3000/api/code/save
+content-type: application/json
+
+{
+    "code": "print('Second Post Request !!')", 
+    "author": "Dhruv_Gheewala", 
+    "output": "Second Post Request !!", 
+    "language": "Python", 
+    "visibility": "private"
+}
+
+###
+
+POST http://localhost:3000/api/code/save
+content-type: application/json
+
+{
+    "code": "print('Third Post Request !!')", 
+    "author": "Dhruv_Gheewala", 
+    "output": "Third Post Request !!", 
+    "language": "Python", 
+    "visibility": "private"
+}
+
+###
+
+POST http://localhost:3000/api/code/save
+content-type: application/json
+
+{
+    "code": "print('First Post Request !!')", 
+    "author": "DhruvGheewala", 
+    "output": "First Post Request !!", 
+    "language": "Python", 
+    "visibility": "private"
+}
+
+###
+
+GET http://localhost:3000/api/code/view/DhruvGheewala
+
+###
+
+GET http://localhost:3000/api/code/view/Dhruv_Gheewala
+
+###
+
+PUT http://localhost:3000/api/code/view
+Content-Type: application/json
+
+{
+    "author": "Dhruv_Gheewala"
+}
+
+###
+
+PUT http://localhost:3000/api/code/view
+Content-Type: application/json
+
+{
+    "author": "DhruvGheewala"
+}
+
+###
+
+PUT http://localhost:3000/api/code/view/5ff07e5e82348c3538793faf
+Content-Type: application/json
+
+{
+    "author": "DhruvGheewala"
+}
+
+###
+
+PUT http://localhost:3000/api/code/view/5ff07e5e82348c3538793faf
+Content-Type: application/json
+
+{
+    "author": "Dhruv_Gheewala"
+}
