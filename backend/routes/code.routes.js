@@ -5,8 +5,9 @@ const path = require('path');
 const fs = require('fs');
 
 const { cpp, node, python, java } = require('compile-run');
-const dir = './code';
+const { insertCode, getCode, getAllCodes } = require('../controllers/code.controller');
 
+const dir = './code';
 router.post('/compile', (req, res) => {
 
     const lang = req.body.language;
@@ -30,8 +31,6 @@ router.post('/compile', (req, res) => {
         runner = node;
         filePath += fileName + '.js';
     }
-
-    // console.log(lang, filePath, stdin, code);
 
     if (!runner) {
         return res.status(400).send({
@@ -61,6 +60,25 @@ router.post('/compile', (req, res) => {
 
 router.put('/view/:id?', (req, res) => {
     const id = req.params.id; // value or undefined
+    if (id) {
+        // One Code, One Author
+        const codeData = getCode(id, req.body.author);
+        res.status(200).send(codeData);
+        return;
+    }
+
+    // All Codes, One Author
+    const allData = getAllCodes(req.body.author);
+    res.status(200).send(allData);
+});
+
+router.get('/view/:author', (req, res) => {
+    // All Codes, One Author
+    const allData = getAllCodes(req.body.author);
+    res.status(200).send(allData);
+});
+
+router.post('/save', (req, res) => {
 
 });
 
