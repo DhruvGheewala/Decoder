@@ -49,4 +49,15 @@ function validateCode(code) {
     return Joi.valid(code, schema);
 }
 
-module.exports = { Code, validateCode };
+function getCodeModel(codeData) {
+    return new Code({
+        code: codeData.code,
+        input: codeData.input,
+        output: codeData.output,
+        language: codeData.language,
+        author: codeData.author,
+        visibility: codeData.visibility,
+    });
+}
+
+module.exports = { Code, validateCode, getCodeModel };

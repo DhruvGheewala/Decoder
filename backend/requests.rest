@@ -75,7 +75,7 @@ Content-Type: application/json
 
 ###
 
-PUT http://localhost:3000/api/code/view/5ff07e5e82348c3538793faf
+PUT http://localhost:3000/api/code/view/5ff0bd98f07fd90d6817b39e
 Content-Type: application/json
 
 {
@@ -84,9 +84,51 @@ Content-Type: application/json
 
 ###
 
-PUT http://localhost:3000/api/code/view/5ff07e5e82348c3538793faf
+PUT http://localhost:3000/api/code/update/5ff0bd98f07fd90d6817b39e
 Content-Type: application/json
 
 {
-    "author": "Dhruv_Gheewala"
+    "author": "Changed_author",
+    "code": "print('updated code')", 
+    "output": "updated code", 
+    "visibility": "public", 
+    "language": "Python"
 }
+
+###
+
+PUT http://localhost:3000/api/code/update/5ff0bd98f07fd90d6817b39e
+Content-Type: application/json
+
+{
+    "code": "print('Reverting changes')", 
+    "output": "Reverting changes"
+}
+
+###
+
+DELETE http://localhost:3000/api/code/5ff07e6782348c3538793fb0
+
+###
+
+PUT http://localhost:3000/api/code/view/5ff0bd98f07fd90d6817b39e
+
+###
+
+PUT http://localhost:3000/api/code/view/5ff07e0882348c3538793fae
+
+###
+
+GET http://localhost:3000/api/code/all
+
+###
+
+GET http://localhost:3000/api/code//defaults/cpp
+
+###
+
+GET http://localhost:3000/api/code//defaults/not_avail
+
+###
+
+GET http://localhost:3000/api/code//defaults
