@@ -17,6 +17,6 @@ const codeRoute = require('./routes/code.routes');
 app.use('/api/code', codeRoute);
 
 app.listen(PORT, (err) => {
-    if (err) return console.log(`error : connecting to port !!, ${JSON.stringify(err, undefined, 2)}`);
+    if (err) return console.error(`error : connecting to port !!, ${JSON.stringify(err, undefined, 2)}`);
     console.log(`Server is running on Port: ${PORT}`);
 });

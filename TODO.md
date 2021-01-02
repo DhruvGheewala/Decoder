@@ -17,7 +17,7 @@
 
 - Dhruv
   - create api for code sharing,
-    - url: \*/api/code/view/:id
+    - url: */api/code/view/:id
     - data: { author: currentUserName, visibility: public/private }
 
 # Flow
