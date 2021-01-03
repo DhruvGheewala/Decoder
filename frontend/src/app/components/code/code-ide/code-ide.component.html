@@ -30,7 +30,7 @@
                                         <i class="fas fa-download"></i>
                                     </a>
                                     <a class=" btn-sm btn-default icon-size" data-toggle="tooltip"
-                                        (click)="copyToClipboard('')" title="copy code">
+                                        (click)="copyToClipboard('code')" title="copy code">
                                         <i class="fas fa-copy"></i>
                                     </a>
                                     <a class=" btn-sm btn-default icon-size" data-toggle="tooltip"
@@ -58,17 +58,6 @@
                                                 {{mode.caption}}
                                             </option>
                                         </select>
-
-                                        <!-- <select data-toggle="tooltip" title="Language"
-                                            class="form-control form-control-sm"
-                                            (change)="setMode(modeSelect.value,  $event.target.selectedOptions[0].label)"
-                                            [value]='preferedMode' #modeSelect>
-                                            <option [value]='mode.name' [label]="mode.caption"
-                                                *ngFor="let mode of availableModes"
-                                                [selected]='mode.name === preferedMode ? "selected" : ""'>
-                                                {{mode.caption}}
-                                            </option>
-                                        </select> -->
                                     </div>
                                 </div>
                                 <div class="col-sm-2 ">
@@ -88,7 +77,7 @@
                                     <!-- Run -->
                                     <button data-toggle="tooltip" title="Ctrl + b" type="button" id="runButton"
                                         class="col btn btn-outline-primary btn-sm"
-                                        (click)="runClicked(runButton, inputArea, outputArea, errArea)" #runButton>
+                                        (click)="runClicked(runButton, errArea)" #runButton>
                                         <i class="fas fa-play"></i>
                                         <span class="ml-1"> Run </span>
                                     </button>
@@ -97,10 +86,56 @@
                         </div>
                     </div>
                 </div>
-                <div class="row">
-                    <!-- IDE -->
-                    <div class="col">
-                        <div class="codeEditor" #codeEditor></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="ml-2 col-sm-8" #codeEditor></div>
+        <div class="col">
+            <div class="row">
+                <div class="col">
+                    <div>
+                        <div class="row border">
+                            <div class="col">
+                                <span class="font-code font-weight-bold">
+                                    <i class="fas fa-inbox"></i>
+                                    Input
+                                </span>
+                            </div>
+                            <div class="col text-right">
+                                <a class="btn-floating btn-sm btn-default" data-toggle="tooltip" data-placement="left"
+                                    (click)="copyToClipboard('input')" title="copy input">
+                                    <i class="fas fa-copy"></i>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col" #inputEditor></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <div>
+                        <div class="row border">
+                            <div class="col">
+                                <span class="font-code font-weight-bold">
+                                    <i class="fas fa-poll-h"></i>
+                                    Output
+                                </span>
+                            </div>
+                            <div class="col text-right">
+                                <a class="btn-floating btn-sm btn-default" data-toggle="tooltip" data-placement="left"
+                                    (click)="copyToClipboard('output')" title="copy output">
+                                    <i class="fas fa-copy"></i>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col" #outputEditor></div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -128,6 +163,7 @@
             aria-label="output-textarea" #errArea></textarea>
     </div>
 
+    <!-- 
     <div class="row">
         <div class="col ml-2">
             <div>
@@ -173,4 +209,5 @@
             </div>
         </div>
     </div>
+-->
 </div>

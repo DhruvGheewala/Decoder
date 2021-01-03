@@ -19,27 +19,8 @@ html {
   height: 100%;
   min-height: 100%;
   font-family: Arial, Helvetica, sans-serif;
+  overflow-x: hidden;
 }
-
-/* Scrollbar
-::-webkit-scrollbar {
-  width: 0px;
-}
-
-::-webkit-scrollbar-track {
-  background: #f1f1f1;
-}
-
-::-webkit-scrollbar-thumb {
-  background: #888;
-  background: #26272b;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: #555;
-  background: #26272b;
-} 
-*/
 
 .icon-size {
   font-size: 20px !important;

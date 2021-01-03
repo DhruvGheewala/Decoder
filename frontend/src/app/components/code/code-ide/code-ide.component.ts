@@ -74,11 +74,17 @@ export class CodeIdeComponent implements OnInit {
   }
 
   @ViewChild('codeEditor', { static: true }) private codeEditorElemRef: ElementRef;
+  @ViewChild('inputEditor', { static: true }) private inputEditorElemRef: ElementRef;
+  @ViewChild('outputEditor', { static: true }) private outputEditorElemRef: ElementRef;
   @ViewChild('modeSelect', { static: true }) private modeSelectElemRef: ElementRef;
 
+  // ace editors
   private codeEditor: ace.Ace.Editor;
+  private inputEditor: ace.Ace.Editor;
+  private outputEditor: ace.Ace.Editor;
   private editorBeautify: any;
-  private codeEditorElem: any;
+
+  // launguage mode element
   private modeSelectElem: any;
 
   availableModes: any;
@@ -86,7 +92,6 @@ export class CodeIdeComponent implements OnInit {
   preferedMode: any;
   preferedTheme: any;
 
-  hitCompile: boolean;
   isError: boolean;
   fileContent: any = '';
 
@@ -94,20 +99,43 @@ export class CodeIdeComponent implements OnInit {
   ngOnInit(): void {
     $('[data-toggle="tooltip"]').tooltip();
     this.isError = false;
+
     // Pre-Requisites
     this.availableModes = this.adminData.getModes();
     this.availableThemes = this.adminData.getThemes();
 
+    // ace editor
     ace.require('ace/ext/language_tools');
     this.editorBeautify = ace.require('ace/ext/beautify');
 
+    // frontend elements
+    let codeEditorElem = this.codeEditorElemRef.nativeElement;
+    let inputEditorElem = this.inputEditorElemRef.nativeElement;
+    let outputEditorElem = this.outputEditorElemRef.nativeElement;
     this.modeSelectElem = this.modeSelectElemRef.nativeElement;
-    this.codeEditorElem = this.codeEditorElemRef.nativeElement;
 
     const editorOptions: Partial<ace.Ace.EditorOptions> = this.getEditorOptions();
 
     // Configuration
-    this.codeEditor = ace.edit(this.codeEditorElem, editorOptions);
+    this.codeEditor = ace.edit(codeEditorElem, editorOptions);
+    this.inputEditor = ace.edit(inputEditorElem, {
+      highlightActiveLine: true,
+      minLines: 13,
+      maxLines: 13,
+    });
+    this.outputEditor = ace.edit(outputEditorElem, {
+      highlightActiveLine: true,
+      minLines: 13,
+      maxLines: 13,
+    });
+
+    // for the scope fold feature
+    this.codeEditor.setShowFoldWidgets(true);
+
+    // Font-Size
+    codeEditorElem.style.fontSize = '18px';
+    inputEditorElem.style.fontSize = '18px';
+    outputEditorElem.style.fontSize = '18px';
 
     // Theme
     this.preferedTheme = this.userData.getTheme();
@@ -119,12 +147,6 @@ export class CodeIdeComponent implements OnInit {
       if (mode.caption === this.preferedMode)
         this.setMode(mode.name, this.preferedMode);
     });
-
-    // for the scope fold feature
-    this.codeEditor.setShowFoldWidgets(true);
-
-    // Font-Size
-    this.codeEditorElem.style.fontSize = '18px';
   }
 
   /**
@@ -133,8 +155,8 @@ export class CodeIdeComponent implements OnInit {
   private getEditorOptions(): Partial<ace.Ace.EditorOptions> & { enableBasicAutocompletion?: boolean; } {
     const basicEditorOptions: Partial<ace.Ace.EditorOptions> = {
       highlightActiveLine: true,
-      minLines: 20,
-      maxLines: 20,
+      minLines: 28,
+      maxLines: 28,
       wrap: 150
     };
     const extraEditorOptions = {
@@ -142,8 +164,7 @@ export class CodeIdeComponent implements OnInit {
       enableLiveAutocompletion: true,
       autoScrollEditorIntoView: true,
     };
-    const mergedOptions = Object.assign(basicEditorOptions, extraEditorOptions);
-    return mergedOptions;
+    return Object.assign(basicEditorOptions, extraEditorOptions);
   }
 
   /**
@@ -168,29 +189,21 @@ export class CodeIdeComponent implements OnInit {
     this.codeEditor.getSession().setMode(`ace/mode/${mode}`);
   }
 
-  /**
-   * Beautify the content of editor
-   */
+  // editor methods
   public beautifyContent() {
     if (this.codeEditor && this.editorBeautify) {
       const session = this.codeEditor.getSession();
       this.editorBeautify.beautify(session);
     }
   }
-
-  /**
-   * Clear the editor
-   */
-  public clearCode() {
-    const code = this.getCode();
-    this.codeEditor.setValue('');
+  public clearCode(editor = this.codeEditor) {
+    const code = this.getCode(editor);
+    editor.setValue('');
     return code;
   }
-
-  /**
-   * @returns - code written by user inside code-editor
-   */
-  public getCode() { return this.codeEditor.getValue(); }
+  public getCode(editor = this.codeEditor) {
+    return editor.getValue();
+  }
 
   public setUserChoice() {
     let mode = this.getCurrentMode();
@@ -199,18 +212,24 @@ export class CodeIdeComponent implements OnInit {
     this.userData.setTheme(theme);
   }
 
-  public copyToClipboard(element) {
+  public copyToClipboard(editor) {
     const selBox = document.createElement('textarea');
     selBox.style.position = 'fixed';
     selBox.style.left = '0';
     selBox.style.top = '0';
     selBox.style.opacity = '0';
-    let txt;
-    if (element === '') {
-      txt = this.getCode();
-    } else {
-      txt = element.value;
+
+    let txt = "";
+    if (editor == "code") {
+      txt = this.codeEditor.getValue();
     }
+    else if (editor == "input") {
+      txt = this.inputEditor.getValue();
+    }
+    else if (editor == "output") {
+      txt = this.outputEditor.getValue();
+    }
+
     selBox.value = txt;
     document.body.appendChild(selBox);
     selBox.focus();
@@ -235,10 +254,8 @@ export class CodeIdeComponent implements OnInit {
 
   /**
    * @param fileList - list of file uploaded
-   * 
    * @description -listen to change file event whenever user changes
    * file function will validate file and acts according to user's selection
-   * 
    */
   public onChangeFile(fileList: FileList): void {
     let file = fileList[0];
@@ -253,7 +270,6 @@ export class CodeIdeComponent implements OnInit {
           this.setMode(mode.name, mode.caption);
         }
       });
-
       if (!found) alert(`You can't upload this file: ${file.name}`);
       return;
     }
@@ -267,15 +283,16 @@ export class CodeIdeComponent implements OnInit {
     'JavaScript': { 'extension': '.js' },
     'Python': { 'extension': '.py' }
   };
+
   /**
    * @param mode - current mode of code editor (i.e language)
-   * 
    * @description - generates file extension according to current mode of
    * code editor
-   * 
    * @returns - extension of file 
    */
-  public findExtension(mode) { return this.languageData[this.preferedMode].extension; }
+  public findExtension(mode) {
+    return this.languageData[this.preferedMode].extension;
+  }
 
   public findMode(extension) {
     let mode = '';
@@ -290,6 +307,7 @@ export class CodeIdeComponent implements OnInit {
     }
     return mode;
   }
+
   /**
    * @returns - current mode of code editor. (selected language)
    */
@@ -315,7 +333,7 @@ export class CodeIdeComponent implements OnInit {
    * user machine. (sample.[extension] file)
    */
   public downloadCode() {
-    let code = this.getCode();
+    let code = this.codeEditor.getValue();
     let filename = "code" + this.findExtension(this.getCurrentMode());
     let a = document.createElement('a');
     let blob = new Blob([code], { type: 'text' });
@@ -324,47 +342,39 @@ export class CodeIdeComponent implements OnInit {
     a.setAttribute('download', filename)
     a.style.display = 'none';
     document.body.appendChild(a);
-    a.click()
+    a.click();
     document.body.removeChild(a);
   }
 
-  public runClicked(runButton, inputArea, outputArea, errArea) {
+  public runClicked(runButton, errArea) {
     const codeObj = {
-      code: this.getCode(),
+      code: this.codeEditor.getValue(),
       language: this.getCurrentMode(),
-      stdin: inputArea.value
+      stdin: this.inputEditor.getValue()
     }
 
     this.isError = false;
-
     runButton.disabled = true;
-    inputArea.disabled = true;
 
     this.userData.compileRun(codeObj).subscribe((data) => {
       runButton.disabled = false;
-      inputArea.disabled = false;
-
       let err = '';
-      console.log(errArea);
-
       if (data.errorType) {
         this.isError = true;
         err += `- ${data.errorType} error\n`;
         err += `- Signal : ${data.signal}\n`;
-        err += `- Exit Code : ${data.exitCode}\n`;
+        err += `- Exit Code : ${data.exitCode}\n\n`;
       }
-
       if (data.stderr) {
         this.isError = true;
-        err += `\nStderr : \n${data.stderr}`;
+        err += `${data.stderr}`;
       }
       errArea.value = err;
-      outputArea.value = data.stdout;
+      this.outputEditor.setValue(data.stdout);
     });
   }
 
   uploadFileClick() {
     document.getElementById("codeUpload").click();
   }
-
 }
