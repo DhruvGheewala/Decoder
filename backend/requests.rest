@@ -54,34 +54,11 @@ GET http://localhost:3000/api/code/view/dhiraj-01
 
 ###
 
-GET http://localhost:3000/api/code/view/Dhruv_Gheewala
+GET http://localhost:3000/api/code/view/DhruvGheewala/5ff1b8ef70e1bd0a0ce3f6df
 
 ###
 
-PUT http://localhost:3000/api/code/view
-Content-Type: application/json
-
-{
-    "author": "Dhruv_Gheewala"
-}
-
-###
-
-PUT http://localhost:3000/api/code/view
-Content-Type: application/json
-
-{
-    "author": "DhruvGheewala"
-}
-
-###
-
-PUT http://localhost:3000/api/code/view/5ff0bd98f07fd90d6817b39e
-Content-Type: application/json
-
-{
-    "author": "DhruvGheewala"
-}
+GET  http://localhost:3000/api/code/view/Dhruv_Gheewala
 
 ###
 
@@ -103,20 +80,17 @@ Content-Type: application/json
 
 {
     "code": "print('Reverting changes')", 
-    "output": "Reverting changes"
+    "output": "Reverting changes", 
+    "visibility": "Private"
 }
 
 ###
 
-DELETE http://localhost:3000/api/code/5ff07e6782348c3538793fb0
+DELETE http://localhost:3000/api/code/delete/5ff07e6782348c3538793fb0
 
 ###
 
-PUT http://localhost:3000/api/code/view/5ff0bd98f07fd90d6817b39e
-
-###
-
-PUT http://localhost:3000/api/code/view/5ff07e0882348c3538793fae
+GET http://localhost:3000/api/code/view/Dhruv_Gheewala/5ff0bd98f07fd90d6817b39e
 
 ###
 
@@ -124,12 +98,72 @@ GET http://localhost:3000/api/code/all
 
 ###
 
-GET http://localhost:3000/api/code//defaults/cpp
+GET http://localhost:3000/api/code/defaults/cpp
 
 ###
 
-GET http://localhost:3000/api/code//defaults/not_avail
+GET http://localhost:3000/api/code/defaults
 
 ###
 
-GET http://localhost:3000/api/code//defaults
+# Error Checking
+POST http://localhost:3000/api/code/compile
+content-type: application/json
+
+{
+    "code": "print('Second Post Request !!')", 
+    "author": "a", 
+    "output": "Second Post Request !!", 
+    "language": "dsadsa", 
+    "visibility": "private"
+}
+
+###
+
+GET http://localhost:3000/api/code/view/Mukesh/dsdsa
+
+###
+
+PUT http://localhost:3000/api/code/update/219847129
+Content-Type: application/json
+
+{
+    
+}
+
+###
+
+DELETE http://localhost:3000/api/code/delete/219847129
+
+###
+
+GET http://localhost:3000/api/code/defaults/not_avail
+
+###
+
+GET http://localhost:3000/api/code/view/DhruvGheewala/5ff0bd98f07fd90d6817b39e
+
+###
+
+DELETE http://localhost:3000/api/code/delete/5ff07e6782348c3538793fb0
+
+###
+
+PUT http://localhost:3000/api/code/update/5ff0bd98f07fd0d6817b39e
+Content-Type: application/json
+
+{
+    "code": "print('Reverting changes')", 
+    "output": "Reverting changes", 
+    "visibility": "Private"
+}
+
+###
+
+GET http://localhost:3000/api/code/view/DhruvGheewala/5ff0bd98f07fd90d6817b39e
+
+###
+
+GET http://localhost:3000/api/code/view/Dhruv_Gheewala/5ff1b8ef70e1bd0a0ce3f6df
+
+###

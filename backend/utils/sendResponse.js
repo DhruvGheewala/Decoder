@@ -1,12 +1,5 @@
 module.exports = (message, res, errorCode = 200) => {
-    console.log(message);
-    if(errorCode == 200) {
-        res.status(200).json({
-            message
-          });
-    }else{
-        res.status(errorCode).json({
-            error: message
-        });
-    }
-  };
+    if (200 <= errorCode && errorCode <= 299)
+        return res.status(errorCode).send(message);
+    res.status(errorCode).send({ err: message });
+};

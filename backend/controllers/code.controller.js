@@ -1,6 +1,14 @@
 const { Code, validateCode, getCodeModel } = require('../models/code.model');
 const { cpp, node, python, java } = require('compile-run');
 
+function errorToJSON(error) {
+    let err = {};
+    for (const key in error)
+        err[key] = error[key];
+    console.error(err);
+    return { err };
+}
+
 // Todo: Not working, will fix it soon !!
 async function compress(id) {
     return id;
@@ -11,7 +19,7 @@ async function insertCode(data) {
         console.log(data);
 
         const _code = getCodeModel(data);
-        // Todo: Not working, will fix it soon !!
+
         const isValid = validateCode(_code);
         console.log('isValid', isValid);
 
@@ -19,35 +27,37 @@ async function insertCode(data) {
         result.id = await compress(result._id);
         return await result.save();
     } catch (err) {
-        console.error(err);
-        return err;
+        return errorToJSON(err);
     }
 }
 
 async function updateCode(id, data) {
     try {
+        if (!data) return null;
+
         const code = getCodeModel(data);
+        if (code.id) return { err: 'Bad request' };
+
         const _code = await Code.findById(id);
-        for (const key in data) {
-            _code[key] = code[key] || _code[key];
-        }
+        if (!_code) return null;
+
+
+        for (const key in data) _code[key] = code[key] || _code[key];
         return await _code.save();
     } catch (err) {
-        console.error(err);
-        return err;
+        return errorToJSON(err);
     }
 }
 
 async function getCode(id, currentUser) {
     try {
         let codeData = await Code.find({ id });
+        if (!codeData.length) return null;
         codeData = codeData[0];
-        if (!codeData) return null;
         if (codeData.visibility === 'public') return codeData;
         return codeData.author === currentUser ? codeData : null;
     } catch (err) {
-        console.error(err);
-        return err;
+        return errorToJSON(err);
     }
 }
 
@@ -55,8 +65,7 @@ async function deleteCode(id) {
     try {
         return await Code.deleteOne({ id });
     } catch (err) {
-        console.error(err);
-        return err;
+        return errorToJSON(err);
     }
 }
 
