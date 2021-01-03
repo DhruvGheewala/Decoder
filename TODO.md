@@ -89,3 +89,11 @@ user can create, delete, update code, blog
 - /profile/:user if this is same user as :user we have to display all public, private codes, blogs
     so create api accordingly
 - /ide/edit/:id => edit code => backend /api/code/view/:id
+
+
+
+
+### backend user authentication
+1. User database(model) is created and under scrunity. 
+2. User controller is under development.
+3. util file is added for some utility (or you can say repetitive tasks). use this to create any utility.
