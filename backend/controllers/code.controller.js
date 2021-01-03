@@ -76,7 +76,10 @@ async function getAllPublicCodes(currentUser) {
 
 function getRunner(lang) {
     let runner = null;
-    if (lang === 'c' || lang === 'cpp') {
+    // Todo: temporary fix on c_cpp
+    if (lang === 'c_cpp') {
+        runner = cpp;
+    } else if (lang === 'c' || lang === 'cpp') {
         runner = cpp;
     } else if (lang === 'python') {
         runner = python;
@@ -91,7 +94,10 @@ function getRunner(lang) {
 const dir = './code';
 function generateFilePath(fileName, lang) {
     let result = null;
-    if (lang === 'c') {
+    // Todo: temporary fix on c_cpp
+    if (lang === 'c_cpp') {
+        result = `${dir}/${fileName}.cpp`;
+    } else if (lang === 'c') {
         result = `${dir}/${fileName}.c`;
     } else if (lang === 'cpp') {
         result = `${dir}/${fileName}.cpp`;

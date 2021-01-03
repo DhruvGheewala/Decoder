@@ -1,3 +1,16 @@
+POST http://localhost:3000/api/code/compile
+content-type: application/json
+
+{
+    "code": "print('Second Post Request !!')", 
+    "author": "a", 
+    "output": "Second Post Request !!", 
+    "language": "python", 
+    "visibility": "private"
+}
+
+###
+
 POST http://localhost:3000/api/code/save
 content-type: application/json
 
@@ -114,7 +127,7 @@ content-type: application/json
     "code": "print('Second Post Request !!')", 
     "author": "a", 
     "output": "Second Post Request !!", 
-    "language": "dsadsa", 
+    "language": "gkjg", 
     "visibility": "private"
 }
 
