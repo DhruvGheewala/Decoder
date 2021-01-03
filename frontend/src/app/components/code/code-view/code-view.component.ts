@@ -1,4 +1,5 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 
 // Ace Editor
 import * as ace from 'ace-builds';
@@ -71,11 +72,22 @@ export class CodeViewComponent implements OnInit {
   @ViewChild('errArea', { static: true }) private errorAreaElemRef: ElementRef;
 
   private codeEditor: ace.Ace.Editor;
-  code_data: any;
 
-  constructor(private userData: UserService) { }
+  code_data: any;
+  code_id: string = null;
+
+  constructor(
+    private userData: UserService,
+    private route: ActivatedRoute
+  ) {
+    this.code_id = route.snapshot.params.id;
+  }
 
   ngOnInit(): void {
+    this.userData.getCodeById(this.code_id).subscribe((data) => {
+      console.log(data);
+    });
+
     $('[data-toggle="tooltip"]').tooltip();
 
     { // editor configuration

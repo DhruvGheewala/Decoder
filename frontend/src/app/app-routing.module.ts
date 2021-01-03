@@ -34,7 +34,7 @@ const routes: Routes = [
     component: CodeViewComponent,
   },
   {
-    path: 'code/recents',
+    path: 'code/list',
     component: CodeRecentComponent,
   },
   {

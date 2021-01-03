@@ -44,8 +44,7 @@ content-type: application/json
     "code": "print('Third Post Request !!')", 
     "author": "Dhruv_Gheewala", 
     "output": "Third Post Request !!", 
-    "language": "Python", 
-    "visibility": "private"
+    "language": "Python"
 }
 
 ###
