@@ -36,18 +36,13 @@ const codeSchema = new mongoose.Schema({
     }
 });
 
+const codeValidationSchema = Joi.object({
+    code: Joi.string().required(),
+    author: Joi.string().min(2).max(10).required(),
+    visibility: Joi.string().required().lowercase().valid('public', 'private')
+});
+
 const Code = mongoose.model('Code', codeSchema);
-
-// Todo: Not working, will fix it soon !!
-
-function validateCode(code) {
-    const schema = {
-        code: Joi.string().required(),
-        author: Joi.string().min(2).max(10).required(),
-        visibility: Joi.string().required().lowercase().valid('public', 'private')
-    }
-    return Joi.valid(code, schema);
-}
 
 function getCodeModel(codeData) {
     return new Code({
@@ -60,4 +55,10 @@ function getCodeModel(codeData) {
     });
 }
 
-module.exports = { Code, validateCode, getCodeModel };
+function validateCode(code) { return codeValidationSchema.validate(code); }
+
+module.exports = {
+    Code,
+    validateCode,
+    getCodeModel
+};
