@@ -3,8 +3,7 @@ const Joi = require('joi');
 
 const codeSchema = new mongoose.Schema({
     id: {
-        type: String,
-        // required: true
+        type: String
     },
     code: {
         type: String,
@@ -12,11 +11,11 @@ const codeSchema = new mongoose.Schema({
     },
     input: {
         type: String,
-        required: true
+        default: ''
     },
     output: {
         type: String,
-        required: true
+        default: ''
     },
     language: {
         type: String,
@@ -38,8 +37,9 @@ const codeSchema = new mongoose.Schema({
 
 const codeValidationSchema = Joi.object({
     code: Joi.string().required(),
-    author: Joi.string().min(2).max(10).required(),
-    visibility: Joi.string().required().lowercase().valid('public', 'private')
+    author: Joi.string().min(3).max(20).required(),
+    language: Joi.string().required(),
+    visibility: Joi.string().lowercase().valid('public', 'private')
 });
 
 const Code = mongoose.model('Code', codeSchema);

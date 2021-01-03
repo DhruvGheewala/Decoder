@@ -7,7 +7,6 @@ const fs = require('fs');
 const {
     insertCode,
     getCode,
-    getAllCodes,
     getAllPublicCodes,
     getRunner,
     generateFilePath,
@@ -52,18 +51,17 @@ router.post('/compile', (req, res) => {
 
 // Todo: error handeling
 
-router.put('/view/:id?', async (req, res) => {
-    const id = req.params.id; // value or undefined
+// Private codes will be send back only iff code[id].author === currentUser
+router.get('/view/:currentUser/:id?', async (req, res) => {
+    const id = req.params.id;
+    const currentUser = req.params.currentUser;
 
-    // reading code
     if (id) {
-        // One Code, One Author
-        const codeData = await getCode(id, req.body.author);
+        const codeData = await getCode(id, currentUser);
         return res.status(200).send(codeData);
     }
 
-    // All Codes, One Author
-    const allData = await getAllCodes(req.body.author);
+    const allData = await getAllPublicCodes(currentUser);
     res.status(200).send(allData);
 });
 
@@ -73,18 +71,13 @@ router.put('/update/:id', async (req, res) => {
     res.status(200).send(result);
 });
 
-router.get('/view/:author', async (req, res) => {
-    // All Codes, One Author
-    const allData = await getAllCodes(req.params.author);
-    res.status(200).send(allData);
-});
-
-router.delete('/:id', async (req, res) => {
+router.delete('/delete/:id', async (req, res) => {
     const result = await deleteCode(req.params.id);
     res.status(200).send(result);
 })
 
 router.post('/save', async (req, res) => {
+    console.log(req.body);
     const codeData = getCodeData(req.body);
     const result = await insertCode(codeData);
     res.status(200).send(result);

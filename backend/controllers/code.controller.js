@@ -8,9 +8,13 @@ async function compress(id) {
 
 async function insertCode(data) {
     try {
+        console.log(data);
+
         const _code = getCodeModel(data);
         // Todo: Not working, will fix it soon !!
-        // const isValid = validateCode(_code);
+        const isValid = validateCode(_code);
+        console.log('isValid', isValid);
+
         const result = await _code.save();
         result.id = await compress(result._id);
         return await result.save();
@@ -27,7 +31,6 @@ async function updateCode(id, data) {
         for (const key in data) {
             _code[key] = code[key] || _code[key];
         }
-        console.log(_code);
         return await _code.save();
     } catch (err) {
         console.error(err);
@@ -35,13 +38,13 @@ async function updateCode(id, data) {
     }
 }
 
-async function getCode(id, author) {
+async function getCode(id, currentUser) {
     try {
         let codeData = await Code.find({ id });
         codeData = codeData[0];
-        if (!codeData) return codeData;
-        if (codeData.visibility.toLowerCase() === 'public') return codeData;
-        return codeData.author === author ? codeData : null;
+        if (!codeData) return null;
+        if (codeData.visibility === 'public') return codeData;
+        return codeData.author === currentUser ? codeData : null;
     } catch (err) {
         console.error(err);
         return err;
@@ -57,8 +60,10 @@ async function deleteCode(id) {
     }
 }
 
-async function getAllCodes(author) { return await Code.find({ author: author }); }
-async function getAllPublicCodes() { return await Code.find({ visibility: 'public' }); }
+async function getAllPublicCodes(currentUser) {
+    if (currentUser) return await Code.find({ author: currentUser, visibility: 'public' });
+    return await Code.find({ visibility: 'public' });
+}
 
 function getRunner(lang) {
     let runner = null;
@@ -98,14 +103,13 @@ function getCodeData(data) {
         output: data.output,
         language: data.language,
         author: data.author,
-        visibility: data.visibility
+        visibility: data.visibility ? data.visibility.toLowerCase() : 'public'
     };
 }
 
 module.exports = {
     insertCode,
     getCode,
-    getAllCodes,
     getAllPublicCodes,
     getRunner,
     generateFilePath,
