@@ -3,8 +3,9 @@ content-type: application/json
 
 {
     "code": "print('Hello World')", 
-    "author": "Dhruv_Gheewala", 
-    "output": "Hello World", 
+    "author": "dhiraj-01", 
+    "input": "12",
+    "output": "Hello World",
     "language": "Python"
 }
 
@@ -49,7 +50,7 @@ content-type: application/json
 
 ###
 
-GET http://localhost:3000/api/code/view/DhruvGheewala
+GET http://localhost:3000/api/code/view/dhiraj-01
 
 ###
 
