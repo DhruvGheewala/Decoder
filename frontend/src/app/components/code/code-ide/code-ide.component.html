@@ -14,7 +14,7 @@
                             <div class="row">
                                 <div class="col text-right mt-1">
                                     <a class=" btn-sm btn-default icon-size" data-toggle="tooltip"
-                                        title="Share your code">
+                                        title="Share your code" (click)="shareCodeClick()">
                                         <i class="fas fa-share-square"></i>
                                     </a>
                                     <a class=" btn-sm btn-default icon-size" data-toggle="tooltip"
@@ -76,8 +76,8 @@
                                 <div class="col-sm-2 ">
                                     <!-- Run -->
                                     <button data-toggle="tooltip" title="Ctrl + b" type="button" id="runButton"
-                                        class="col btn btn-outline-primary btn-sm"
-                                        (click)="runClicked(runButton, errArea)" #runButton>
+                                        class="col btn btn-outline-primary btn-sm" (click)="runClicked(runButton)"
+                                        #runButton>
                                         <i class="fas fa-play"></i>
                                         <span class="ml-1"> Run </span>
                                     </button>
@@ -153,14 +153,14 @@
                 </div>
                 <div class="col text-right">
                     <a class="btn-floating btn-sm btn-default" data-toggle="tooltip" data-placement="left"
-                        (click)="copyToClipboard(errArea)" title="copy stderr">
+                        (click)="copyToClipboard('error')" title="copy stderr">
                         <i class="fas fa-copy"></i>
                     </a>
                 </div>
             </div>
         </div>
         <textarea class="font-small font-code form-control text-danger" disabled="true" rows="10"
-            aria-label="output-textarea" #errArea></textarea>
+            aria-label="output-textarea" #error></textarea>
     </div>
 
     <!-- 

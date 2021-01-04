@@ -16,7 +16,7 @@ import { LoginComponent } from './components/login/login.component';
 import { BlogViewComponent } from './components/blog/blog-view/blog-view.component';
 import { BlogCreateComponent } from './components/blog/blog-create/blog-create.component';
 import { BlogEditComponent } from './components/blog/blog-edit/blog-edit.component';
-import { BlogListComponent } from './components/blog/blog-list/blog-list.component';
+import { BlogRecentComponent } from './components/blog/blog-recent/blog-recent.component';
 import { RegisterComponent } from './components/register/register.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { AboutComponent } from './components/about/about.component';
@@ -41,7 +41,7 @@ import { AdminService } from "./service/admin.service";
     BlogViewComponent,
     BlogCreateComponent,
     BlogEditComponent,
-    BlogListComponent,
+    BlogRecentComponent,
     RegisterComponent,
     ProfileComponent,
     AboutComponent,

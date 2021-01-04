@@ -74,15 +74,13 @@ export class UserService {
   private compileUrl = `${this.apiUrl}/code/compile`;
   compileRun(data) { return this.http.post<any>(this.compileUrl, data); }
 
-  // TODO: POST API CALL TO BACKEND
-  saveCode(code) {
-
-  }
-
   getAllPublicCodes(): Observable<any> {
     return this.http.get<any>(this.apiUrl + '/code/all');
   }
-  getCodeById(id: string) {
-    return this.http.get<any>(this.apiUrl + '/code/view/' + id);
+  getCodeById(id: string): Observable<any> {
+    return this.http.get<any>(this.apiUrl + '/code/view/public/' + id);
+  }
+  saveCode(data): Observable<any> {
+    return this.http.post<any>(this.apiUrl + '/code/save', data);
   }
 }

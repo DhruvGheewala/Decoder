@@ -3,8 +3,8 @@ import { Routes, RouterModule } from '@angular/router';
 import { AboutComponent } from './components/about/about.component';
 import { BlogCreateComponent } from './components/blog/blog-create/blog-create.component';
 import { BlogEditComponent } from './components/blog/blog-edit/blog-edit.component';
-import { BlogListComponent } from './components/blog/blog-list/blog-list.component';
 import { BlogViewComponent } from './components/blog/blog-view/blog-view.component';
+import { BlogRecentComponent } from "./components/blog/blog-recent/blog-recent.component";
 import { ContactComponent } from './components/contact/contact.component';
 import { ErrorComponent } from './components/error/error.component';
 import { HomeComponent } from './components/home/home.component';
@@ -34,7 +34,7 @@ const routes: Routes = [
     component: CodeViewComponent,
   },
   {
-    path: 'code/list',
+    path: 'code/recent',
     component: CodeRecentComponent,
   },
   {
@@ -42,8 +42,8 @@ const routes: Routes = [
     component: UpcomingContestComponent,
   },
   {
-    path: 'blog/list',
-    component: BlogListComponent,
+    path: 'blog/recent',
+    component: BlogRecentComponent,
   },
   {
     path: 'blog/create',

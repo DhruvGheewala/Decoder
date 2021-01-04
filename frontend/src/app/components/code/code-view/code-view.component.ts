@@ -55,7 +55,6 @@ import 'ace-builds/src-min-noconflict/ext-language_tools';
 import 'ace-builds/src-noconflict/ext-beautify';
 
 // Services
-import { AdminService } from "src/app/service/admin.service";
 import { UserService } from "src/app/service/user.service";
 declare var $: any;
 
@@ -67,11 +66,13 @@ declare var $: any;
 export class CodeViewComponent implements OnInit {
 
   @ViewChild('codeEditor', { static: true }) private codeEditorElemRef: ElementRef;
-  @ViewChild('inputArea', { static: true }) private inputAreaElemRef: ElementRef;
-  @ViewChild('outputArea', { static: true }) private outputAreaElemRef: ElementRef;
+  @ViewChild('inputEditor', { static: true }) private inputEditorElemRef: ElementRef;
+  @ViewChild('outputEditor', { static: true }) private outputEditorElemRef: ElementRef;
   @ViewChild('errArea', { static: true }) private errorAreaElemRef: ElementRef;
 
   private codeEditor: ace.Ace.Editor;
+  private inputEditor: ace.Ace.Editor;
+  private outputEditor: ace.Ace.Editor;
 
   code_data: any;
   code_id: string = null;
@@ -84,98 +85,77 @@ export class CodeViewComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.userData.getCodeById(this.code_id).subscribe((data) => {
-      console.log(data);
-    });
-
     $('[data-toggle="tooltip"]').tooltip();
 
-    { // editor configuration
+    this.userData.getCodeById(this.code_id).subscribe((data) => {
+      this.code_data = data;
+      console.log(data);
 
-      ace.require('ace/ext/language_tools');
-      let editorBeautify = ace.require('ace/ext/beautify');
+      { // editor configuration
 
-      let codeEditorElem = this.codeEditorElemRef.nativeElement;
-      const editorOptions: Partial<ace.Ace.EditorOptions> = this.getEditorOptions();
+        ace.require('ace/ext/language_tools');
+        let editorBeautify = ace.require('ace/ext/beautify');
 
-      // Configuration
-      this.codeEditor = ace.edit(codeEditorElem, editorOptions);
+        // frontend elements
+        let codeEditorElem = this.codeEditorElemRef.nativeElement;
+        let inputEditorElem = this.inputEditorElemRef.nativeElement;
+        let outputEditorElem = this.outputEditorElemRef.nativeElement;
 
-      // for the scope fold feature
-      this.codeEditor.setShowFoldWidgets(true);
+        // Configuration
+        this.codeEditor = ace.edit(codeEditorElem, {
+          minLines: 28,
+          maxLines: 28,
+          wrap: 100
+        });
+        this.inputEditor = ace.edit(inputEditorElem, {
+          highlightActiveLine: true,
+          minLines: 13,
+          maxLines: 13,
+        });
+        this.outputEditor = ace.edit(outputEditorElem, {
+          highlightActiveLine: true,
+          minLines: 13,
+          maxLines: 13,
+        });
 
-      // Font-Size
-      codeEditorElem.style.fontSize = '18px';
-    }
+        codeEditorElem.style.fontSize = '18px';
+        inputEditorElem.style.fontSize = '18px';
+        outputEditorElem.style.fontSize = '18px';
+      }
 
-    this.code_data = {
-      author: "dhiraj-01",
-      code: `#include <stdio.h>
-int main() {
-  
-};`,
-      input: "123",
-      output: "345",
-      error: "",
-      theme: "monokai",
-      language: "c_cpp",
-    }
+      this.setTheme(this.code_data.theme || "monokai");
+      this.setMode(this.code_data.language.toLowerCase());
 
-    // set data
-    this.setTheme(this.code_data.theme);
-    this.setMode(this.code_data.language);
-    this.codeEditor.setValue(this.code_data.code);
-    this.codeEditor.setReadOnly(true);
-    this.inputAreaElemRef.nativeElement.value = this.code_data.input;
-    this.outputAreaElemRef.nativeElement.value = this.code_data.output;
-    this.errorAreaElemRef.nativeElement.value = this.code_data.error;
+      this.codeEditor.setValue(this.code_data.code);
+      this.inputEditor.setValue(this.code_data.input);
+      this.outputEditor.setValue(this.code_data.output);
+
+      this.codeEditor.setReadOnly(true);
+      this.inputEditor.setReadOnly(true);
+      this.outputEditor.setReadOnly(true);
+
+      this.errorAreaElemRef.nativeElement.value = this.code_data.error;
+    });
   }
 
-  /**
-   * Sets the mode of editor to provided mode, default if null
-   * @param mode - this is selected programming language mode
-   */
   setMode(mode: any) {
     this.codeEditor.getSession().setMode(`ace/mode/${mode}`);
   }
-
-  /**
-   * Sets the theme of IDE to provided theme, default if null
-   * @param theme - selected theme of type any
-   */
   setTheme(theme: any) {
     this.codeEditor.setTheme(`ace/theme/${theme}`);
   }
 
-  /**
-   * Give Configuration Options for IDE
-   */
-  private getEditorOptions(): Partial<ace.Ace.EditorOptions> & { enableBasicAutocompletion?: boolean; } {
-    const basicEditorOptions: Partial<ace.Ace.EditorOptions> = {
-      highlightActiveLine: true,
-      minLines: 20,
-      maxLines: 20,
-      wrap: 150
-    };
-    const extraEditorOptions = {
-      enableBasicAutocompletion: true,
-      enableLiveAutocompletion: true,
-      autoScrollEditorIntoView: true,
-    };
-    return Object.assign(basicEditorOptions, extraEditorOptions);
-  }
-
   public findExtension(lang) {
     let extension = ".txt";
-    if (lang === "c") {
+    if (lang === "C") {
       extension = ".c";
-    } else if (lang === "c_cpp") {
+    } else if (lang === "C++") {
       extension = ".cpp";
-    } else if (lang === "python") {
+    } else if (lang === "Python") {
       extension = ".py";
-    } else if (lang === "javascript") {
+    } else if (lang === "Javascript") {
       extension = ".js";
-    } else if (lang == "java") {
+    } else if (lang == "Java") {
       extension = ".java";
     }
     return extension;
@@ -196,18 +176,30 @@ int main() {
     document.body.removeChild(a);
   }
 
-  public copyToClipboard(element) {
+  public copyToClipboard(editor) {
     const selBox = document.createElement('textarea');
     selBox.style.position = 'fixed';
     selBox.style.left = '0';
     selBox.style.top = '0';
     selBox.style.opacity = '0';
-    let txt;
-    if (element === '') {
-      txt = this.code_data.code;
-    } else {
-      txt = element.value;
+    let txt = "";
+
+    if (editor == "code") {
+      txt = this.codeEditor.getValue();
     }
+    else if (editor == "input") {
+      txt = this.inputEditor.getValue();
+    }
+    else if (editor == "output") {
+      txt = this.outputEditor.getValue();
+    }
+    else if (editor == "error") {
+      txt = this.errorAreaElemRef.nativeElement.value;
+    }
+    else {
+      return;
+    }
+
     selBox.value = txt;
     document.body.appendChild(selBox);
     selBox.focus();
