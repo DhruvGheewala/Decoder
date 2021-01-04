@@ -87,7 +87,7 @@ router.get('/all', async (req, res) => {
     sendResponse(result, res);
 });
 
-const languages = ['c', 'c++', 'python', 'java', 'javascript'];
+const languages = ['C', 'C++', 'Python', 'Java', 'Javascript'];
 router.get('/defaults/:language?', async (req, res) => {
     const language = req.params.language;
     if (language) {
@@ -100,14 +100,17 @@ router.get('/defaults/:language?', async (req, res) => {
             return sendResponse({ language, code: data }, res);
         });
     } else {
-        let result = [];
+        let array = [];
+        let result = {};
         languages.forEach(language => {
             const path = generateFilePath('template', language);
             fs.readFile(path, { encoding: 'utf-8' }, (err, data) => {
                 if (err) return sendResponse(err, res, 404);
-                result.push({ language, code: data });
-                if (result.length === languages.length)
+                array.push({ language, code: data });
+                if (array.length === languages.length) {
+                    array.forEach(element => result[element.language] = element.code);
                     return sendResponse(result, res);
+                }
             });
         });
     }

@@ -76,7 +76,6 @@ export class CodeIdeComponent implements OnInit {
   @ViewChild('codeEditor', { static: true }) private codeEditorElemRef: ElementRef;
   @ViewChild('inputEditor', { static: true }) private inputEditorElemRef: ElementRef;
   @ViewChild('outputEditor', { static: true }) private outputEditorElemRef: ElementRef;
-  @ViewChild('modeSelect', { static: true }) private modeSelectElemRef: ElementRef;
   @ViewChild('error', { static: true }) private errorElemRef: ElementRef;
 
   // ace editors
@@ -85,13 +84,11 @@ export class CodeIdeComponent implements OnInit {
   private outputEditor: ace.Ace.Editor;
   private editorBeautify: any;
 
-  // launguage mode element
-  private modeSelectElem: any;
-
   availableLanguages: any;
   availableThemes: any;
   selectedLanguage: any;
   selectedTheme: any;
+  languageTemplate: any;
 
   isError: boolean;
   fileContent: any = '';
@@ -101,10 +98,6 @@ export class CodeIdeComponent implements OnInit {
     $('[data-toggle="tooltip"]').tooltip();
     this.isError = false;
 
-    // Pre-Requisites
-    this.availableLanguages = this.adminData.getLanguages();
-    this.availableThemes = this.adminData.getThemes();
-
     // ace editor
     ace.require('ace/ext/language_tools');
     this.editorBeautify = ace.require('ace/ext/beautify');
@@ -113,7 +106,6 @@ export class CodeIdeComponent implements OnInit {
     let codeEditorElem = this.codeEditorElemRef.nativeElement;
     let inputEditorElem = this.inputEditorElemRef.nativeElement;
     let outputEditorElem = this.outputEditorElemRef.nativeElement;
-    this.modeSelectElem = this.modeSelectElemRef.nativeElement;
 
     const editorOptions: Partial<ace.Ace.EditorOptions> = this.getEditorOptions();
 
@@ -138,13 +130,20 @@ export class CodeIdeComponent implements OnInit {
     inputEditorElem.style.fontSize = '18px';
     outputEditorElem.style.fontSize = '18px';
 
-    // Theme
-    this.selectedTheme = this.userData.getTheme();
-    this.setTheme(this.selectedTheme);
+    // Pre-Requisites
+    this.availableLanguages = this.adminData.getLanguages();
+    this.availableThemes = this.adminData.getThemes();
+    this.userData.getDefaultTemplates().subscribe((data) => {
+      this.languageTemplate = data.result;
 
-    // Mode
-    this.selectedLanguage = this.userData.getLanguage();
-    this.setMode(this.selectedLanguage);
+      // Theme
+      this.selectedTheme = this.userData.getTheme();
+      this.setTheme(this.selectedTheme);
+
+      // Mode
+      this.selectedLanguage = this.userData.getLanguage();
+      this.setMode(this.selectedLanguage);
+    });
   }
 
   /**
@@ -167,8 +166,10 @@ export class CodeIdeComponent implements OnInit {
 
   setTheme(theme: string) { this.codeEditor.setTheme(`ace/theme/${theme}`); }
   setMode(language: string) {
-    const mode = this.availableLanguages[language].mode;
+
     this.selectedLanguage = language;
+    const mode = this.availableLanguages[language].mode;
+    this.codeEditor.setValue(this.languageTemplate[language]);
     this.codeEditor.getSession().setMode(`ace/mode/${mode}`);
   }
 

@@ -37,10 +37,10 @@ export class UserService {
   // Todo: update in server
   setTheme(theme: string) { this.choosen.theme = theme; }
 
-  private compileUrl = `${this.apiUrl}/code/compile`;
-  compileRun(data) { return this.http.post<any>(this.compileUrl, data); }
-
+  // API Calls
+  compileRun(data): Observable<any> { return this.http.post<any>(this.apiUrl + '/code/compile', data); }
   getAllPublicCodes(): Observable<any> { return this.http.get<any>(this.apiUrl + '/code/all'); }
   getCodeById(id: string): Observable<any> { return this.http.get<any>(this.apiUrl + '/code/view/public/' + id); }
   saveCode(data): Observable<any> { return this.http.post<any>(this.apiUrl + '/code/save', data); }
+  getDefaultTemplates(): Observable<any> { return this.http.get<any>(this.apiUrl + '/code/defaults'); }  // Todo: User's choice isn't included yet
 }
