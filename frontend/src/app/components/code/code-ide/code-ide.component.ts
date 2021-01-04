@@ -57,6 +57,7 @@ import 'ace-builds/src-noconflict/ext-beautify';
 // Services
 import { AdminService } from "src/app/service/admin.service";
 import { UserService } from "src/app/service/user.service";
+import { Router } from '@angular/router';
 declare var $: any;
 
 @Component({
@@ -77,6 +78,7 @@ export class CodeIdeComponent implements OnInit {
   @ViewChild('inputEditor', { static: true }) private inputEditorElemRef: ElementRef;
   @ViewChild('outputEditor', { static: true }) private outputEditorElemRef: ElementRef;
   @ViewChild('modeSelect', { static: true }) private modeSelectElemRef: ElementRef;
+  @ViewChild('error', { static: true }) private errorElemRef: ElementRef;
 
   // ace editors
   private codeEditor: ace.Ace.Editor;
@@ -95,7 +97,7 @@ export class CodeIdeComponent implements OnInit {
   isError: boolean;
   fileContent: any = '';
 
-  constructor(private adminData: AdminService, private userData: UserService) { }
+  constructor(private adminData: AdminService, private userData: UserService, private router: Router) { }
   ngOnInit(): void {
     $('[data-toggle="tooltip"]').tooltip();
     this.isError = false;
@@ -346,7 +348,7 @@ export class CodeIdeComponent implements OnInit {
     document.body.removeChild(a);
   }
 
-  public runClicked(runButton, errArea) {
+  public runClicked(runButton) {
     const codeObj = {
       code: this.codeEditor.getValue(),
       language: this.getCurrentMode(),
@@ -369,12 +371,31 @@ export class CodeIdeComponent implements OnInit {
         this.isError = true;
         err += `${data.stderr}`;
       }
-      errArea.value = err;
+      this.errorElemRef.nativeElement.value = err;
       this.outputEditor.setValue(data.stdout);
     });
   }
 
   uploadFileClick() {
     document.getElementById("codeUpload").click();
+  }
+
+  shareCodeClick() {
+    let code = {
+      author: 'Guest',
+      code: this.codeEditor.getValue(),
+      input: this.inputEditor.getValue(),
+      output: this.outputEditor.getValue(),
+      error: this.errorElemRef.nativeElement.value,
+      language: 'C++',
+      theme: 'monokai',
+      visibility: 'public'
+    };
+
+    this.userData.saveCode(code).subscribe((data) => {
+      if (!data.err) {
+        this.router.navigate(['/code/view/' + data.id]);
+      }
+    });
   }
 }

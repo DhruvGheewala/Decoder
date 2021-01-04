@@ -1,1 +1,38 @@
-<p>code-recent works!</p>
+<div class="full m-3">
+    <div>
+        <div class="row mb-2">
+            <div class="col">
+                <input type="text" class="form-control" placeholder="Search" #searchEle
+                    (keyup)="filter(searchEle.value)">
+            </div>
+        </div>
+        <div class="p-3 border">
+            <div class="row">
+                <div class="col font4 font-weight-bold">ID</div>
+                <div class="col font4 font-weight-bold">Author</div>
+                <div class="col font4 font-weight-bold">Launguage</div>
+                <div class="col font4 font-weight-bold">Date</div>
+            </div>
+            <div *ngFor="let code of all_codes; let isEven = even">
+                <div class="row" [ngClass]="isEven ? '' : 'bg-gray'">
+                    <div class="col">
+                        <a routerLink="/code/view/{{code.id}}">
+                            {{code.id}}
+                        </a>
+                    </div>
+                    <div class="col">
+                        <a routerLink="/profile/{{code.author}}">
+                            {{code.author}}
+                        </a>
+                    </div>
+                    <div class="col">
+                        {{code.language}}
+                    </div>
+                    <div class="col">
+                        {{dateToHumanReadable(code.timePublished)}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -80,7 +80,7 @@ export class UpcomingContestComponent implements OnInit {
     this.copyAllData2.forEach(b => {
       let ok: boolean = false;
       terms.forEach(term => {
-        if (b.name.toLocaleLowerCase().includes(term) || b.site.toLocaleLowerCase().includes(term)) {
+        if (b.name.toLowerCase().includes(term) || b.site.toLowerCase().includes(term)) {
           ok = true;
         }
       });
