@@ -1,5 +1,5 @@
 const { Code, validateCode, getCodeModel } = require('../models/code.model');
-const { cpp, node, python, java } = require('compile-run');
+const { c, cpp, node, python, java } = require('compile-run');
 
 function errorToJSON(error) {
     let err = {};
@@ -76,10 +76,11 @@ async function getAllPublicCodes(currentUser) {
 
 function getRunner(lang) {
     let runner = null;
-    // Todo: temporary fix on c_cpp
-    if (lang === 'c_cpp') {
-        runner = cpp;
-    } else if (lang === 'c' || lang === 'cpp') {
+    lang = lang.toLowerCase();
+
+    if (lang === 'c') {
+        runner = c;
+    } else if (lang === 'c++') {
         runner = cpp;
     } else if (lang === 'python') {
         runner = python;
@@ -94,12 +95,11 @@ function getRunner(lang) {
 const dir = './code';
 function generateFilePath(fileName, lang) {
     let result = null;
-    // Todo: temporary fix on c_cpp
-    if (lang === 'c_cpp') {
-        result = `${dir}/${fileName}.cpp`;
-    } else if (lang === 'c') {
+    lang = lang.toLowerCase();
+
+    if (lang === 'c') {
         result = `${dir}/${fileName}.c`;
-    } else if (lang === 'cpp') {
+    } else if (lang === 'c++') {
         result = `${dir}/${fileName}.cpp`;
     } else if (lang === 'python') {
         result = `${dir}/${fileName}.py`;

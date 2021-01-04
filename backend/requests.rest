@@ -63,7 +63,7 @@ content-type: application/json
 
 ###
 
-GET http://localhost:3000/api/code/view/dhiraj-01
+GET http://localhost:3000/api/code/view/public/5ff2aeb0aa6eea29a44c8a79
 
 ###
 
@@ -127,7 +127,7 @@ content-type: application/json
     "code": "print('Second Post Request !!')", 
     "author": "a", 
     "output": "Second Post Request !!", 
-    "language": "gkjg", 
+    "language": "c#", 
     "visibility": "private"
 }
 
