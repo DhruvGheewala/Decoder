@@ -66,7 +66,6 @@ declare var $: any;
   styleUrls: ['./code-ide.component.css']
 })
 export class CodeIdeComponent implements OnInit {
-
   @HostListener('document:keypress', ['$event'])
   handleKeyboardEvent(event: KeyboardEvent) {
     if (event.ctrlKey && event.code == "KeyB") {
@@ -89,10 +88,10 @@ export class CodeIdeComponent implements OnInit {
   // launguage mode element
   private modeSelectElem: any;
 
-  availableModes: any;
+  availableLanguages: any;
   availableThemes: any;
-  preferedMode: any;
-  preferedTheme: any;
+  selectedLanguage: any;
+  selectedTheme: any;
 
   isError: boolean;
   fileContent: any = '';
@@ -103,7 +102,7 @@ export class CodeIdeComponent implements OnInit {
     this.isError = false;
 
     // Pre-Requisites
-    this.availableModes = this.adminData.getModes();
+    this.availableLanguages = this.adminData.getLanguages();
     this.availableThemes = this.adminData.getThemes();
 
     // ace editor
@@ -140,15 +139,12 @@ export class CodeIdeComponent implements OnInit {
     outputEditorElem.style.fontSize = '18px';
 
     // Theme
-    this.preferedTheme = this.userData.getTheme();
-    this.setTheme(this.preferedTheme);
+    this.selectedTheme = this.userData.getTheme();
+    this.setTheme(this.selectedTheme);
 
     // Mode
-    this.preferedMode = this.userData.getMode();
-    this.availableModes.forEach(mode => {
-      if (mode.caption === this.preferedMode)
-        this.setMode(mode.name, this.preferedMode);
-    });
+    this.selectedLanguage = this.userData.getLanguage();
+    this.setMode(this.selectedLanguage);
   }
 
   /**
@@ -169,25 +165,10 @@ export class CodeIdeComponent implements OnInit {
     return Object.assign(basicEditorOptions, extraEditorOptions);
   }
 
-  /**
-   * Sets the theme of IDE to provided theme, default if null
-   * @param theme - selected theme of type any
-   */
-  setTheme(theme: any) {
-    if (!theme) {
-      theme = this.userData.getTheme();
-    }
-    this.codeEditor.setTheme(`ace/theme/${theme}`);
-  }
-
-  /**
-   * Sets the mode of editor to provided mode, default if null
-   * @param mode - this is selected programming language mode
-   */
-  setMode(mode: any, lang: any) {
-    // Todo: mode will be caption, we have to obtain name from it
-    // if (!mode) mode = this.userData.getMode();
-    this.preferedMode = lang;
+  setTheme(theme: string) { this.codeEditor.setTheme(`ace/theme/${theme}`); }
+  setMode(language: string) {
+    const mode = this.availableLanguages[language].mode;
+    this.selectedLanguage = language;
     this.codeEditor.getSession().setMode(`ace/mode/${mode}`);
   }
 
@@ -203,15 +184,11 @@ export class CodeIdeComponent implements OnInit {
     editor.setValue('');
     return code;
   }
-  public getCode(editor = this.codeEditor) {
-    return editor.getValue();
-  }
+  public getCode(editor = this.codeEditor) { return editor.getValue(); }
 
   public setUserChoice() {
-    let mode = this.getCurrentMode();
-    let theme = this.getCurretTheme();
-    this.userData.setMode(mode);
-    this.userData.setTheme(theme);
+    this.userData.setLanguage(this.selectedLanguage);
+    this.userData.setTheme(this.selectedTheme);
   }
 
   public copyToClipboard(editor) {
@@ -221,14 +198,12 @@ export class CodeIdeComponent implements OnInit {
     selBox.style.top = '0';
     selBox.style.opacity = '0';
 
-    let txt = "";
+    let txt: string = '';
     if (editor == "code") {
       txt = this.codeEditor.getValue();
-    }
-    else if (editor == "input") {
+    } else if (editor == "input") {
       txt = this.inputEditor.getValue();
-    }
-    else if (editor == "output") {
+    } else if (editor == "output") {
       txt = this.outputEditor.getValue();
     }
 
@@ -254,80 +229,36 @@ export class CodeIdeComponent implements OnInit {
     fileReader.readAsText(file);
   }
 
+  uploadFileClick() { $('#codeUpload').click(); }
+
   /**
    * @param fileList - list of file uploaded
    * @description -listen to change file event whenever user changes
    * file function will validate file and acts according to user's selection
    */
   public onChangeFile(fileList: FileList): void {
-    let file = fileList[0];
-    let curExtension = "." + file.name.split(".").pop();
-    let reqExtension = this.findExtension(this.getCurrentMode());
-    if (curExtension != reqExtension) {
-      let found: Boolean = false;
-      this.availableModes.forEach(mode => {
-        if (this.languageData[mode.caption].extension === curExtension) {
-          found = true;
+    if (!fileList[0]) {
+      alert("You haven't uploaded a file.")
+      return;
+    }
+    const file = fileList[0];
+
+    const fileExtension = `.${file.name.split('.').pop()}`;
+    const reqExtension = this.availableLanguages[this.selectedLanguage].extension;
+
+    if (fileExtension != reqExtension) {
+      for (const key in this.availableLanguages) {
+        const element = this.availableLanguages[key];
+        if (element.extension === fileExtension) {
           this.loadFileToEditor(file);
-          this.setMode(mode.name, mode.caption);
+          this.setMode(key);
+          return;
         }
-      });
-      if (!found) alert(`You can't upload this file: ${file.name}`);
+      }
+      alert(`You can't upload this file: ${file.name}`);
       return;
     }
     this.loadFileToEditor(file);
-  }
-
-  private languageData = {
-    'C': { 'extension': '.c' },
-    'C++': { 'extension': '.cpp' },
-    'Java': { 'extension': '.java' },
-    'JavaScript': { 'extension': '.js' },
-    'Python': { 'extension': '.py' }
-  };
-
-  /**
-   * @param mode - current mode of code editor (i.e language)
-   * @description - generates file extension according to current mode of
-   * code editor
-   * @returns - extension of file 
-   */
-  public findExtension(mode) {
-    return this.languageData[this.preferedMode].extension;
-  }
-
-  public findMode(extension) {
-    let mode = '';
-    if (extension === ".c" || extension === '.cpp') {
-      mode = "c_cpp";
-    } else if (extension === ".py") {
-      mode = "python";
-    } else if (extension === ".js") {
-      mode = "javascript";
-    } else if (extension == ".java") {
-      mode = "java";
-    }
-    return mode;
-  }
-
-  /**
-   * @returns - current mode of code editor. (selected language)
-   */
-  public getCurrentMode() {
-    let mode: any = this.codeEditor.getSession().getMode();
-    mode = mode.$id;
-    mode = mode.substr(mode.lastIndexOf('/') + 1);
-    return mode;
-  }
-
-  /**
-   * @returns - current theme of code editor.
-   */
-  public getCurretTheme() {
-    let theme: any = this.codeEditor.getSession().getMode();
-    theme = theme.$id;
-    theme = theme.substr(theme.lastIndexOf('/') + 1);
-    return theme;
   }
 
   /**
@@ -336,7 +267,7 @@ export class CodeIdeComponent implements OnInit {
    */
   public downloadCode() {
     let code = this.codeEditor.getValue();
-    let filename = "code" + this.findExtension(this.getCurrentMode());
+    let filename = `code${this.availableLanguages[this.selectedLanguage].extension}`;
     let a = document.createElement('a');
     let blob = new Blob([code], { type: 'text' });
     let url = URL.createObjectURL(blob);
@@ -351,7 +282,7 @@ export class CodeIdeComponent implements OnInit {
   public runClicked(runButton) {
     const codeObj = {
       code: this.codeEditor.getValue(),
-      language: this.getCurrentMode(),
+      language: this.selectedLanguage,
       stdin: this.inputEditor.getValue()
     }
 
@@ -359,6 +290,8 @@ export class CodeIdeComponent implements OnInit {
     runButton.disabled = true;
 
     this.userData.compileRun(codeObj).subscribe((data) => {
+      console.log(data);
+      data = data.result;
       runButton.disabled = false;
       let err = '';
       if (data.errorType) {
@@ -376,26 +309,43 @@ export class CodeIdeComponent implements OnInit {
     });
   }
 
-  uploadFileClick() {
-    document.getElementById("codeUpload").click();
-  }
-
   shareCodeClick() {
-    let code = {
+    let codeObj = {
       author: 'Guest',
       code: this.codeEditor.getValue(),
+      language: this.selectedLanguage,
+      theme: this.selectedTheme,
+      visibility: 'public',
+      stdin: this.inputEditor.getValue(),
       input: this.inputEditor.getValue(),
-      output: this.outputEditor.getValue(),
-      error: this.errorElemRef.nativeElement.value,
-      language: 'C++',
-      theme: 'monokai',
-      visibility: 'public'
+      output: '',
+      error: ''
     };
 
-    this.userData.saveCode(code).subscribe((data) => {
-      if (!data.err) {
-        this.router.navigate(['/code/view/' + data.id]);
+    this.userData.compileRun(codeObj).subscribe((data) => {
+      if (data.err) {
+        this.router.navigate(['/ide']);
       }
+
+      data = data.result;
+      let err = '';
+      if (data.errorType) {
+        this.isError = true;
+        err += `- ${data.errorType} error\n`;
+        err += `- Signal : ${data.signal}\n`;
+        err += `- Exit Code : ${data.exitCode}\n\n`;
+      }
+      if (data.stderr) {
+        this.isError = true;
+        err += `${data.stderr}`;
+      }
+      codeObj.error = err;
+      codeObj.output = data.stdout;
+
+      this.userData.saveCode(codeObj).subscribe((data) => {
+        if (!data.err)
+          this.router.navigate(['/code/view/' + data.result.id]);
+      });
     });
   }
 }

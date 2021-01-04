@@ -7,7 +7,6 @@ export class AdminService {
 
   constructor() { }
 
-  // Available Themes, Format: [Theme Name, File Name, 'dark' if dark theme: else light]
   private themeData = [
     ["Chrome"],
     ["Clouds"],
@@ -49,7 +48,6 @@ export class AdminService {
     ["Vibrant Ink", "vibrant_ink", "dark"]
   ];
 
-  // converting themeData into JSON
   private themes = this.themeData.map((data) => {
     let name = data[1] || data[0].replace(/ /g, '_').toLowerCase();
     let theme = {
@@ -61,35 +59,34 @@ export class AdminService {
     return theme;
   });
 
-  // JSON object for modes
-  private modes = [
-    {
+  private languages = {
+    'C': {
       caption: 'C',
-      mode: 'ace/mode/c_cpp',
-      name: 'c_cpp'
+      mode: 'c_cpp',
+      extension: '.c'
     },
-    {
+    'C++': {
       caption: 'C++',
-      mode: 'ace/mode/c_cpp',
-      name: 'c_cpp'
+      mode: 'c_cpp',
+      extension: '.cpp'
     },
-    {
-      caption: 'Java',
-      mode: 'ace/mode/java',
-      name: 'java'
-    },
-    {
-      caption: 'JavaScript',
-      mode: 'ace/mode/javascript',
-      name: 'javascript'
-    },
-    {
+    'Python': {
       caption: 'Python',
-      mode: 'ace/mode/python',
-      name: 'python'
+      mode: 'python',
+      extension: '.py'
+    },
+    'Java': {
+      caption: 'Java',
+      mode: 'java',
+      extension: '.java'
+    },
+    'Javascript': {
+      caption: 'Javascript',
+      mode: 'javascript',
+      extension: '.js'
     }
-  ];
+  };
 
   getThemes() { return this.themes };
-  getModes() { return this.modes; }
+  getLanguages() { return this.languages; }
 }

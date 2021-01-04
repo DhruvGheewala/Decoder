@@ -15,7 +15,7 @@ export class CodeRecentComponent implements OnInit {
 
   ngOnInit(): void {
     this.userService.getAllPublicCodes().subscribe((data) => {
-      this.all_codes = this.copy_all_codes = data;
+      this.all_codes = this.copy_all_codes = data.result;
       this.all_codes.sort((a, b) => {
         return new Date(b.timePublished).valueOf() - new Date(a.timePublished).valueOf();
       });

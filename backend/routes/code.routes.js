@@ -25,7 +25,7 @@ router.post('/compile', (req, res) => {
     const filePath = generateFilePath('Decoder', lang);
 
     if (!runner)
-        return sendResponse('Supported languages: C/C++, Python & Java', res, 400);
+        return sendResponse('Supported languages: C, C++, Python, Java & Javascript', res, 400);
 
     fs.writeFile(filePath, code, () => {
         const startTime = new Date();
@@ -79,39 +79,35 @@ router.delete('/delete/:id', async (req, res) => {
 router.post('/save', async (req, res) => {
     const codeData = getCodeData(req.body);
     const result = await insertCode(codeData);
-    res.status(200).send(result);
+    sendResponse(result, res);
 });
 
 router.get('/all', async (req, res) => {
     const result = await getAllPublicCodes();
-    res.status(200).send(result);
+    sendResponse(result, res);
 });
 
-const languages = ['c', 'cpp', 'python', 'java', 'javascript'];
+const languages = ['c', 'c++', 'python', 'java', 'javascript'];
 router.get('/defaults/:language?', async (req, res) => {
     const language = req.params.language;
     if (language) {
         const path = generateFilePath('template', language);
-        if (path === null) return res.status(400).send({
-            type: 'Bad Request',
-            status: 400,
-            message: 'Supported languages: C/C++, Python & Java'
-        });
+        if (path === null)
+            return sendResponse('Supported languages: C, C++, Python, Java & Javascript', res, 400);
 
         fs.readFile(path, { encoding: 'utf-8' }, (err, data) => {
-            if (err) return res.status(404).send(err);
-            return res.status(200).send({ language, code: data });
+            if (err) return sendResponse(err, res, 404);
+            return sendResponse({ language, code: data }, res);
         });
     } else {
         let result = [];
         languages.forEach(language => {
-            console.log(language);
             const path = generateFilePath('template', language);
             fs.readFile(path, { encoding: 'utf-8' }, (err, data) => {
-                if (err) return res.status(404).send(err);
+                if (err) return sendResponse(err, res, 404);
                 result.push({ language, code: data });
                 if (result.length === languages.length)
-                    return res.status(200).send(result);
+                    return sendResponse(result, res);
             });
         });
     }

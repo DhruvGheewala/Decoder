@@ -25,6 +25,7 @@
                                         data-toggle="tooltip" title="Upload code">
                                         <i class="fas fa-upload"></i>
                                     </a>
+
                                     <a class=" btn-sm btn-default icon-size" data-toggle="tooltip"
                                         (click)="downloadCode()" title="Download code">
                                         <i class="fas fa-download"></i>
@@ -49,13 +50,12 @@
                                     <div class="">
                                         <!-- <small>Language</small> -->
                                         <select data-toggle="tooltip" title="Languages"
-                                            class="form-control form-control-sm"
-                                            (change)="setMode($event.target.selectedOptions[0].value, $event.target.selectedOptions[0].label)"
-                                            [value]='preferedMode' #modeSelect>
-                                            <option [value]='mode.name' [label]='mode.caption'
-                                                *ngFor="let mode of availableModes"
-                                                [selected]='mode.caption === preferedMode ? "selected" : ""'>
-                                                {{mode.caption}}
+                                            class="form-control form-control-sm" (change)="setMode(modeSelect.value)"
+                                            [value]='selectedLanguage' #modeSelect>
+                                            <option [value]='language.key'
+                                                *ngFor="let language of availableLanguages | keyvalue"
+                                                [selected]='language.key === selectedLanguage ? "selected" : ""'>
+                                                {{language.key}}
                                             </option>
                                         </select>
                                     </div>
@@ -67,7 +67,7 @@
                                             class="form-control form-control-sm" (change)="setTheme(themeSelect.value)"
                                             #themeSelect>
                                             <option [value]='theme.name' *ngFor="let theme of availableThemes"
-                                                [selected]='theme.name === preferedTheme ? "selected" : ""'>
+                                                [selected]='theme.name === selectedTheme ? "selected" : ""'>
                                                 {{theme.caption}}
                                             </option>
                                         </select>

@@ -56,6 +56,7 @@ import 'ace-builds/src-noconflict/ext-beautify';
 
 // Services
 import { UserService } from "src/app/service/user.service";
+import { AdminService } from 'src/app/service/admin.service';
 declare var $: any;
 
 @Component({
@@ -74,21 +75,24 @@ export class CodeViewComponent implements OnInit {
   private inputEditor: ace.Ace.Editor;
   private outputEditor: ace.Ace.Editor;
 
-  code_data: any;
+  availableLanguages: any;
   code_id: string = null;
+  code_data: any = {
+    author: ''
+  };
 
   constructor(
     private userData: UserService,
+    private adminData: AdminService,
     private route: ActivatedRoute
-  ) {
-    this.code_id = route.snapshot.params.id;
-  }
+  ) { this.code_id = route.snapshot.params.id; }
 
   ngOnInit(): void {
     $('[data-toggle="tooltip"]').tooltip();
 
     this.userData.getCodeById(this.code_id).subscribe((data) => {
-      this.code_data = data;
+      this.code_data = data.result;
+      this.availableLanguages = this.adminData.getLanguages();
       console.log(data);
 
       { // editor configuration
@@ -124,7 +128,7 @@ export class CodeViewComponent implements OnInit {
       }
 
       this.setTheme(this.code_data.theme || "monokai");
-      this.setMode(this.code_data.language.toLowerCase());
+      this.setMode(this.code_data.language);
 
       this.codeEditor.setValue(this.code_data.code);
       this.inputEditor.setValue(this.code_data.input);
@@ -138,7 +142,8 @@ export class CodeViewComponent implements OnInit {
     });
   }
 
-  setMode(mode: any) {
+  setMode(language: any) {
+    const mode = this.availableLanguages[language].mode;
     this.codeEditor.getSession().setMode(`ace/mode/${mode}`);
   }
   setTheme(theme: any) {
@@ -208,19 +213,3 @@ export class CodeViewComponent implements OnInit {
     document.body.removeChild(selBox);
   }
 }
-
-// import { Component, OnInit } from '@angular/core';
-
-// @Component({
-//   selector: 'app-code-view',
-//   templateUrl: './code-view.component.html',
-//   styleUrls: ['./code-view.component.css']
-// })
-// export class CodeViewComponent implements OnInit {
-
-//   constructor() { }
-
-//   ngOnInit(): void {
-//   }
-
-// }

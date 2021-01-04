@@ -16,8 +16,6 @@ async function compress(id) {
 
 async function insertCode(data) {
     try {
-        console.log(data);
-
         const _code = getCodeModel(data);
 
         const isValid = validateCode(_code);
