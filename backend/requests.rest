@@ -2,10 +2,10 @@ POST http://localhost:3000/api/code/compile
 content-type: application/json
 
 {
-    "code": "print('Second Post Request !!')", 
-    "author": "a", 
-    "output": "Second Post Request !!", 
-    "language": "python", 
+    "code": "print('kushal vaghri')", 
+    "author": "xyz", 
+    "input": "",
+    "language": "c++", 
     "visibility": "private"
 }
 

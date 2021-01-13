@@ -1,12 +1,16 @@
 const { Code, validateCode, getCodeModel } = require('../models/code.model');
-const { c, cpp, node, python, java } = require('compile-run');
+const { node, python } = require('compile-run');
+const fs = require('fs');
+const util = require('util');
+const exec = util.promisify(require('child_process').exec);
+const writeFileAsync = util.promisify(fs.writeFile);
 
 function errorToJSON(error) {
     let err = {};
     for (const key in error)
         err[key] = error[key];
     console.error(err);
-    return { err };
+    return errorToJSON(err);
 }
 
 // Todo: Not working, will fix it soon !!
@@ -72,61 +76,123 @@ async function getAllPublicCodes(currentUser) {
     return await Code.find({ visibility: 'public' });
 }
 
-function getRunner(lang) {
-    let runner = null;
-    lang = lang.toLowerCase();
-
-    if (lang === 'c') {
-        runner = c;
-    } else if (lang === 'c++') {
-        runner = cpp;
-    } else if (lang === 'python') {
-        runner = python;
-    } else if (lang === 'java') {
-        runner = java;
-    } else if (lang === 'javascript') {
-        runner = node;
-    }
-    return runner;
-}
-
 const dir = './code';
-function generateFilePath(fileName, lang) {
+function generateFilePath(fileName, language) {
     let result = null;
-    lang = lang.toLowerCase();
+    language = language.toLowerCase();
 
-    if (lang === 'c') {
+    if (language === 'c') {
         result = `${dir}/${fileName}.c`;
-    } else if (lang === 'c++') {
+    } else if (language === 'c++') {
         result = `${dir}/${fileName}.cpp`;
-    } else if (lang === 'python') {
+    } else if (language === 'python') {
         result = `${dir}/${fileName}.py`;
-    } else if (lang === 'java') {
+    } else if (language === 'java') {
         result = `${dir}/${fileName}.java`;
-    } else if (lang === 'javascript') {
+    } else if (language === 'javascript') {
         result = `${dir}/${fileName}.js`;
     }
     return result;
 }
 
-function getCodeData(data) {
-    return {
-        code: data.code,
-        input: data.input,
-        output: data.output,
-        language: data.language,
-        author: data.author,
-        visibility: data.visibility ? data.visibility.toLowerCase() : 'public'
-    };
+class C {
+    runFile = async (path, { stdin }, callback) => {
+        // compiling...
+        try {
+            await exec(`gcc ${path} -o code/c.exe`);
+        } catch (err) {
+            return errorToJSON(err);
+        }
+
+        await writeFileAsync('code/input.txt', stdin);
+
+        // Running...
+        const startTime = new Date();
+        let result = await exec('cd code && c.exe < input.txt');
+        const endTime = new Date();
+        const runTime = endTime.getTime() - startTime.getTime();
+        result.manualrunTime = runTime;
+        return result;
+    }
+};
+
+class Cpp {
+    async runFile(path, { stdin }) {
+        // compiling...
+        try {
+            await exec(`g++ ${path} -o code/cpp.exe`);
+        } catch (err) {
+            return errorToJSON(err);
+        }
+
+        await writeFileAsync('code/input.txt', stdin);
+
+        // Running...
+        const startTime = new Date();
+        let result = await exec('cd code && cpp.exe < input.txt');
+        const endTime = new Date();
+        const runTime = endTime.getTime() - startTime.getTime();
+        result.manualrunTime = runTime;
+        return result;
+    }
+};
+
+class Java {
+    runFile = async (path, { stdin }, callback) => {
+        // compiling...
+        try {
+            await exec(`javac ${path}`);
+        } catch (err) {
+            return errorToJSON(err);
+        }
+
+        writeFileAsync('code/input.txt', stdin);
+
+        // Running...
+        const startTime = new Date();
+        let result = await exec('cd code && java Decoder < input.txt');
+        const endTime = new Date();
+        const runTime = endTime.getTime() - startTime.getTime();
+        result.manualrunTime = runTime;
+        return result;
+    }
+};
+
+async function runFile(language, code, stdin) {
+    language = language.toLowerCase();
+    let runner = null;
+    if (language === 'c') {
+        runner = new C();
+    } else if (language === 'c++') {
+        runner = new Cpp();
+    } else if (language === 'java') {
+        runner = new Java();
+    } else if (language === 'javascript') {
+        runner = node;
+    } else if (language === 'python') {
+        runner = python;
+    }
+
+    if (!runner) return { err: 'Available languages are C, C++, Java, Python & Javascript' };
+    const path = generateFilePath('Decoder', language);
+    await writeFileAsync(path, code);
+
+    const startTime = new Date();
+    const result = await runner.runFile(path, { stdin });
+    if (result.err) return result;
+
+    const endTime = new Date();
+    const runTime = endTime.getTime() - startTime.getTime();
+    if (!result.manualrunTime) result.manualrunTime = runTime;
+    return result;
 }
 
 module.exports = {
     insertCode,
     getCode,
     getAllPublicCodes,
-    getRunner,
+    runFile,
     generateFilePath,
-    getCodeData,
     updateCode,
     deleteCode
 };

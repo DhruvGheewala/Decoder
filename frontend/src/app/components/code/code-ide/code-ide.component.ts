@@ -291,7 +291,6 @@ export class CodeIdeComponent implements OnInit {
     runButton.disabled = true;
 
     this.userData.compileRun(codeObj).subscribe((data) => {
-      console.log(data);
       data = data.result;
       runButton.disabled = false;
       let err = '';

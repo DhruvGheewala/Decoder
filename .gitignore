@@ -1,7 +1,8 @@
 # custom
+backend/code/*.exe
+backend/code/*.txt
 backend/code/Decoder.*
 backend/code/Decoder.js
-Dhruv.rest
 
 # Logs
 logs
