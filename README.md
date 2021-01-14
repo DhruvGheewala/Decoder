@@ -3,10 +3,11 @@
 <img src="./screenshots/logo.PNG" alt="Decoder"/>
 
 ## Table of Contents
-- [Introduction](#decoder---a-competitive-programming-portal)
+- [Table of Contents](#table-of-contents)
+- [Decoder - A Competitive Programming Portal](#decoder---a-competitive-programming-portal)
 - [Functionality](#functionality)
-- [Installation](#installtion)
-- [How to run?](#how-to-run-)
+- [Installtion](#installtion)
+- [How to run ?](#how-to-run-)
 - [Screenshots](#screenshots)
 
 ## Decoder - A Competitive Programming Portal
@@ -51,12 +52,13 @@ npm install
 cd frontend
 npm install
 ```
+ - <span style="color:red">Make sure you have node, gcc, g++, jdk & python installed in your system/server(which will compile code)</span>
 
 ## How to run ?
 ```
 cd backend
 node index.js
-   
+
 cd frontend
 ng serve -o
 ```

@@ -284,7 +284,7 @@ export class CodeIdeComponent implements OnInit {
 
   public runClicked(runButton) {
     const codeObj = {
-      code: this.codeEditor.getValue(),
+      content: this.codeEditor.getValue(),
       language: this.selectedLanguage,
       stdin: this.inputEditor.getValue()
     }
@@ -296,35 +296,35 @@ export class CodeIdeComponent implements OnInit {
       data = data.result;
       runButton.disabled = false;
       let err = '';
-      if (data.errorType) {
-        this.isError = true;
-        err += `- ${data.errorType} error\n`;
-        err += `- Signal : ${data.signal}\n`;
-        err += `- Exit Code : ${data.exitCode}\n\n`;
+      if (data.err) {
+        const errData = data.err;
+        err += `- Killed: ${errData.killed}\n`;
+        err += `- Signal: ${errData.siganl}\n`;
+        err += `ERROR =======================\n${errData.stderr}\n`;
       }
-      if (data.stderr) {
-        this.isError = true;
-        err += `${data.stderr}`;
-      }
+      if (data.stderr) err += `STDERR =======================\n${data.stderr}`;
+      if (err !== '') this.isError = true;
+
       this.errorElemRef.nativeElement.value = err;
-      this.outputEditor.setValue(data.stdout);
+      this.outputEditor.setValue(data.stdout ?? '');
     });
   }
 
   shareCodeClick() {
     let codeObj = {
       author: 'Guest',
-      code: this.codeEditor.getValue(),
+      content: this.codeEditor.getValue(),
       language: this.selectedLanguage,
       theme: this.selectedTheme,
       visibility: 'public',
       stdin: this.inputEditor.getValue(),
-      input: this.inputEditor.getValue(),
       output: '',
       error: ''
     };
 
+    console.log(codeObj);
     this.userData.compileRun(codeObj).subscribe((data) => {
+      console.log(data);
       if (data.err) {
         this.router.navigate(['/ide']);
       }
@@ -344,6 +344,7 @@ export class CodeIdeComponent implements OnInit {
       codeObj.error = err;
       codeObj.output = data.stdout;
 
+      console.log(codeObj);
       this.userData.saveCode(codeObj).subscribe((data) => {
         if (!data.err)
           this.router.navigate(['/code/view/' + data.result.id]);

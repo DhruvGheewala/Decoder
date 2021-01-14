@@ -1,5 +1,6 @@
 const { Code, validateCode, getCodeModel } = require('../models/code.model');
 const { node, python } = require('compile-run');
+const os = require('os');
 const fs = require('fs');
 const util = require('util');
 const exec = util.promisify(require('child_process').exec);
@@ -10,7 +11,7 @@ function errorToJSON(error) {
     for (const key in error)
         err[key] = error[key];
     console.error(err);
-    return errorToJSON(err);
+    return { err };
 }
 
 // Todo: Not working, will fix it soon !!
@@ -21,10 +22,8 @@ async function compress(id) {
 async function insertCode(data) {
     try {
         const _code = getCodeModel(data);
-
         const isValid = validateCode(_code);
         console.log('isValid', isValid);
-
         const result = await _code.save();
         result.id = await compress(result._id);
         return await result.save();
@@ -95,11 +94,19 @@ function generateFilePath(fileName, language) {
     return result;
 }
 
+const osCompile = {
+    'exe': ['windows_nt'],
+    'out': ['darwin', 'linux']
+};
+
 class C {
-    runFile = async (path, { stdin }, callback) => {
+    runFile = async (path, { stdin }) => {
+        const osType = os.type().toLowerCase();
+
         // compiling...
         try {
-            await exec(`gcc ${path} -o code/c.exe`);
+            if (osCompile.exe.indexOf(osType) >= 0) await exec(`gcc ${path} -o code/c.exe`);
+            else if (osCompile.out.indexOf(osType) >= 0) await exec(`gcc ${path} -o code/c.out`);
         } catch (err) {
             return errorToJSON(err);
         }
@@ -108,7 +115,10 @@ class C {
 
         // Running...
         const startTime = new Date();
-        let result = await exec('cd code && c.exe < input.txt');
+        let result = null;
+        if (osCompile.exe.indexOf(osType) >= 0) result = await exec('cd code && c.exe < input.txt');
+        else if (osCompile.out.indexOf(osType) >= 0) result = await exec('cd code && ./c.out < input.txt');
+
         const endTime = new Date();
         const runTime = endTime.getTime() - startTime.getTime();
         result.manualrunTime = runTime;
@@ -118,9 +128,12 @@ class C {
 
 class Cpp {
     async runFile(path, { stdin }) {
+        const osType = os.type().toLowerCase();
+
         // compiling...
         try {
-            await exec(`g++ ${path} -o code/cpp.exe`);
+            if (osCompile.exe.indexOf(osType) >= 0) await exec(`g++ ${path} -o code/cpp.exe`);
+            else if (osCompile.out.indexOf(osType) >= 0) await exec(`g++ ${path} -o code/cpp.out`);
         } catch (err) {
             return errorToJSON(err);
         }
@@ -129,7 +142,10 @@ class Cpp {
 
         // Running...
         const startTime = new Date();
-        let result = await exec('cd code && cpp.exe < input.txt');
+        let result = null;
+        if (osCompile.exe.indexOf(osType) >= 0) result = await exec('cd code && cpp.exe < input.txt');
+        else if (osCompile.out.indexOf(osType) >= 0) result = await exec('cd code && ./cpp.out < input.txt');
+
         const endTime = new Date();
         const runTime = endTime.getTime() - startTime.getTime();
         result.manualrunTime = runTime;
@@ -138,7 +154,7 @@ class Cpp {
 };
 
 class Java {
-    runFile = async (path, { stdin }, callback) => {
+    runFile = async (path, { stdin }) => {
         // compiling...
         try {
             await exec(`javac ${path}`);

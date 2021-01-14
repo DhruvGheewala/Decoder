@@ -17,13 +17,12 @@ const {
 
 // /api/code
 router.post('/compile', async (req, res) => {
-    let { language, code, stdin } = _.pick(req.body, ['language', 'code', 'stdin']);
-    stdin = stdin ?? '';
-    code = code ?? '';
+    let { language, content, stdin } = _.pick(req.body, ['language', 'content', 'stdin']);
+    stdin = stdin ? stdin : '';
+    content = content ? content : '';
 
-    const result = await runFile(language, code, stdin);
-    console.log('sadasdadad');
-    if (result.err) return sendResponse(result.err, res, 404);
+    const result = await runFile(language, content, stdin);
+    console.log('result', result);
     sendResponse(result, res);
 });
 
@@ -62,10 +61,8 @@ router.delete('/delete/:id', async (req, res) => {
     sendResponse(result, res);
 });
 
-// Todo: error handeling
-
 router.post('/save', async (req, res) => {
-    const codeData = _.pick(req.body, ['code', 'input', 'output', 'language', 'author', 'visibility']);
+    const codeData = _.pick(req.body, ['content', 'input', 'output', 'language', 'author', 'visibility']);
     const result = await insertCode(codeData);
     sendResponse(result, res);
 });
