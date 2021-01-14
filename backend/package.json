@@ -22,10 +22,14 @@
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "joi": "^17.3.0",
+    "jsonwebtoken": "^8.5.1",
     "lodash": "^4.17.20",
-    "mongoose": "^5.11.9"
+    "mongoose": "^5.11.9",
+    "nodemailer": "^6.4.17"
   },
   "devDependencies": {
+    "@types/nodemailer": "^6.4.0",
+    "nodemailer-express-handlebars": "^4.0.0",
     "nodemon": "^2.0.6"
   }
 }

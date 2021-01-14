@@ -1,25 +1,25 @@
 const express = require('express');
 const router = express.Router();
+const userController = require('../controllers/user.controller');
+//user controller
+router.post('/signup', userController.signupUser);
 
 //user controller
-router.post('/signup', );
+router.post('/verify-email', userController.verifyEmail);
 
 //user controller
-router.post('/verify-email', );
-
-//user controller
-router.post('/login', );
+router.post('/signin', userController.loginUser);
 
 
 //user controller
-router.post('/forgot-password', );
+router.post('/forgot-password', userController.forgotPassword);
 
 //user controller
-router.post('/reset-password', );
+router.post('/reset-password', userController.resetPassword);
 
 
 //user controller add middleware for auth
-router.put('/update-profile', );
+router.put('/update-profile', userController.updateUser);
 
 router.post('/save-settings', );
 

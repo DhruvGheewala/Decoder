@@ -1,0 +1,61 @@
+POST http://localhost:3000/auth/signup
+content-type: application/json
+
+{
+    "username": "kushal.p13", 
+    "email": "abc@xyz.com", 
+    "password": "kushal",
+    "id": "abc",
+    "method": "local"
+}
+
+###
+POST http://localhost:3000/auth/signup
+content-type: application/json
+
+{
+    "username": "dhiraj-01", 
+    "email": "dhirajgovindvira1112@gmail.com", 
+    "password": "dhiraj",
+    "id": "abc",
+    "method": "local"
+}
+
+###
+
+POST http://localhost:3000/auth/signin
+Content-Type: application/json
+
+{
+    "loginEmail": "abc@xyz.com",
+    "loginPassword": "kushal",
+    "method": "local",
+    "id": ""
+}
+
+###
+PUT http://localhost:3000/auth/update-profile
+Content-Type: application/json
+
+{
+    "usremail": "abc@xyz.com",
+    "fullname": "kushal pandya",
+    "bio": "i love cats",
+    "accounts": [
+        {
+            "url" : "https://codeforces.com",
+            "profile": "codeforces"
+        },
+        {
+            "url" : "https://codechef.com",
+            "profile": "codechef"
+        }
+    ]
+}
+###
+POST http://localhost:3000/auth/forgot-password
+Content-Type: application/json
+
+{
+    "email": "dhirajgovindvira1112@gmail.com"
+}
