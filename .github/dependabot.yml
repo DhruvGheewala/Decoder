@@ -5,17 +5,17 @@
 
 version: 2
 updates:
-  - package-ecosystem: "root"
+  - package-ecosystem: "npm"
     directory: "/"
     schedule:
       interval: "daily"
 
-  - package-ecosystem: "frontend"
+  - package-ecosystem: "npm"
     directory: "/frontend"
     schedule:
       interval: "daily"
 
-  - package-ecosystem: "backend"
+  - package-ecosystem: "npm"
     directory: "/backend"
     schedule:
       interval: "daily"
