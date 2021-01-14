@@ -15,6 +15,7 @@ import { LoginComponent } from './components/login/login.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { RegisterComponent } from './components/register/register.component';
 import { UpcomingContestComponent } from './components/upcoming-contest/upcoming-contest.component';
+import { CodeUserComponent } from './components/code/code-user/code-user.component';
 
 const routes: Routes = [
   {
@@ -36,6 +37,10 @@ const routes: Routes = [
   {
     path: 'code/recent',
     component: CodeRecentComponent,
+  },
+  {
+    path: 'code/:user/:id',
+    component: CodeUserComponent,
   },
   {
     path: 'upcoming-contest',

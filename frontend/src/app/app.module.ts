@@ -27,6 +27,7 @@ import { CodeRecentComponent } from './components/code/code-recent/code-recent.c
 // Service
 import { UserService } from "./service/user.service";
 import { AdminService } from "./service/admin.service";
+import { CodeUserComponent } from './components/code/code-user/code-user.component';
 
 @NgModule({
   declarations: [
@@ -47,7 +48,8 @@ import { AdminService } from "./service/admin.service";
     AboutComponent,
     CodeViewComponent,
     CodeRecentComponent,
-    CodeIdeComponent
+    CodeIdeComponent,
+    CodeUserComponent
   ],
   imports: [
     BrowserModule,
