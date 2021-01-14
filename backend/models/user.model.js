@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-const uniqueValidator = require('mongoose-unique-validator');
 
 let userSchema = new Schema({
     username: {
@@ -24,7 +23,7 @@ let userSchema = new Schema({
         type: Boolean,
         default: false
     },
-    method:{
+    method: {
         type: String,
         required: true
     },
@@ -41,15 +40,11 @@ let userSchema = new Schema({
         default: ''
     },
     myblogs: {
-        type : [{id: String}],
-        default : []
+        type: [{ id: String }],
+        default: []
     },
     mycodes: {
-        type : [{id: String}],
-        default : []
-    },
-    myaccouts: {
-        type: [{url: String, profile: String}],
+        type: [{ id: String }],
         default: []
     },
     settings: {
@@ -61,5 +56,4 @@ let userSchema = new Schema({
     collection: 'users'
 })
 
-userSchema.plugin(uniqueValidator, { message: 'Email already in use.' });
 module.exports = mongoose.model('User', userSchema)

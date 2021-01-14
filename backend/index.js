@@ -20,5 +20,6 @@ app.use(bodyParser.json());
 
 // Routes
 const codeRoute = require('./routes/code.routes');
-
+const authRoute = require('./routes/user.routes');
 app.use('/api/code', codeRoute);
+app.use('/auth',authRoute);
