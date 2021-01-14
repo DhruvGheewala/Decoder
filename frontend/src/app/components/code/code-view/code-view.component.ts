@@ -130,7 +130,7 @@ export class CodeViewComponent implements OnInit {
       this.setTheme(this.code_data.theme || "monokai");
       this.setMode(this.code_data.language);
 
-      this.codeEditor.setValue(this.code_data.code);
+      this.codeEditor.setValue(this.code_data.content);
       this.inputEditor.setValue(this.code_data.input);
       this.outputEditor.setValue(this.code_data.output);
 
@@ -138,7 +138,7 @@ export class CodeViewComponent implements OnInit {
       this.inputEditor.setReadOnly(true);
       this.outputEditor.setReadOnly(true);
 
-      this.errorAreaElemRef.nativeElement.value = this.code_data.error;
+      this.errorAreaElemRef.nativeElement.value = this.code_data.stderr;
     });
   }
 

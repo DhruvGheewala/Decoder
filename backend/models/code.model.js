@@ -20,7 +20,7 @@ const codeSchema = new mongoose.Schema({
 const Code = mongoose.model('Code', codeSchema);
 function getCodeModel(codeData) {
     return new Code({
-        code: codeData.code,
+        content: codeData.content,
         input: codeData.input,
         output: codeData.output,
         language: codeData.language,

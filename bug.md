@@ -3,3 +3,4 @@
 
 - ## overall
   - after hover, title of icons are still visible
+  - stdout, output, input, stdin, error, stderr issue in db and frontend
