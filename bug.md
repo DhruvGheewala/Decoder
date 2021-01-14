@@ -1,3 +1,5 @@
 - ## Code-ide component
-    - there is a misconception between mode and caption, so we have to fix that issue in user/admin service and code-ide and related components.
-    - on compilation failure or server error, error isn't handeled properly
+  - error handling remaining, and sometimes run button stays disabled
+
+- ## overall
+  - after hover, title of icons are still visible

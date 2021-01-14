@@ -1,42 +1,30 @@
 const express = require('express');
 const router = express.Router();
 
-const path = require('path');
+const _ = require('lodash');
 const fs = require('fs');
 const sendResponse = require('../utils/sendResponse');
 
 const {
+    runFile,
+    generateFilePath,
     insertCode,
     getCode,
-    getAllPublicCodes,
-    getRunner,
-    generateFilePath,
-    getCodeData,
     updateCode,
-    deleteCode
+    deleteCode,
+    getAllPublicCodes
 } = require('../controllers/code.controller');
 
-router.post('/compile', (req, res) => {
-    const lang = req.body.language;
-    const code = req.body.code;
-    const stdin = req.body.stdin;
+// /api/code
+router.post('/compile', async (req, res) => {
+    let { language, code, stdin } = _.pick(req.body, ['language', 'code', 'stdin']);
+    stdin = stdin ?? '';
+    code = code ?? '';
 
-    const runner = getRunner(lang);
-    const filePath = generateFilePath('Decoder', lang);
-
-    if (!runner)
-        return sendResponse('Supported languages: C, C++, Python, Java & Javascript', res, 400);
-
-    fs.writeFile(filePath, code, () => {
-        const startTime = new Date();
-        runner.runFile(filePath, { stdin: stdin }, (err, result) => {
-            const endTime = new Date();
-            const compileTime = endTime.getTime() - startTime.getTime();
-            if (err) return sendResponse(err, res, 500);
-            result.manualCompilationTime = compileTime;
-            sendResponse(result, res);
-        });
-    });
+    const result = await runFile(language, code, stdin);
+    console.log('sadasdadad');
+    if (result.err) return sendResponse(result.err, res, 404);
+    sendResponse(result, res);
 });
 
 // Private codes will be send back only iff code[id].author === currentUser
@@ -60,7 +48,7 @@ router.get('/view/:currentUser/:id?', async (req, res) => {
 });
 
 router.put('/update/:id', async (req, res) => {
-    const codeData = getCodeData(req.body);
+    const codeData = _.pick(req.body, ['code', 'input', 'output', 'language', 'author', 'visibility']);
     const result = await updateCode(req.params.id, codeData);
     if (!result)
         return sendResponse('Code not found or Bad request, Please try again', res, 404);
@@ -77,7 +65,7 @@ router.delete('/delete/:id', async (req, res) => {
 // Todo: error handeling
 
 router.post('/save', async (req, res) => {
-    const codeData = getCodeData(req.body);
+    const codeData = _.pick(req.body, ['code', 'input', 'output', 'language', 'author', 'visibility']);
     const result = await insertCode(codeData);
     sendResponse(result, res);
 });
