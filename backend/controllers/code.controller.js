@@ -1,30 +1,18 @@
-const { Code, validateCode, getCodeModel } = require('../models/code.model');
-const { node, python } = require('compile-run');
-const os = require('os');
-const fs = require('fs');
-const util = require('util');
-const exec = util.promisify(require('child_process').exec);
-const writeFileAsync = util.promisify(fs.writeFile);
-
-function errorToJSON(error) {
-    let err = {};
-    for (const key in error)
-        err[key] = error[key];
-    console.error(err);
-    return { err };
-}
+const { Code, validateCode, CodeModel } = require('../models/code.model');
+const { c, cpp, java, node, python } = require('../utils/compile-run');
+const { errorToJSON } = require('../utils/global');
 
 // Todo: Not working, will fix it soon !!
-async function compress(id) {
-    return id;
-}
+async function compress(id) { return id; }
 
+// Todo: handle various errors
 async function insertCode(data) {
     try {
-        const _code = getCodeModel(data);
-        const isValid = validateCode(_code);
-        console.log('isValid', isValid);
-        const result = await _code.save();
+        const code = new CodeModel(data);
+        const isValid = validateCode(code);
+        // Todo => validation
+        //// console.log('isValid', isValid);
+        const result = await code.save();
         result.id = await compress(result._id);
         return await result.save();
     } catch (err) {
@@ -32,36 +20,33 @@ async function insertCode(data) {
     }
 }
 
-async function updateCode(id, data) {
-    try {
-        if (!data) return null;
-
-        const code = getCodeModel(data);
-        if (code.id) return { err: 'Bad request' };
-
-        const _code = await Code.findById(id);
-        if (!_code) return null;
-
-
-        for (const key in data) _code[key] = code[key] || _code[key];
-        return await _code.save();
-    } catch (err) {
-        return errorToJSON(err);
-    }
-}
-
+//* Complete
 async function getCode(id, currentUser) {
     try {
-        let codeData = await Code.find({ id });
-        if (!codeData.length) return null;
-        codeData = codeData[0];
-        if (codeData.visibility === 'public') return codeData;
-        return codeData.author === currentUser ? codeData : null;
+        const code = await Code.findOne({ id });
+        if (!code) return null;
+        if (code.visibility === 'public') return code;
+        return code.author === currentUser ? code : null;
     } catch (err) {
         return errorToJSON(err);
     }
 }
 
+// Todo: validation
+async function updateCode(id, data) {
+    try {
+        if (!data || data.id) return null;
+        const code = await Code.findOne({ id });
+        if (!code) return null;
+        const _code = new CodeModel(data);
+        for (const key in data) code[key] = _code[key] || code[key];
+        return await code.save();
+    } catch (err) {
+        return errorToJSON(err);
+    }
+}
+
+//* Complete
 async function deleteCode(id) {
     try {
         return await Code.deleteOne({ id });
@@ -70,11 +55,13 @@ async function deleteCode(id) {
     }
 }
 
+//* Complete
 async function getAllPublicCodes(currentUser) {
     if (currentUser) return await Code.find({ author: currentUser, visibility: 'public' });
     return await Code.find({ visibility: 'public' });
 }
 
+//* Complete
 const dir = './code';
 function generateFilePath(fileName, language) {
     let result = null;
@@ -82,122 +69,43 @@ function generateFilePath(fileName, language) {
 
     if (language === 'c') {
         result = `${dir}/${fileName}.c`;
-    } else if (language === 'c++') {
+    } else if (language === 'c++' || language === 'cpp') {
         result = `${dir}/${fileName}.cpp`;
-    } else if (language === 'python') {
+    } else if (language === 'python' || language === 'py') {
         result = `${dir}/${fileName}.py`;
     } else if (language === 'java') {
         result = `${dir}/${fileName}.java`;
-    } else if (language === 'javascript') {
+    } else if (language === 'javascript' || language === 'js') {
         result = `${dir}/${fileName}.js`;
     }
     return result;
 }
 
-const osCompile = {
-    'exe': ['windows_nt'],
-    'out': ['darwin', 'linux']
-};
-
-class C {
-    runFile = async (path, { stdin }) => {
-        const osType = os.type().toLowerCase();
-
-        // compiling...
-        try {
-            if (osCompile.exe.indexOf(osType) >= 0) await exec(`gcc ${path} -o code/c.exe`);
-            else if (osCompile.out.indexOf(osType) >= 0) await exec(`gcc ${path} -o code/c.out`);
-        } catch (err) {
-            return errorToJSON(err);
-        }
-
-        await writeFileAsync('code/input.txt', stdin);
-
-        // Running...
-        const startTime = new Date();
-        let result = null;
-        if (osCompile.exe.indexOf(osType) >= 0) result = await exec('cd code && c.exe < input.txt');
-        else if (osCompile.out.indexOf(osType) >= 0) result = await exec('cd code && ./c.out < input.txt');
-
-        const endTime = new Date();
-        const runTime = endTime.getTime() - startTime.getTime();
-        result.manualrunTime = runTime;
-        return result;
-    }
-};
-
-class Cpp {
-    async runFile(path, { stdin }) {
-        const osType = os.type().toLowerCase();
-
-        // compiling...
-        try {
-            if (osCompile.exe.indexOf(osType) >= 0) await exec(`g++ ${path} -o code/cpp.exe`);
-            else if (osCompile.out.indexOf(osType) >= 0) await exec(`g++ ${path} -o code/cpp.out`);
-        } catch (err) {
-            return errorToJSON(err);
-        }
-
-        await writeFileAsync('code/input.txt', stdin);
-
-        // Running...
-        const startTime = new Date();
-        let result = null;
-        if (osCompile.exe.indexOf(osType) >= 0) result = await exec('cd code && cpp.exe < input.txt');
-        else if (osCompile.out.indexOf(osType) >= 0) result = await exec('cd code && ./cpp.out < input.txt');
-
-        const endTime = new Date();
-        const runTime = endTime.getTime() - startTime.getTime();
-        result.manualrunTime = runTime;
-        return result;
-    }
-};
-
-class Java {
-    runFile = async (path, { stdin }) => {
-        // compiling...
-        try {
-            await exec(`javac ${path}`);
-        } catch (err) {
-            return errorToJSON(err);
-        }
-
-        writeFileAsync('code/input.txt', stdin);
-
-        // Running...
-        const startTime = new Date();
-        let result = await exec('cd code && java Decoder < input.txt');
-        const endTime = new Date();
-        const runTime = endTime.getTime() - startTime.getTime();
-        result.manualrunTime = runTime;
-        return result;
-    }
-};
-
-async function runFile(language, code, stdin) {
-    language = language.toLowerCase();
+//* Complete
+async function runFile({ language, code, stdin }) {
     let runner = null;
+    language = language.toLowerCase();
     if (language === 'c') {
-        runner = new C();
-    } else if (language === 'c++') {
-        runner = new Cpp();
+        runner = c;
+    } else if (language === 'c++' || language === 'cpp') {
+        runner = cpp;
     } else if (language === 'java') {
-        runner = new Java();
-    } else if (language === 'javascript') {
+        runner = java;
+    } else if (language === 'javascript' || language === 'js') {
         runner = node;
-    } else if (language === 'python') {
+    } else if (language === 'python' || language === 'py') {
         runner = python;
     }
 
-    if (!runner) return { err: 'Available languages are C, C++, Java, Python & Javascript' };
+    if (!runner) return null;
     const path = generateFilePath('Decoder', language);
-    await writeFileAsync(path, code);
+    await fs.writeFileAsync(path, code);
 
     const startTime = new Date();
     const result = await runner.runFile(path, { stdin });
-    if (result.err) return result;
-
     const endTime = new Date();
+
+    if (!result || result.err) return result;
     const runTime = endTime.getTime() - startTime.getTime();
     if (!result.manualrunTime) result.manualrunTime = runTime;
     return result;
@@ -206,9 +114,9 @@ async function runFile(language, code, stdin) {
 module.exports = {
     insertCode,
     getCode,
-    getAllPublicCodes,
-    runFile,
-    generateFilePath,
     updateCode,
-    deleteCode
+    deleteCode,
+    getAllPublicCodes,
+    generateFilePath,
+    runFile,
 };
