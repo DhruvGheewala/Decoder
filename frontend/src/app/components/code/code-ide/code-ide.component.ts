@@ -113,13 +113,15 @@ export class CodeIdeComponent implements OnInit {
     this.codeEditor = ace.edit(codeEditorElem, editorOptions);
     this.inputEditor = ace.edit(inputEditorElem, {
       highlightActiveLine: true,
-      minLines: 13,
-      maxLines: 13,
+      minLines: 12.1,
+      maxLines: 12.1,
+      wrap: 50
     });
     this.outputEditor = ace.edit(outputEditorElem, {
       highlightActiveLine: true,
-      minLines: 13,
-      maxLines: 13,
+      minLines: 12.1,
+      maxLines: 12.1,
+      wrap: 50
     });
 
     // for the scope fold feature
@@ -291,7 +293,6 @@ export class CodeIdeComponent implements OnInit {
     runButton.disabled = true;
 
     this.userData.compileRun(codeObj).subscribe((data) => {
-      console.log(data);
       data = data.result;
       runButton.disabled = false;
       let err = '';

@@ -4,13 +4,31 @@
             <div class="col">
                 <div class="border">
                     <div class="row center mt-2 mb-2 ml-0 mr-0">
-                        <div class="col-sm-3">
-                            <div class="font-weight-bold icon-size" data-toggle="Decoder" title="Share your code">
-                                <i class="fas fa-code"></i>
-                                code
+                        <div class="col-sm-5">
+                            <div class="row">
+                                <div class="col-sm-1 font-weight-bold icon-size" data-toggle="Decoder"
+                                    title="Share your code">
+                                    <i class="fas fa-code"></i>
+                                </div>
+                                <div class="col-sm-6">
+                                    <input class="w-100 font-code form-control-sm border" type="text"
+                                        placeholder="Title" required>
+                                </div>
+                                <div class="col">
+                                    <i class="fas fa-folder"></i>
+                                    <select class="ml-2 form-select form-control-sm"
+                                        aria-label="Default select example">
+                                        <option selected>Default</option>
+                                        <option value="1">C++</option>
+                                        <option value="2">C</option>
+                                        <option value="3">Java</option>
+                                        <option value="4">Python</option>
+                                        <option value="5">Javascript</option>
+                                    </select>
+                                </div>
                             </div>
                         </div>
-                        <div class="col-sm-9">
+                        <div class="col-sm-7">
                             <div class="row">
                                 <div class="col text-right mt-1">
                                     <a class=" btn-sm btn-default icon-size" data-toggle="tooltip"
@@ -46,7 +64,7 @@
                                     <input type="file" id="codeUpload" class="hide"
                                         (change)="onChangeFile($event.target.files)" />
                                 </div>
-                                <div class="col-sm-2 ">
+                                <div class="col-sm-2">
                                     <div class="">
                                         <!-- <small>Language</small> -->
                                         <select data-toggle="tooltip" title="Languages"
@@ -60,7 +78,7 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-sm-2 ">
+                                <div class="col-sm-2">
                                     <div class="">
                                         <!-- <small>Theme</small> -->
                                         <select data-toggle="tooltip" title="Themes"
@@ -73,7 +91,7 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-sm-2 ">
+                                <div class="col-sm-2">
                                     <!-- Run -->
                                     <button data-toggle="tooltip" title="Ctrl + b" type="button" id="runButton"
                                         class="col btn btn-outline-primary btn-sm" (click)="runClicked(runButton)"
@@ -89,78 +107,79 @@
             </div>
         </div>
     </div>
-
-    <div class="row">
-        <div class="ml-2 col-sm-8" #codeEditor></div>
-        <div class="col">
-            <div class="row">
-                <div class="col">
-                    <div>
-                        <div class="row border">
-                            <div class="col">
-                                <span class="font-code font-weight-bold">
-                                    <i class="fas fa-inbox"></i>
-                                    Input
-                                </span>
+    <div>
+        <div class="row">
+            <div class="ml-1 col-sm-8" #codeEditor></div>
+            <div class="col">
+                <div class="row">
+                    <div class="col">
+                        <div>
+                            <div class="row border">
+                                <div class="col">
+                                    <span class="font-code font-weight-bold">
+                                        <i class="fas fa-inbox"></i>
+                                        Input
+                                    </span>
+                                </div>
+                                <div class="col text-right">
+                                    <a class="btn-floating btn-sm btn-default" data-toggle="tooltip"
+                                        data-placement="left" (click)="copyToClipboard('input')" title="copy input">
+                                        <i class="fas fa-copy"></i>
+                                    </a>
+                                </div>
                             </div>
-                            <div class="col text-right">
-                                <a class="btn-floating btn-sm btn-default" data-toggle="tooltip" data-placement="left"
-                                    (click)="copyToClipboard('input')" title="copy input">
-                                    <i class="fas fa-copy"></i>
-                                </a>
+                            <div class="row">
+                                <div class="col" #inputEditor></div>
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="col" #inputEditor></div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="row">
-                <div class="col">
-                    <div>
-                        <div class="row border">
-                            <div class="col">
-                                <span class="font-code font-weight-bold">
-                                    <i class="fas fa-poll-h"></i>
-                                    Output
-                                </span>
+                <div class="row">
+                    <div class="col">
+                        <div>
+                            <div class="row border">
+                                <div class="col">
+                                    <span class="font-code font-weight-bold">
+                                        <i class="fas fa-poll-h"></i>
+                                        Output
+                                    </span>
+                                </div>
+                                <div class="col text-right">
+                                    <a class="btn-floating btn-sm btn-default" data-toggle="tooltip"
+                                        data-placement="left" (click)="copyToClipboard('output')" title="copy output">
+                                        <i class="fas fa-copy"></i>
+                                    </a>
+                                </div>
                             </div>
-                            <div class="col text-right">
-                                <a class="btn-floating btn-sm btn-default" data-toggle="tooltip" data-placement="left"
-                                    (click)="copyToClipboard('output')" title="copy output">
-                                    <i class="fas fa-copy"></i>
-                                </a>
+                            <div class="row">
+                                <div class="col" #outputEditor></div>
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="col" #outputEditor></div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <div [ngClass]="isError ? '' : 'hide'">
-        <div class="border">
-            <div class="row ml-2 mr-2">
-                <div class="col">
-                    <span class="font-code font-weight-bold">
-                        <i class="fas fa-bug"></i>
-                        Error
-                    </span>
-                </div>
-                <div class="col text-right">
-                    <a class="btn-floating btn-sm btn-default" data-toggle="tooltip" data-placement="left"
-                        (click)="copyToClipboard('error')" title="copy stderr">
-                        <i class="fas fa-copy"></i>
-                    </a>
+        <div [ngClass]="isError ? '' : 'hide'">
+            <div class="border">
+                <div class="row ml-2 mr-2">
+                    <div class="col">
+                        <span class="font-code font-weight-bold">
+                            <i class="fas fa-bug"></i>
+                            Error
+                        </span>
+                    </div>
+                    <div class="col text-right">
+                        <a class="btn-floating btn-sm btn-default" data-toggle="tooltip" data-placement="left"
+                            (click)="copyToClipboard('error')" title="copy stderr">
+                            <i class="fas fa-copy"></i>
+                        </a>
+                    </div>
                 </div>
             </div>
+            <textarea class="font-small font-code form-control text-danger" disabled="true" rows="10"
+                aria-label="output-textarea" #error></textarea>
         </div>
-        <textarea class="font-small font-code form-control text-danger" disabled="true" rows="10"
-            aria-label="output-textarea" #error></textarea>
     </div>
 
     <!-- 
