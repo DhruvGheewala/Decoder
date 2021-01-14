@@ -1,22 +1,16 @@
-# Frontend
+# Dhiraj
+- frontend => IDE and Recent codes page
+- contact us, about page
 
-- start work on blogs
+# Dhruv
+- frontend => IDE configuration, default template
+- backend => code database
 
-- add IDE functionality
-  - share code
-  - user setting
+# Kushal
+- frontend => copy code, upload, download
+- backend => user database (working)
 
-- dhiraj
-  - ide/view/:id, frontend
-  - ide/view/list, frontend
-  - profile/:user, frontend
-
-# Backend
-
-- create database
-
-# Flow
-
+# Database
 ```
 3 database
 1. user
@@ -78,7 +72,6 @@
 ```
 
 ### frontend
-
 => User not logged in
 - /ide => compiler
 - /code/recent => show all public codes
@@ -89,8 +82,6 @@ user can create, delete, update code, blog
 - /profile/:user if this is same user as :user we have to display all public, private codes, blogs
     so create api accordingly
 - /ide/edit/:id => edit code => backend /api/code/view/:id
-
-
 
 
 ### backend user authentication
