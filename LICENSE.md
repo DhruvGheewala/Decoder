@@ -1,6 +1,6 @@
 MIT License
 
-Copyright (c) 2021 [Dhruv_gheewala](https://github.com/DhruvGheewala), [Dhiraj-01](https://github.com/Dhiraj-01), [Kushalp13](https://github.com/kushalp13)
+Copyright (c) 2021 [DhruvGheewala](https://github.com/DhruvGheewala), [DhirajGovindvira](https://github.com/Dhiraj-01), [KushalPandya](https://github.com/kushalp13)
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
