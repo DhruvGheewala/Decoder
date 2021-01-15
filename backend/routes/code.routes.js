@@ -1,3 +1,4 @@
+// *route: /api/code/...
 const express = require('express');
 const router = express.Router();
 
@@ -6,11 +7,10 @@ const sendResponse = require('../utils/sendResponse');
 const controller = require('../controllers/code.controller');
 const { fs } = require('../utils/global');
 
-// route: /api/code/*
 
-//* Complete
+// *Complete
 router.post('/compile', async (req, res) => {
-    let { language, content, stdin } = _.pick(req.body, ['language', 'content', 'stdin']);
+    let { language, content, stdin } = req.body;
     stdin = stdin ? stdin : '';
     content = content ? content : '';
     const result = await controller.runFile({ language, code: content, stdin });
@@ -19,7 +19,10 @@ router.post('/compile', async (req, res) => {
     sendResponse(result, res);
 });
 
-//* Complete
+/**
+ * *Complete
+ * Todo: send request to save code in user Database too !!
+ */
 router.post('/save', async (req, res) => {
     const codeData = _.pick(req.body, ['content', 'stdin', 'stdout', 'language', 'author', 'visibility', 'title', 'stderr']);
     const result = await controller.insertCode(codeData);
@@ -28,9 +31,9 @@ router.post('/save', async (req, res) => {
     sendResponse(result, res);
 });
 
-//* Complete
+// *Complete
 router.get('/defaults/:language', async (req, res) => {
-    const language = req.params.language;
+    const { language } = req.params;
     const path = controller.generateFilePath('template', language);
     if (!path) return sendResponse('Bad Request', res, 400);
 
@@ -42,7 +45,7 @@ router.get('/defaults/:language', async (req, res) => {
     }
 });
 
-//* Complete
+// *Complete
 const languages = ['C', 'C++', 'Python', 'Java', 'Javascript'];
 router.get('/defaults', async (_req, res) => {
     let array = [];
@@ -61,43 +64,48 @@ router.get('/defaults', async (_req, res) => {
     return sendResponse(result, res);
 });
 
-// !Private codes will be send back only iff code[id].author === currentUser
-router.get('/view/:currentUser/:id?', async (req, res) => {
-    const id = req.params.id;
-    const currentUser = req.params.currentUser;
+// *Complete
+router.get('/all', async (_req, res) => {
+    const result = await controller.getAllPublicCodes();
+    sendResponse(result, res);
+});
 
-    if (id) {
-        const codeData = await getCode(id, currentUser);
-        if (!codeData)
-            return sendResponse('Code not found or Bad request, Please try again', res, 404);
-        if (codeData.err)
-            return sendResponse(codeData.err, res, 400);
-        return sendResponse(codeData, res);
-    }
-
+// *Complete
+router.get('/view/:currentUser', async (req, res) => {
+    const { currentUser } = req.params;
     const allData = await getAllPublicCodes(currentUser);
-    if (!allData)
-        return sendResponse('Code not found or Bad request, Please try again', res, 404);
+    if (!allData) return sendResponse('User not found, Please try again', res, 404);
     sendResponse(allData, res);
 });
 
+/**
+ * Todo: authenticate jwt token
+ * !Private codes will be send back only iff code[id].author === currentUser
+ * *Complete
+ */
+router.get('/view/:currentUser/:id', async (req, res) => {
+    const { id, currentUser } = req.params;
+    const codeData = await getCode(id, currentUser);
+    if (!codeData) return sendResponse('Code not found, Please try again', res, 404);
+    if (codeData.err) return sendResponse(codeData.err, res, 500);
+    return sendResponse(codeData, res);
+});
+
+// *Complete
 router.put('/update/:id', async (req, res) => {
     const codeData = _.pick(req.body, ['code', 'input', 'output', 'language', 'author', 'visibility']);
     const result = await updateCode(req.params.id, codeData);
-    if (!result)
-        return sendResponse('Code not found or Bad request, Please try again', res, 404);
-    if (result.err)
-        return sendResponse(result.err, res, 400);
+    if (!result) return sendResponse('Invalid id, Please try again', res, 404);
+    if (result.err) return sendResponse(result.err, res, 400);
     sendResponse(result, res);
 });
 
+/**
+ * *Complete
+ * *will not return an error on no deletion
+ */
 router.delete('/delete/:id', async (req, res) => {
     const result = await deleteCode(req.params.id);
-    sendResponse(result, res);
-});
-
-router.get('/all', async (req, res) => {
-    const result = await getAllPublicCodes();
     sendResponse(result, res);
 });
 

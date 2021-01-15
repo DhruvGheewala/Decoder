@@ -40,15 +40,13 @@
     - random test case generator file
 
 ## Installtion
-- Install [Nodejs](https://nodejs.org/en/), [Angular cli](https://cli.angular.io/), [MongoDB](https://www.mongodb.com/)
-```
-git clone https://github.com/DhruvGheewala/Decoder.git 
-(or manually download this project)
+- Install [Node.js](https://nodejs.org/en/), [Angular cli](https://cli.angular.io/), [MongoDB](https://www.mongodb.com/)
+```python
+# will download this repository locally
+git clone https://github.com/DhruvGheewala/Decoder.git
+(otherwise manually download this project)
 
-cd backend
-npm install
-
-cd frontend
+# will install all the dependencies for project
 npm install
 ```
 
@@ -57,9 +55,9 @@ npm install
 ```
 
 ## How to run ?
-```javascript
-npm run install  // will install all the dependencies for project
-npm run start    // will serve the project
+```python
+# will serve the project
+npm start
 ```
 
 ## Screenshots
