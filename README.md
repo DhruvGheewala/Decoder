@@ -2,7 +2,7 @@
 
 <img src="./screenshots/logo.PNG" alt="Decoder"/>
 
-## Table of Contents
+### Table of Contents
 - [Decoder - A Competitive Programming Portal](#decoder---a-competitive-programming-portal)
 - [Functionality](#functionality)
 - [Installtion](#installtion)
@@ -57,12 +57,9 @@ npm install
 ```
 
 ## How to run ?
-```
-cd backend
-node index.js
-
-cd frontend
-ng serve -o
+```javascript
+npm run install  // will install all the dependencies for project
+npm run start    // will serve the project
 ```
 
 ## Screenshots
