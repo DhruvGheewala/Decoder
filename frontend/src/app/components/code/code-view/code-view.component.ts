@@ -93,7 +93,6 @@ export class CodeViewComponent implements OnInit {
     this.userData.getCodeById(this.code_id).subscribe((data) => {
       this.code_data = data.result;
       this.availableLanguages = this.adminData.getLanguages();
-      console.log(data);
 
       { // editor configuration
 
@@ -131,8 +130,8 @@ export class CodeViewComponent implements OnInit {
       this.setMode(this.code_data.language);
 
       this.codeEditor.setValue(this.code_data.content);
-      this.inputEditor.setValue(this.code_data.input);
-      this.outputEditor.setValue(this.code_data.output);
+      this.inputEditor.setValue(this.code_data.stdin);
+      this.outputEditor.setValue(this.code_data.stdout);
 
       this.codeEditor.setReadOnly(true);
       this.inputEditor.setReadOnly(true);

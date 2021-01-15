@@ -294,7 +294,8 @@ export class CodeIdeComponent implements OnInit {
     document.body.removeChild(a);
   }
 
-  public runClicked() {
+  // Todo: convert this into async and await(Dhruv)
+  public runClicked(callback = () => { }) {
     const codeObj = {
       content: this.codeEditor.getValue(),
       language: this.selectedLanguage,
@@ -304,10 +305,9 @@ export class CodeIdeComponent implements OnInit {
     this.isError = false;
     this.runButtonElem.disabled = true;
     this.userData.compileRun(codeObj).subscribe((data) => {
-      console.log(data);
-
       let err = '';
       if (data.err) {
+        // Todo: dhiraj
         const errData = data.err;
         err = `- Killed: ${errData.killed}\n`;
         err += `- Signal: ${errData.siganl}\n`;
@@ -319,33 +319,36 @@ export class CodeIdeComponent implements OnInit {
       data = data.result;
       this.runButtonElem.disabled = false;
       if (data.stderr) {
+        // Todo: dhiraj
         err = `STDERR =======================\n${data.stderr}`;
         this.isError = true;
       }
 
       this.errorEditorElem.value = err;
-      this.outputEditor.setValue(data.stdout ?? '');
+      this.outputEditor.setValue(data.stdout);
+
+      callback();
     });
   }
 
   shareCodeClick() {
-    this.runClicked();
+    this.runClicked(() => {
+      let codeObj = {
+        title: this.titleElem.value,
+        content: this.codeEditor.getValue(),
+        language: this.selectedLanguage,
+        stdin: this.inputEditor.getValue(),
+        stdout: this.outputEditor.getValue(),
+        stderr: this.errorEditorElem.value,
+        theme: this.selectedTheme,
+        author: 'Guest',  // Todo
+        visibility: 'public'  // Todo
+      };
 
-    let codeObj = {
-      title: this.titleElem.value,
-      content: this.codeEditor.getValue(),
-      language: this.selectedLanguage,
-      stdin: this.inputEditor.getValue(),
-      stdout: this.outputEditor.getValue(),
-      stderr: this.errorEditorElem.value,
-      author: 'Guest',  // Todo
-      theme: this.selectedTheme,
-      visibility: 'public'  // Todo
-    };
-
-    this.userData.saveCode(codeObj).subscribe((data) => {
-      if (!data.err)
-        this.router.navigate(['/code/view/' + data.result.id]);
+      this.userData.saveCode(codeObj).subscribe((data) => {
+        if (!data.err)
+          this.router.navigate(['/code/view/' + data.result.id]);
+      });
     });
   }
 }

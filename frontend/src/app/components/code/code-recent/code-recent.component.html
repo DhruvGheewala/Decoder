@@ -8,7 +8,7 @@
         </div>
         <div class="p-3 border">
             <div class="row">
-                <div class="col font4 font-weight-bold">ID</div>
+                <div class="col font4 font-weight-bold">Title</div>
                 <div class="col font4 font-weight-bold">Author</div>
                 <div class="col font4 font-weight-bold">Language</div>
                 <div class="col font4 font-weight-bold">Date</div>
@@ -17,7 +17,7 @@
                 <div class="row" [ngClass]="isEven ? '' : 'bg-gray'">
                     <div class="col">
                         <a routerLink="/code/view/{{code.id}}">
-                            {{code.id}}
+                            {{code.title}}
                         </a>
                     </div>
                     <div class="col">
@@ -29,7 +29,7 @@
                         {{code.language}}
                     </div>
                     <div class="col">
-                        {{dateToHumanReadable(code.timePublished)}}
+                        {{dateToHumanReadable(code.time)}}
                     </div>
                 </div>
             </div>
