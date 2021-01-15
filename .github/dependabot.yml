@@ -7,21 +7,18 @@ version: 2
 updates:
   - package-ecosystem: "npm"
     directory: "/"
-    schedule:
       schedule:
         interval: "weekly"
         day: "sunday"
 
   - package-ecosystem: "npm"
     directory: "/frontend"
-    schedule:
       schedule:
         interval: "weekly"
         day: "sunday"
 
   - package-ecosystem: "npm"
     directory: "/backend"
-    schedule:
       schedule:
         interval: "weekly"
         day: "sunday"
