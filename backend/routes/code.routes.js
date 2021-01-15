@@ -15,7 +15,7 @@ router.post('/compile', async (req, res) => {
     content = content ? content : '';
     const result = await controller.runFile({ language, code: content, stdin });
     if (!result) return sendResponse('Bad Request', res, 400);
-    if (result.err) return sendResponse(result.err, res, 500);
+    if (result.err) return sendResponse(result.err, res, 400);
     sendResponse(result, res);
 });
 
@@ -73,7 +73,7 @@ router.get('/all', async (_req, res) => {
 // *Complete
 router.get('/view/:currentUser', async (req, res) => {
     const { currentUser } = req.params;
-    const allData = await getAllPublicCodes(currentUser);
+    const allData = await controller.getAllPublicCodes(currentUser);
     if (!allData) return sendResponse('User not found, Please try again', res, 404);
     sendResponse(allData, res);
 });
@@ -85,7 +85,7 @@ router.get('/view/:currentUser', async (req, res) => {
  */
 router.get('/view/:currentUser/:id', async (req, res) => {
     const { id, currentUser } = req.params;
-    const codeData = await getCode(id, currentUser);
+    const codeData = await controller.getCode(id, currentUser);
     if (!codeData) return sendResponse('Code not found, Please try again', res, 404);
     if (codeData.err) return sendResponse(codeData.err, res, 500);
     return sendResponse(codeData, res);
@@ -94,7 +94,7 @@ router.get('/view/:currentUser/:id', async (req, res) => {
 // *Complete
 router.put('/update/:id', async (req, res) => {
     const codeData = _.pick(req.body, ['code', 'input', 'output', 'language', 'author', 'visibility']);
-    const result = await updateCode(req.params.id, codeData);
+    const result = await controller.updateCode(req.params.id, codeData);
     if (!result) return sendResponse('Invalid id, Please try again', res, 404);
     if (result.err) return sendResponse(result.err, res, 400);
     sendResponse(result, res);
@@ -105,7 +105,7 @@ router.put('/update/:id', async (req, res) => {
  * *will not return an error on no deletion
  */
 router.delete('/delete/:id', async (req, res) => {
-    const result = await deleteCode(req.params.id);
+    const result = await controller.deleteCode(req.params.id);
     sendResponse(result, res);
 });
 

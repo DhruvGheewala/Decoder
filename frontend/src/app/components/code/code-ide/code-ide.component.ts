@@ -58,6 +58,7 @@ import 'ace-builds/src-noconflict/ext-beautify';
 import { AdminService } from "src/app/service/admin.service";
 import { UserService } from "src/app/service/user.service";
 import { Router } from '@angular/router';
+import { viewClassName } from '@angular/compiler';
 declare var $: any;
 
 @Component({
@@ -77,12 +78,19 @@ export class CodeIdeComponent implements OnInit {
   @ViewChild('inputEditor', { static: true }) private inputEditorElemRef: ElementRef;
   @ViewChild('outputEditor', { static: true }) private outputEditorElemRef: ElementRef;
   @ViewChild('error', { static: true }) private errorElemRef: ElementRef;
+  @ViewChild('runButton', { static: true }) private runButtonElemRef: ElementRef;
+  @ViewChild('title', { static: true }) private titleElemRef: ElementRef;
 
   // ace editors
   private codeEditor: ace.Ace.Editor;
   private inputEditor: ace.Ace.Editor;
   private outputEditor: ace.Ace.Editor;
+  private errorEditor: ace.Ace.Editor;
   private editorBeautify: any;
+
+  private errorEditorElem: any;
+  private runButtonElem: any;
+  private titleElem: any;
 
   availableLanguages: any;
   availableThemes: any;
@@ -106,6 +114,10 @@ export class CodeIdeComponent implements OnInit {
     let codeEditorElem = this.codeEditorElemRef.nativeElement;
     let inputEditorElem = this.inputEditorElemRef.nativeElement;
     let outputEditorElem = this.outputEditorElemRef.nativeElement;
+
+    this.errorEditorElem = this.errorElemRef.nativeElement;
+    this.runButtonElem = this.runButtonElemRef.nativeElement;
+    this.titleElem = this.titleElemRef.nativeElement;
 
     const editorOptions: Partial<ace.Ace.EditorOptions> = this.getEditorOptions();
 
@@ -282,7 +294,7 @@ export class CodeIdeComponent implements OnInit {
     document.body.removeChild(a);
   }
 
-  public runClicked(runButton) {
+  public runClicked() {
     const codeObj = {
       content: this.codeEditor.getValue(),
       language: this.selectedLanguage,
@@ -290,65 +302,50 @@ export class CodeIdeComponent implements OnInit {
     }
 
     this.isError = false;
-    runButton.disabled = true;
-
+    this.runButtonElem.disabled = true;
     this.userData.compileRun(codeObj).subscribe((data) => {
-      data = data.result;
-      runButton.disabled = false;
+      console.log(data);
+
       let err = '';
       if (data.err) {
         const errData = data.err;
-        err += `- Killed: ${errData.killed}\n`;
+        err = `- Killed: ${errData.killed}\n`;
         err += `- Signal: ${errData.siganl}\n`;
         err += `ERROR =======================\n${errData.stderr}\n`;
+        this.isError = true;
+        return;
       }
-      if (data.stderr) err += `STDERR =======================\n${data.stderr}`;
-      if (err !== '') this.isError = true;
 
-      this.errorElemRef.nativeElement.value = err;
+      data = data.result;
+      this.runButtonElem.disabled = false;
+      if (data.stderr) {
+        err = `STDERR =======================\n${data.stderr}`;
+        this.isError = true;
+      }
+
+      this.errorEditorElem.value = err;
       this.outputEditor.setValue(data.stdout ?? '');
     });
   }
 
   shareCodeClick() {
+    this.runClicked();
+
     let codeObj = {
-      author: 'Guest',
+      title: this.titleElem.value,
       content: this.codeEditor.getValue(),
       language: this.selectedLanguage,
-      theme: this.selectedTheme,
-      visibility: 'public',
       stdin: this.inputEditor.getValue(),
-      output: '',
-      error: ''
+      stdout: this.outputEditor.getValue(),
+      stderr: this.errorEditorElem.value,
+      author: 'Guest',  // Todo
+      theme: this.selectedTheme,
+      visibility: 'public'  // Todo
     };
 
-    console.log(codeObj);
-    this.userData.compileRun(codeObj).subscribe((data) => {
-      console.log(data);
-      if (data.err) {
-        this.router.navigate(['/ide']);
-      }
-
-      data = data.result;
-      let err = '';
-      if (data.errorType) {
-        this.isError = true;
-        err += `- ${data.errorType} error\n`;
-        err += `- Signal : ${data.signal}\n`;
-        err += `- Exit Code : ${data.exitCode}\n\n`;
-      }
-      if (data.stderr) {
-        this.isError = true;
-        err += `${data.stderr}`;
-      }
-      codeObj.error = err;
-      codeObj.output = data.stdout;
-
-      console.log(codeObj);
-      this.userData.saveCode(codeObj).subscribe((data) => {
-        if (!data.err)
-          this.router.navigate(['/code/view/' + data.result.id]);
-      });
+    this.userData.saveCode(codeObj).subscribe((data) => {
+      if (!data.err)
+        this.router.navigate(['/code/view/' + data.result.id]);
     });
   }
 }

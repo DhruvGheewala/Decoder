@@ -7,7 +7,6 @@
 - dhiraj
   - view for code/list, my codes & all codes
   - directory structure
-  - check the stdout codeEditor for error & stderr
 - dhruv
   - api for code/list, folders and codes
   - refactor runner & code.*.js files

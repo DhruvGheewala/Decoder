@@ -1,6 +1,6 @@
 const { Code, validateCode, CodeModel } = require('../models/code.model');
 const { c, cpp, java, node, python } = require('../utils/compile-run');
-const { errorToJSON } = require('../utils/global');
+const { errorToJSON, fs } = require('../utils/global');
 
 // Todo: Not working, will fix it soon !!
 async function compress(id) { return id; }

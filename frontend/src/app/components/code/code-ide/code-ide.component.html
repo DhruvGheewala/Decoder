@@ -12,7 +12,7 @@
                                 </div>
                                 <div class="col-sm-6">
                                     <input class="w-100 font-code form-control-sm border" type="text"
-                                        placeholder="Title" required>
+                                        placeholder="Title" #title>
                                 </div>
                                 <div class="col">
                                     <i class="fas fa-folder"></i>
@@ -94,8 +94,7 @@
                                 <div class="col-sm-2">
                                     <!-- Run -->
                                     <button data-toggle="tooltip" title="Ctrl + b" type="button" id="runButton"
-                                        class="col btn btn-outline-primary btn-sm" (click)="runClicked(runButton)"
-                                        #runButton>
+                                        class="col btn btn-outline-primary btn-sm" (click)="runClicked()" #runButton>
                                         <i class="fas fa-play"></i>
                                         <span class="ml-1"> Run </span>
                                     </button>

@@ -1,5 +1,5 @@
 const os = require('os');
-const { fs, errorToJSON } = require('../utils/global');
+const { fs, errorToJSON, exec } = require('../utils/global');
 const { node, python } = require('compile-run');
 
 const osCompile = {
@@ -88,10 +88,14 @@ class Java {
     }
 };
 
+const c = new C();
+const cpp = new Cpp();
+const java = new Java();
+
 module.exports = {
-    c: new C(),
-    cpp: new Cpp(),
-    java: new Java(),
+    c,
+    cpp,
+    java,
     node,
     python
 };
