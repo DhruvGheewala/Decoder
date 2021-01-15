@@ -8,14 +8,20 @@ updates:
   - package-ecosystem: "npm"
     directory: "/"
     schedule:
-      interval: "daily"
+      schedule:
+        interval: "weekly"
+        day: "sunday"
 
   - package-ecosystem: "npm"
     directory: "/frontend"
     schedule:
-      interval: "daily"
+      schedule:
+        interval: "weekly"
+        day: "sunday"
 
   - package-ecosystem: "npm"
     directory: "/backend"
     schedule:
-      interval: "daily"
+      schedule:
+        interval: "weekly"
+        day: "sunday"
