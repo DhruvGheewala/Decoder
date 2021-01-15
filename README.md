@@ -3,7 +3,6 @@
 <img src="./screenshots/logo.PNG" alt="Decoder"/>
 
 ## Table of Contents
-- [Table of Contents](#table-of-contents)
 - [Decoder - A Competitive Programming Portal](#decoder---a-competitive-programming-portal)
 - [Functionality](#functionality)
 - [Installtion](#installtion)
@@ -52,7 +51,10 @@ npm install
 cd frontend
 npm install
 ```
- - <span style="color:red">Make sure you have node, gcc, g++, jdk & python installed in your system/server(which will compile code)</span>
+
+```diff
+- Make sure you have node(javascript), gcc(c), g++(c++), jdk(java) & python installed in your system / server (which will compile code).
+```
 
 ## How to run ?
 ```
