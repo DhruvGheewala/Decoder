@@ -294,61 +294,58 @@ export class CodeIdeComponent implements OnInit {
     document.body.removeChild(a);
   }
 
-  // Todo: convert this into async and await(Dhruv)
-  public runClicked(callback = () => { }) {
+  public async runClicked() {
     const codeObj = {
-      content: this.codeEditor.getValue(),
+      content: this.codeEditor.getValue(),  // Todo: Dhiraj getter for each editor, same as in view
       language: this.selectedLanguage,
       stdin: this.inputEditor.getValue()
     }
 
     this.isError = false;
     this.runButtonElem.disabled = true;
-    this.userData.compileRun(codeObj).subscribe((data) => {
-      let err = '';
-      if (data.err) {
-        // Todo: dhiraj
-        const errData = data.err;
-        err = `- Killed: ${errData.killed}\n`;
-        err += `- Signal: ${errData.siganl}\n`;
-        err += `ERROR =======================\n${errData.stderr}\n`;
-        this.isError = true;
-        return;
-      }
 
-      data = data.result;
-      this.runButtonElem.disabled = false;
-      if (data.stderr) {
-        // Todo: dhiraj
-        err = `STDERR =======================\n${data.stderr}`;
-        this.isError = true;
-      }
+    const observer = this.userData.compileRun(codeObj);
+    let data = await observer.toPromise();
 
-      this.errorEditorElem.value = err;
-      this.outputEditor.setValue(data.stdout);
+    let err = '';
+    if (data.err) {
+      // Todo: dhiraj
+      const errData = data.err;
+      err = `- Killed: ${errData.killed}\n`;
+      err += `- Signal: ${errData.siganl}\n`;
+      err += `ERROR =======================\n${errData.stderr}\n`;
+      this.isError = true;
+      return;
+    }
 
-      callback();
-    });
+    data = data.result;
+    this.runButtonElem.disabled = false;
+    if (data.stderr) {
+      // Todo: dhiraj
+      err = `STDERR =======================\n${data.stderr}`;
+      this.isError = true;
+    }
+
+    this.errorEditorElem.value = err;
+    this.outputEditor.setValue(data.stdout);
   }
 
-  shareCodeClick() {
-    this.runClicked(() => {
-      let codeObj = {
-        title: this.titleElem.value,
-        content: this.codeEditor.getValue(),
-        language: this.selectedLanguage,
-        stdin: this.inputEditor.getValue(),
-        stdout: this.outputEditor.getValue(),
-        stderr: this.errorEditorElem.value,
-        theme: this.selectedTheme,
-        author: 'Guest',  // Todo
-        visibility: 'public'  // Todo
-      };
+  public async shareCodeClick() {
+    await this.runClicked();
+    let codeObj = {
+      title: this.titleElem.value,
+      content: this.codeEditor.getValue(),
+      language: this.selectedLanguage,
+      stdin: this.inputEditor.getValue(),
+      stdout: this.outputEditor.getValue(),
+      stderr: this.errorEditorElem.value,
+      theme: this.selectedTheme,
+      author: 'Guest',  // Todo
+      visibility: 'public'  // Todo
+    };
 
-      this.userData.saveCode(codeObj).subscribe((data) => {
-        if (!data.err)
-          this.router.navigate(['/code/view/' + data.result.id]);
-      });
+    this.userData.saveCode(codeObj).subscribe((data) => {
+      if (!data.err) this.router.navigate(['/code/view/' + data.result.id]);
     });
   }
 }

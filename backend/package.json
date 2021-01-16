@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "dev-start": "nodemon index.js"
+    "dev-start": "nodemon index.js",
+    "init-problems": "node controllers/problems.controller.js"
   },
   "nodemonConfig": {
     "ignore": [

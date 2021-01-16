@@ -1,5 +1,6 @@
 # Decoder
 
+- try to make onload focus on code editor, exp: user can directly start writing code when he navigates to /ide(new)
 - start work on blogs
 - add IDE functionality
   - user setting
@@ -9,7 +10,6 @@
   - directory structure
 - dhruv
   - api for code/list, folders and codes
-  - refactor runner & code.*.js files
   - create folder.*.js
 - kushal
   - complete authentication & autherization

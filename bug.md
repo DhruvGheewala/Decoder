@@ -1,6 +1,5 @@
 - ## Code-ide component
-  - error handling remaining, and sometimes run button stays disabled
+  - error handling remaining, and sometimes run button stays disabled (could be fixed, please test this someone and confirm it)
 
 - ## overall
   - after hover, title of icons are still visible
-  - stdout, output, input, stdin, error, stderr issue in db and frontend

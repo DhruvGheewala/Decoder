@@ -3,6 +3,9 @@ backend/code/*.exe
 backend/code/*.txt
 backend/code/Decoder.*
 backend/code/Decoder.js
+backend/controllers/problems.controller.js
+Decoder.code-snippets
+components/problems/*
 
 # Logs
 logs

@@ -16,6 +16,7 @@ import { ProfileComponent } from './components/profile/profile.component';
 import { RegisterComponent } from './components/register/register.component';
 import { UpcomingContestComponent } from './components/upcoming-contest/upcoming-contest.component';
 import { CodeUserComponent } from './components/code/code-user/code-user.component';
+import { ProblemsComponent } from './components/problems/problems.component';
 
 const routes: Routes = [
   {
@@ -85,6 +86,10 @@ const routes: Routes = [
   {
     path: 'contact',
     component: ContactComponent,
+  },
+  {
+    path: 'problems',
+    component: ProblemsComponent,
   },
   {
     path: '**',
