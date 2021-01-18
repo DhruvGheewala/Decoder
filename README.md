@@ -6,6 +6,7 @@
 - [Decoder - A Competitive Programming Portal](#decoder---a-competitive-programming-portal)
 - [Functionality](#functionality)
 - [Installtion](#installtion)
+- [Environment Variable Structure](#environment-variable-structure)
 - [How to run ?](#how-to-run-)
 - [Screenshots](#screenshots)
 
@@ -52,6 +53,15 @@ npm install
 
 ```diff
 - Make sure you have node(javascript), gcc(c), g++(c++), jdk(java) & python installed in your system / server (which will compile code).
+```
+
+## Environment Variable Structure
+```dotenv
+PORT = ****
+DB_PATH = ****
+SECRETKEY = ****
+EMAIL_ID = ****
+EMAIL_PASSWORD = ****
 ```
 
 ## How to run ?

@@ -64,16 +64,22 @@ export class UserService {
       localStorage.setItem('access_token', res.result.token);
       this.curUser = res.result;
       console.log(this.curUser);
+      this.currentUser = this.curUser.userData;
       this.router.navigate(['/']);
     });
   }
   itemValue = new Subject<string>();
+  get userData(): JSON {
+    return JSON.parse(localStorage.getItem('userData'));
+  }
   set currentUser(data: any) {
+    console.log(data);
     this.itemValue.next(data);
-    localStorage.setItem('currentUser', data);
+    localStorage.setItem('userData', JSON.stringify(data));
+    localStorage.setItem('currentUserName', data.username);
   }
   get currentUser() {
-    return localStorage.getItem('currentUser');
+    return localStorage.getItem('currentUserName');
   }
   getToken() {
     return localStorage.getItem('access_token');

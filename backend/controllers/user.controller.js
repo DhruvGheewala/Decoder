@@ -29,7 +29,7 @@ exports.signupUser = async (req, res) => {
         });
         if (method === "local") {
             if (!password) {
-                // sendResponse('Please provide password',res,);
+                sendResponse('Please provide password', res);
             }
             //encryting password
             const sault = await bcrypt.genSalt(10);
@@ -69,20 +69,14 @@ exports.signupUser = async (req, res) => {
 exports.loginUser = async (req, res) => {
 
     const { username, password, method, id } = req.body;
-    console.log(username);
     try {
-        let user = await userSchema.findOne({
-            //! changed to username for testing
-            username: username
-        })
-        console.log(user);
+        let user = await userSchema.findOne({ username });
         if (!user) {
             return sendResponse('Authentication failed! No such user exist!', res, 404);
         }
         if (!user.active) {
             return sendResponse('Account email is not confirmed yet! Check Your Email Inbox', res, 401);
         }
-        console.log("came here", method);
         const jwtToken = generateToken(user);
         if (method.toLowerCase() === 'local') {
             const ok = await bcrypt.compare(password, user.password);
@@ -121,7 +115,6 @@ exports.loginUser = async (req, res) => {
  */
 exports.verifyEmail = async (req, res) => {
     const getToken = req.body.token;
-    console.log("here is token ", getToken);
     try {
         const ok = jwt.verify(getToken, process.env.SECRETKEY);
         if (ok) {
@@ -146,7 +139,6 @@ exports.verifyEmail = async (req, res) => {
 exports.forgotPassword = async (req, res) => {
     const usermail = req.body.email;
     try {
-        console.log("email is here " + usermail);
         let user = await userSchema.findOne({ email: usermail });
         if (!user) {
             return sendResponse("Invalid email, User not found!", res, 404);
@@ -193,7 +185,6 @@ exports.resetPassword = async (req, res) => {
 
 exports.updateUser = async (req, res) => {
     const { usremail, fullname, bio } = req.body;
-    console.log(fullname);
     try {
         let user = await userSchema.findOne({ email: usremail });
         if (!user) {
@@ -219,7 +210,6 @@ exports.getAllUsernames = async (req, res) => {
         };
     });
 
-    console.log("here", userMap);
     sendResponse(userMap, res);
 }
 exports.saveCode = async (req, res) => {

@@ -13,15 +13,9 @@ export class HeaderComponent implements OnInit {
   brandClass: string = "navbar-brand text-warning";
   colorClass: string[] = ["text-primary", "text-success", "text-danger", "text-warning", "text-info"];
 
-  constructor(public _userService: UserService) {
-    this._userService.itemValue.subscribe(currentUser => {
-      this.userData = JSON.parse(currentUser);
-      console.log(this.userData);
-    })
-  }
-  ngOnInit(): void {
+  constructor(public _userService: UserService) { }
 
-  }
+  ngOnInit(): void { }
 
   /**
   * Returns a random integer between min (inclusive) and max (inclusive).
