@@ -27,7 +27,7 @@ export class UserService {
     theme: this.userPreferedTheme || this.defaultTheme
   };
 
-  curUser = {};
+  curUser = { userData: { username: "" } };
   constructor(private http: HttpClient, public router: Router) { }
 
   getLanguage() {
