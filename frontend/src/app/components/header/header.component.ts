@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { UserService } from 'src/app/service/user.service';
 
 @Component({
   selector: 'app-header',
@@ -7,12 +8,19 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HeaderComponent implements OnInit {
 
+  userData = {}
   title: string = "</Decoder>";
   brandClass: string = "navbar-brand text-warning";
   colorClass: string[] = ["text-primary", "text-success", "text-danger", "text-warning", "text-info"];
 
-  constructor() { }
+  constructor(public _userService: UserService) {
+    this._userService.itemValue.subscribe(currentUser => {
+      this.userData = JSON.parse(currentUser);
+      console.log(this.userData);
+    })
+  }
   ngOnInit(): void {
+
   }
 
   /**
@@ -26,5 +34,8 @@ export class HeaderComponent implements OnInit {
 
   brandHover() {
     this.brandClass = "navbar-brand " + this.colorClass[this.rnd(0, this.colorClass.length - 1)];
+  }
+  logout() {
+    this._userService.doLogout();
   }
 }

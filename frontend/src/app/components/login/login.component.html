@@ -6,12 +6,17 @@
                 Don't have an account ?
                 <a routerLink="/register" class="link">create one</a>
             </div>
-            <form class="pt-3 was-validated" method="post">
+            <form [formGroup]="loginForm" (ngSubmit)="loginUser()" class="pt-3 was-validated" method="post">
 
                 <div class="form-group">
-                    <label for="name">Name</label>
-                    <input type="text" id="name" formControlName="user"
+                    <label for="username">Name</label>
+                    <input type="text" id="username" formControlName="username"
                         class="form-control form-control-sm custom-width" placeholder="Your name" required>
+                    <div *ngIf="!userName.valid && (userName.dirty || userName.touched) && userName.errors">
+                        <div *ngIf="userName.errors.required" class="text-danger font-italic">
+                            Username is required!!
+                        </div>
+                    </div>
                     <!-- <small *ngIf="hasError('user')" class="text-danger font-italic">Username required!</small> -->
                 </div>
 
@@ -19,6 +24,11 @@
                     <label for="password">Password</label>
                     <input type="password" id="password" formControlName="password"
                         class="form-control form-control-sm custom-width" placeholder="Your password" required>
+                    <div *ngIf="!userPass.valid && (userPass.dirty || userPass.touched) && userPass.errors">
+                        <div *ngIf="userPass.errors.required" class="text-danger font-italic">
+                            Password is required!!
+                        </div>
+                    </div>
                     <!-- <small *ngIf="hasError('password')" class="text-danger font-italic">password required!</small> -->
                 </div>
 

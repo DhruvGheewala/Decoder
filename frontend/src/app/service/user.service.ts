@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Router } from '@angular/router';
+import { Observable, of, Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +13,7 @@ export class UserService {
   // Defualt values
 
   // api request url at backend
-  endpoint: string = 'http://localhost:3000/auth';
+  private authUrl: string = 'http://localhost:3000/auth';
 
   //TODO: Default template of cpp.
   private defaultLanguage = 'C++';
@@ -27,7 +28,9 @@ export class UserService {
     theme: this.userPreferedTheme || this.defaultTheme
   };
 
-  constructor(private http: HttpClient) { }
+
+  curUser = {};
+  constructor(private http: HttpClient, public router: Router) { }
 
   getLanguage() { return this.choosen.language; }
   // Todo: update in sevrer
@@ -43,4 +46,61 @@ export class UserService {
   getCodeById(id: string): Observable<any> { return this.http.get<any>(this.apiUrl + '/code/view/public/' + id); }
   saveCode(data): Observable<any> { return this.http.post<any>(this.apiUrl + '/code/save', data); }
   getDefaultTemplates(): Observable<any> { return this.http.get<any>(this.apiUrl + '/code/defaults'); }  // Todo: User's choice isn't included yet
+
+  getAllUser(type: string, val: any): Observable<any> {
+    let existingUser: Observable<any>;
+    this.http.get<any>(this.authUrl + '/getAllUsernames').subscribe((data) => {
+      existingUser = data.result;
+      return existingUser;
+    });
+    return existingUser;
+  }
+
+  signupUser(data: any): Observable<any> {
+    return this.http.post<any>(this.authUrl + '/signup', data);
+  }
+
+  loginUser(data: any) {
+    return this.http.post<any>(this.authUrl + '/signin', data).subscribe((res: any) => {
+      localStorage.setItem('access_token', res.result.token);
+      this.curUser = res.result;
+      console.log(this.curUser);
+      this.router.navigate(['/']);
+    });
+  }
+  itemValue = new Subject<string>();
+  set currentUser(data: any) {
+    this.itemValue.next(data);
+    localStorage.setItem('currentUser', data);
+  }
+  get currentUser() {
+    return localStorage.getItem('currentUser');
+  }
+  getToken() {
+    return localStorage.getItem('access_token');
+  }
+  get isLoggedIn(): boolean {
+    let authToken = localStorage.getItem('access_token');
+    return (authToken !== null) ? true : false;
+  }
+  doLogout() {
+    let removeToken = localStorage.removeItem('access_token');
+    let removeUser = localStorage.removeItem('currentUser');
+    if (removeToken == null && removeUser == null) {
+      this.router.navigate(['/login']);
+    }
+  }
+  verifyToken(token: string) {
+    var obj = {
+      token: token
+    }
+    this.http.post<any>(this.authUrl + '/verify-email', obj).subscribe((res) => {
+      if (!res.err) {
+        alert("Email verified!");
+        this.router.navigate(['/login']);
+      } else {
+        alert("Invalid token or token expired!");
+      }
+    });
+  }
 }
