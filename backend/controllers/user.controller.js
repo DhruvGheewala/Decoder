@@ -43,8 +43,8 @@ exports.signupUser = async (req, res) => {
         const jwtToken = generateToken(user);
         if (method === "local") {
             await userSchema.findByIdAndUpdate(user._id, { mailToken: jwtToken });
-            const url = "url-goes-here#" + jwtToken;
-            sendMail(user.email, "Verify your email!", "cofirm-email", user.username, url);
+            const url = "http://localhost:4200/?token=" + jwtToken;
+            sendMail(user.email, "Verify your email!", "confirm-email", user.username, url);
             return sendResponse('Email successfully sent', res, 200);
         } else {
 
@@ -68,20 +68,24 @@ exports.signupUser = async (req, res) => {
  */
 exports.loginUser = async (req, res) => {
 
-    const { loginEmail, loginPassword, method, id } = req.body;
+    const { username, password, method, id } = req.body;
+    console.log(username);
     try {
         let user = await userSchema.findOne({
-            email: loginEmail
+            //! changed to username for testing
+            username: username
         })
+        console.log(user);
         if (!user) {
             return sendResponse('Authentication failed! No such user exist!', res, 404);
         }
         if (!user.active) {
             return sendResponse('Account email is not confirmed yet! Check Your Email Inbox', res, 401);
         }
+        console.log("came here", method);
         const jwtToken = generateToken(user);
         if (method.toLowerCase() === 'local') {
-            const ok = await bcrypt.compare(loginPassword, user.password);
+            const ok = await bcrypt.compare(password, user.password);
             if (ok) {
                 const resObj = {
                     token: jwtToken,
@@ -117,6 +121,7 @@ exports.loginUser = async (req, res) => {
  */
 exports.verifyEmail = async (req, res) => {
     const getToken = req.body.token;
+    console.log("here is token ", getToken);
     try {
         const ok = jwt.verify(getToken, process.env.SECRETKEY);
         if (ok) {
@@ -203,6 +208,20 @@ exports.updateUser = async (req, res) => {
     }
 }
 
+exports.getAllUsernames = async (req, res) => {
+    let userMap = {};
+    let users = await userSchema.find({});
+
+    users.forEach((user) => {
+        userMap[user._id] = {
+            username: user.username,
+            email: user.email
+        };
+    });
+
+    console.log("here", userMap);
+    sendResponse(userMap, res);
+}
 exports.saveCode = async (req, res) => {
 
 }

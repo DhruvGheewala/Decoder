@@ -24,7 +24,7 @@
             </li>
         </ul>
 
-        <div *ngIf="true; then thenBlock else elseBlock"></div>
+        <div *ngIf="!this._userService.isLoggedIn; then thenBlock else elseBlock"></div>
         <ng-template #thenBlock>
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
@@ -38,11 +38,14 @@
 
         <ng-template #elseBlock>
             <ul class="navbar-nav ml-auto">
+                <li class="nav-item text-white">
+                    {{this._userService.curUser.userData.username}}
+                </li>
                 <li class="nav-item">
                     <a class="nav-link text-white" routerLink="/profile/#">Profile</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-white" routerLink="/home">Logout</a>
+                    <a class="nav-link text-white" (click)="logout()">Logout</a>
                 </li>
             </ul>
         </ng-template>

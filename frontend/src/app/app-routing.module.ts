@@ -18,6 +18,9 @@ import { UpcomingContestComponent } from './components/upcoming-contest/upcoming
 import { CodeUserComponent } from './components/code/code-user/code-user.component';
 import { ProblemsComponent } from './components/problems/problems.component';
 
+
+import { AuthGuard } from "./service/auth.guard";
+
 const routes: Routes = [
   {
     path: '',
@@ -42,6 +45,7 @@ const routes: Routes = [
   {
     path: 'code/:user/:id',
     component: CodeUserComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'upcoming-contest',
@@ -54,6 +58,7 @@ const routes: Routes = [
   {
     path: 'blog/create',
     component: BlogCreateComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'blog/view',
@@ -62,6 +67,7 @@ const routes: Routes = [
   {
     path: 'blog/edit/:id',
     component: BlogEditComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'upcoming-contest',
@@ -78,6 +84,7 @@ const routes: Routes = [
   {
     path: 'profile/:user',
     component: ProfileComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'about',

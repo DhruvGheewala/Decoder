@@ -21,15 +21,20 @@ router.post('/reset-password', userController.resetPassword);
 //user controller add middleware for auth
 router.put('/update-profile', userController.updateUser);
 
-router.post('/save-settings', );
+//get all users
+router.get('/getAllUsernames', userController.getAllUsernames);
+
+
+
+router.post('/save-settings',);
 
 //All related to code-environment
 
 //code controller add middleware for auth
-router.post('/save-code', );
+router.post('/save-code',);
 
 //code controller add middleware for auth
-router.delete('/delete-code/:id', );
+router.delete('/delete-code/:id',);
 
 
 

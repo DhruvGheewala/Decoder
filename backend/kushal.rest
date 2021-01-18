@@ -59,3 +59,20 @@ Content-Type: application/json
 {
     "email": "dhirajgovindvira1112@gmail.com"
 }
+
+###
+GET http://localhost:3000/auth/getAllUsernames
+Content-Type: application/json
+
+
+###
+POST http://localhost:3000/auth/signup
+content-type: application/json
+
+{
+    "username": "kushal", 
+    "email": "kushaldotp13@gmail.com", 
+    "password": "kushal",
+    "id": "abc",
+    "method": "local"
+}

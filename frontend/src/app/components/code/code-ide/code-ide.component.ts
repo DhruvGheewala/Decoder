@@ -103,7 +103,9 @@ export class CodeIdeComponent implements OnInit {
 
   constructor(private adminData: AdminService, private userData: UserService, private router: Router) { }
   ngOnInit(): void {
-    $('[data-toggle="tooltip"]').tooltip();
+    $('[data-toggle="tooltip"]').tooltip({
+      trigger: 'hover'
+    });
     this.isError = false;
 
     // ace editor

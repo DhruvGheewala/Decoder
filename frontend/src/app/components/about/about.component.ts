@@ -11,7 +11,7 @@ export class AboutComponent implements OnInit {
   public members = [
     {
       name: "Dhruv Gheewala",
-      info: "Some example text some example text. John Doe is an architect and engineer",
+      info: "I am competitive coder. I go by name Dhruv_gheewala on most of the competitive platforms. I like problem solving, and i am huge fan of Game Of Thrones. Valar Morghulis",
       // info: [
       //   "- Student at DDU, Nadiad",
       //   "- Competitive coder",
@@ -23,7 +23,7 @@ export class AboutComponent implements OnInit {
     },
     {
       name: "Dhiraj Govindvira",
-      info: "Some example text some example text. John Doe is an architect and engineer",
+      info: "Hey there! I am competitive programmer and i enjoy problem solving alot! I am huge fan of tmkoc.",
       linkedin: "https://www.linkedin.com/in/dhiraj-govindvira/",
       github: "https://github.com/Dhiraj-01",
       instagram: "https://www.instagram.com/dhiraj_1_11/",
@@ -31,7 +31,7 @@ export class AboutComponent implements OnInit {
     },
     {
       name: "Kushal Pandya",
-      info: "Some example text some example text. John Doe is an architect and engineer",
+      info: "",
       linkedin: "https://www.linkedin.com/in/kushal-pandya-630540173/",
       github: "https://github.com/kushalp13",
       instagram: "https://www.instagram.com/kushal.p13/",

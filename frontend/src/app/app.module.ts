@@ -2,7 +2,8 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
-import { HttpClientModule } from "@angular/common/http";
+import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 // Components
 import { AppComponent } from './app.component';
@@ -29,6 +30,7 @@ import { UserService } from "./service/user.service";
 import { AdminService } from "./service/admin.service";
 import { CodeUserComponent } from './components/code/code-user/code-user.component';
 import { ProblemsComponent } from './components/problems/problems.component';
+import { AuthInterceptor } from './service/authconfig.interceptor';
 
 @NgModule({
   declarations: [
@@ -57,8 +59,18 @@ import { ProblemsComponent } from './components/problems/problems.component';
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
-  providers: [AdminService, UserService],
+  providers: [
+    AdminService,
+    UserService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
