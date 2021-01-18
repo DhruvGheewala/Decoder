@@ -7,11 +7,16 @@
                 <a routerLink="/login" class="link">login</a>
             </div>
 
-            <form class="pt-3 was-validated" method="post">
+            <form [formGroup]="signupForm" (ngSubmit)="signUpLocal()" class="pt-3 was-validated" method="post">
                 <div class="form-group">
-                    <label for="name">Name</label>
-                    <input type="text" id="name" formControlName="user"
+                    <label for="username">Name</label>
+                    <input type="text" id="username" name="username" formControlName="username"
                         class="form-control form-control-sm custom-width" placeholder="Your name" required>
+                    <div *ngIf="!userName.valid && (userName.dirty || userName.touched) && userName.errors">
+                        <div *ngIf="userName.errors.validateuser" class="text-danger font-italic">
+                            Username {{userName.value}} Already Exist!
+                        </div>
+                    </div>
                     <!-- <small *ngIf="hasError('user')" class="text-danger font-italic">username required!</small> -->
                 </div>
 
@@ -19,6 +24,11 @@
                     <label for="email">Email</label>
                     <input type="email" id="email" formControlName="email"
                         class="form-control form-control-sm custom-width" placeholder="Your email" required>
+                    <div *ngIf="!userEmail.valid && (userEmail.dirty || userEmail.touched) && userEmail.errors">
+                        <div *ngIf="userEmail.errors.validateuser" class="text-danger font-italic">
+                            Email {{userEmail.value}} Already Exist!
+                        </div>
+                    </div>
                     <!-- <small *ngIf="hasError('email')" class="text-danger font-italic">email required!</small> -->
                 </div>
 
@@ -26,6 +36,11 @@
                     <label for="password">Password</label>
                     <input type="password" id="password" formControlName="password"
                         class="form-control form-control-sm custom-width" placeholder="Your password" required>
+                    <div *ngIf="!userPass.valid && (userPass.dirty || userPass.touched) && userPass.errors">
+                        <div *ngIf="userPass.errors.required" class="text-danger font-italic">
+                            Password is required!!
+                        </div>
+                    </div>
                     <!-- <small *ngIf="hasError('password')" class="text-danger font-italic">password required!</small> -->
                 </div>
 
@@ -33,6 +48,14 @@
                     <label for="repassword">Repeat password</label>
                     <input type="password" id="repassword" formControlName="repassword"
                         class="form-control form-control-sm custom-width" placeholder="Repeat password" required>
+                    <div *ngIf="!rePass.valid && (rePass.dirty || rePass.touched) && rePass.errors">
+                        <div *ngIf="rePass.errors.required" class="text-danger font-italic">
+                            Password is required!!
+                        </div>
+                        <div *ngIf="rePass.errors.mustMatch" class="text-danger font-italic">
+                            Password does not match!!
+                        </div>
+                    </div>
                     <!-- <small *ngIf="hasError('repassword')" class="text-danger font-italic">repassword
                     required!</small> -->
                 </div>

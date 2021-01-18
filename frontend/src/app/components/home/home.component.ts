@@ -1,4 +1,6 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { ActivatedRoute, RouteConfigLoadEnd } from '@angular/router';
+import { UserService } from 'src/app/service/user.service';
 
 @Component({
   selector: 'app-home',
@@ -8,7 +10,10 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 export class HomeComponent implements OnInit {
 
   @ViewChild("code") codeEle: ElementRef;
-  constructor() { }
+  public Token: any;
+  constructor(public route: ActivatedRoute, public _userService: UserService) {
+    this.Token = this.route.snapshot.queryParamMap.get('token');
+  }
 
   title: string = "</Decoder>";
   default_code: string = `
@@ -22,6 +27,10 @@ export class HomeComponent implements OnInit {
 `;
 
   ngOnInit(): void {
+    if (this.Token != null) {
+      console.log(this.Token);
+      this._userService.verifyToken(this.Token);
+    }
   }
 
   ngAfterViewInit() {

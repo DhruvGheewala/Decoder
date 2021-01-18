@@ -156,7 +156,7 @@
 
 
 /* heart */
-.fa-beat {
+.fa-beat:hover {
   animation:fa-beat 5s ease infinite;
 }
 @keyframes fa-beat {
