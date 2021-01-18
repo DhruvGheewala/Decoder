@@ -4,33 +4,18 @@
             <div class="col">
                 <div class="border">
                     <div class="row center mt-2 mb-2 ml-0 mr-0">
-                        <div class="col-sm-5">
+                        <div class="col-sm-3">
                             <div class="row">
-                                <div class="col-sm-1 font-weight-bold icon-size" data-toggle="Decoder"
-                                    title="Share your code">
-                                    <i class="fas fa-code"></i>
-                                </div>
-                                <div class="col text-left">
-                                    <input class="w-100 font-code form-control-sm border" type="text"
-                                        placeholder="Title" #title>
-                                </div>
                                 <div class="col">
-                                    <i class="fas fa-folder"></i>
-                                    <select class="ml-2 form-select form-control-sm"
-                                        aria-label="Default select example">
-                                        <option selected>Default</option>
-                                        <option value="1">C++</option>
-                                        <option value="2">C</option>
-                                        <option value="3">Java</option>
-                                        <option value="4">Python</option>
-                                        <option value="5">Javascript</option>
-                                    </select>
+                                    <i class="fas fa-code"></i>
+                                    <input class="ml-2 form-control-sm border" type="text"
+                                        placeholder="Title (undefined)" #title style="width: 18em;">
                                 </div>
                             </div>
                         </div>
-                        <div class="col-sm-7">
+                        <div class="col-sm-9">
                             <div class="row">
-                                <div class="col text-right mt-1">
+                                <div class="col text-right">
                                     <a class=" btn-sm btn-default icon-size" data-toggle="tooltip"
                                         title="Share your code" (click)="shareCodeClick()">
                                         <i class="fas fa-share-square"></i>
@@ -65,7 +50,19 @@
                                         (change)="onChangeFile($event.target.files)" />
                                 </div>
                                 <div class="col-sm-2">
-                                    <div class="">
+                                    <i class="fas fa-folder"></i>
+                                    <select class="ml-2 form-select form-control-sm" data-toggle="tooltip"
+                                        title="Select folder" aria-label="Default select example">
+                                        <option selected>Default</option>
+                                        <option value="1">C++</option>
+                                        <option value="2">C</option>
+                                        <option value="3">Java</option>
+                                        <option value="4">Python</option>
+                                        <option value="5">Javascript</option>
+                                    </select>
+                                </div>
+                                <div class="col-sm-2">
+                                    <div>
                                         <!-- <small>Language</small> -->
                                         <select data-toggle="tooltip" title="Languages"
                                             class="form-control form-control-sm" (change)="setMode(modeSelect.value)"
@@ -79,7 +76,7 @@
                                     </div>
                                 </div>
                                 <div class="col-sm-2">
-                                    <div class="">
+                                    <div>
                                         <!-- <small>Theme</small> -->
                                         <select data-toggle="tooltip" title="Themes"
                                             class="form-control form-control-sm" (change)="setTheme(themeSelect.value)"
@@ -108,7 +105,7 @@
     </div>
     <div>
         <div class="row">
-            <div class="ml-1 col-sm-8" #codeEditor></div>
+            <div class="ml-2 col-sm-8" #codeEditor></div>
             <div class="col">
                 <div class="row">
                     <div class="col">

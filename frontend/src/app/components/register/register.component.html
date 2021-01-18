@@ -14,7 +14,7 @@
                         class="form-control form-control-sm custom-width" placeholder="Your name" required>
                     <div *ngIf="!userName.valid && (userName.dirty || userName.touched) && userName.errors">
                         <div *ngIf="userName.errors.validateuser" class="text-danger font-italic">
-                            Username {{userName.value}} Already Exist!
+                            Username already exist!
                         </div>
                     </div>
                     <!-- <small *ngIf="hasError('user')" class="text-danger font-italic">username required!</small> -->
@@ -26,7 +26,7 @@
                         class="form-control form-control-sm custom-width" placeholder="Your email" required>
                     <div *ngIf="!userEmail.valid && (userEmail.dirty || userEmail.touched) && userEmail.errors">
                         <div *ngIf="userEmail.errors.validateuser" class="text-danger font-italic">
-                            Email {{userEmail.value}} Already Exist!
+                            Email already exist!
                         </div>
                     </div>
                     <!-- <small *ngIf="hasError('email')" class="text-danger font-italic">email required!</small> -->
