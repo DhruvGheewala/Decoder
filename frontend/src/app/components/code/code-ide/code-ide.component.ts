@@ -342,7 +342,7 @@ export class CodeIdeComponent implements OnInit {
       stdout: this.outputEditor.getValue(),
       stderr: this.errorEditorElem.value,
       theme: this.selectedTheme,
-      author: 'Guest',  // Todo
+      author: localStorage.getItem('currentUserName') || 'Guest',  // Todo: security issue
       visibility: 'public'  // Todo
     };
 
