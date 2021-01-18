@@ -9,11 +9,11 @@
                 <a class="nav-link text-white" routerLink="/ide">IDE</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link text-white" routerLink="/code/recent">Codes</a>
+                <a class="nav-link text-white" routerLink="/code/recent">Recent codes</a>
             </li>
-            <li class="nav-item">
+            <!-- <li class="nav-item">
                 <a class="nav-link text-white" routerLink="/blog/recent">Blogs</a>
-            </li>
+            </li> -->
             <li class="nav-item">
                 <a class="nav-link text-white" routerLink="/upcoming-contest">Upcoming Contests</a>
             </li>
@@ -27,6 +27,9 @@
         <div *ngIf="!this._userService.isLoggedIn; then thenBlock else elseBlock"></div>
         <ng-template #thenBlock>
             <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link text-white" routerLink="/code/Guest/Default">My codes</a>
+                </li>
                 <li class="nav-item">
                     <a class="nav-link text-white" routerLink="/login">Login</a>
                 </li>

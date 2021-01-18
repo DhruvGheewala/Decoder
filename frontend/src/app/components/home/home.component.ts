@@ -34,6 +34,6 @@ export class HomeComponent implements OnInit {
   }
 
   ngAfterViewInit() {
-    this.codeEle.nativeElement.innerHTML = this.default_code;
+    // this.codeEle.nativeElement.innerHTML = this.default_code;
   }
 }

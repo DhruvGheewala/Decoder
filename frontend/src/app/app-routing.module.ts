@@ -35,6 +35,10 @@ const routes: Routes = [
     component: CodeIdeComponent,
   },
   {
+    path: 'ide/edit/:id',
+    component: CodeIdeComponent,
+  },
+  {
     path: 'code/view/:id',
     component: CodeViewComponent,
   },

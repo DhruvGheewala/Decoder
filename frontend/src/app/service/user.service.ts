@@ -1,16 +1,15 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable, of, Subject } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
   private apiUrl: string = 'http://localhost:3000/api';
-  headers = new HttpHeaders().set('Content-Type', 'application/json');
 
-  // Defualt values
+  headers = new HttpHeaders().set('Content-Type', 'application/json');
 
   // api request url at backend
   private authUrl: string = 'http://localhost:3000/auth';
@@ -28,25 +27,25 @@ export class UserService {
     theme: this.userPreferedTheme || this.defaultTheme
   };
 
-
   curUser = {};
   constructor(private http: HttpClient, public router: Router) { }
 
-  getLanguage() { return this.choosen.language; }
+  getLanguage() {
+    return this.choosen.language;
+  }
   // Todo: update in sevrer
-  setLanguage(language: String) { this.choosen.language = language; }
-
-  getTheme() { return this.choosen.theme; }
+  setLanguage(language: String) {
+    this.choosen.language = language;
+  }
+  getTheme() {
+    return this.choosen.theme;
+  }
   // Todo: update in server
-  setTheme(theme: string) { this.choosen.theme = theme; }
+  setTheme(theme: string) {
+    this.choosen.theme = theme;
+  }
 
   // API Calls
-  compileRun(data): Observable<any> { return this.http.post<any>(this.apiUrl + '/code/compile', data); }
-  getAllPublicCodes(): Observable<any> { return this.http.get<any>(this.apiUrl + '/code/all'); }
-  getCodeById(id: string): Observable<any> { return this.http.get<any>(this.apiUrl + '/code/view/public/' + id); }
-  saveCode(data): Observable<any> { return this.http.post<any>(this.apiUrl + '/code/save', data); }
-  getDefaultTemplates(): Observable<any> { return this.http.get<any>(this.apiUrl + '/code/defaults'); }  // Todo: User's choice isn't included yet
-
   getAllUser(type: string, val: any): Observable<any> {
     let existingUser: Observable<any>;
     this.http.get<any>(this.authUrl + '/getAllUsernames').subscribe((data) => {
@@ -102,5 +101,26 @@ export class UserService {
         alert("Invalid token or token expired!");
       }
     });
+  }
+  compileRun(data): Observable<any> {
+    return this.http.post<any>(this.apiUrl + '/code/compile', data);
+  }
+  getAllPublicCodes(): Observable<any> {
+    return this.http.get<any>(this.apiUrl + '/code/all');
+  }
+  getCodeById(id: string): Observable<any> {
+    return this.http.get<any>(this.apiUrl + '/code/view/public/' + id);
+  }
+  getCodeByUser(user: string): Observable<any> {
+    return this.http.get<any>(this.apiUrl + '/code/view/' + user);
+  }
+  saveCode(data): Observable<any> {
+    return this.http.post<any>(this.apiUrl + '/code/save', data);
+  }
+  getDefaultTemplates(): Observable<any> {
+    return this.http.get<any>(this.apiUrl + '/code/defaults');
+  }
+  deleteCodeById(id: string): Observable<any> {
+    return this.http.delete<any>(this.apiUrl + `/code/delete/${id}`);
   }
 }
