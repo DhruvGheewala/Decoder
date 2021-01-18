@@ -36,6 +36,9 @@
                 <li class="nav-item">
                     <a class="nav-link text-white" routerLink="/code/Guest/Default">My codes</a>
                 </li>
+                <li class="nav-item text-white">
+                    {{this._userService.curUser.userData.username}}
+                </li>
                 <li class="nav-item">
                     <a class="nav-link text-white" routerLink="/profile/#">
                         {{this._userService.currentUser || "Profile"}}

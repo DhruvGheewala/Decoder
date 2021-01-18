@@ -57,7 +57,7 @@ import 'ace-builds/src-noconflict/ext-beautify';
 // Services
 import { AdminService } from "src/app/service/admin.service";
 import { UserService } from "src/app/service/user.service";
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { viewClassName } from '@angular/compiler';
 declare var $: any;
 
@@ -85,7 +85,6 @@ export class CodeIdeComponent implements OnInit {
   private codeEditor: ace.Ace.Editor;
   private inputEditor: ace.Ace.Editor;
   private outputEditor: ace.Ace.Editor;
-  private errorEditor: ace.Ace.Editor;
   private editorBeautify: any;
 
   private errorEditorElem: any;
@@ -101,7 +100,15 @@ export class CodeIdeComponent implements OnInit {
   isError: boolean;
   fileContent: any = '';
 
-  constructor(private adminData: AdminService, private userData: UserService, private router: Router) { }
+  code_id: string = null;
+  constructor(
+    private adminData: AdminService,
+    private userData: UserService,
+    private router: Router,
+    private route: ActivatedRoute,
+  ) {
+    this.code_id = route.snapshot.params.id;
+  }
   ngOnInit(): void {
     $('[data-toggle="tooltip"]').tooltip({
       trigger: 'hover'
@@ -149,6 +156,7 @@ export class CodeIdeComponent implements OnInit {
     // Pre-Requisites
     this.availableLanguages = this.adminData.getLanguages();
     this.availableThemes = this.adminData.getThemes();
+
     this.userData.getDefaultTemplates().subscribe((data) => {
       this.languageTemplate = data.result;
 
@@ -159,6 +167,35 @@ export class CodeIdeComponent implements OnInit {
       // Mode
       this.selectedLanguage = this.userData.getLanguage();
       this.setMode(this.selectedLanguage);
+    });
+
+    if (this.code_id) {
+      this.editCodeMode();
+    }
+  }
+
+  editCodeMode() {
+    this.userData.getCodeById(this.code_id).subscribe((data) => {
+      if (data && data.result) {
+        data = data.result;
+        console.log(data);
+
+        this.codeEditor.setValue(data.content);
+        this.inputEditor.setValue(data.stdin);
+        this.outputEditor.setValue(data.stdout);
+        if (data.stderr) {
+          this.errorEditorElem.val = data.stderr;
+          this.isError = true;
+        }
+        this.setTheme("monokai");
+        const mode = this.availableLanguages[data.language].mode;
+        this.codeEditor.getSession().setMode(`ace/mode/${mode}`);
+
+        this.titleElemRef.nativeElement.value = data.title;
+      }
+      else {
+        this.code_id = null;
+      }
     });
   }
 
@@ -180,9 +217,10 @@ export class CodeIdeComponent implements OnInit {
     return Object.assign(basicEditorOptions, extraEditorOptions);
   }
 
-  setTheme(theme: string) { this.codeEditor.setTheme(`ace/theme/${theme}`); }
+  setTheme(theme: string) {
+    this.codeEditor.setTheme(`ace/theme/${theme}`);
+  }
   setMode(language: string) {
-
     this.selectedLanguage = language;
     const mode = this.availableLanguages[language].mode;
     this.codeEditor.setValue(this.languageTemplate[language]);
@@ -305,26 +343,26 @@ export class CodeIdeComponent implements OnInit {
 
     this.isError = false;
     this.runButtonElem.disabled = true;
+    this.outputEditor.setValue("Running your code ...");
 
     const observer = this.userData.compileRun(codeObj);
     let data = await observer.toPromise();
 
     let err = '';
     if (data.err) {
-      // Todo: dhiraj
       const errData = data.err;
-      err = `- Killed: ${errData.killed}\n`;
-      err += `- Signal: ${errData.siganl}\n`;
-      err += `ERROR =======================\n${errData.stderr}\n`;
+      err = `- Killed : ${errData.killed}\n`;
+      err += `- Signal : ${errData.siganl}\n`;
+      err += `${errData.stderr}`;
       this.isError = true;
+      this.outputEditor.setValue("error occured !!");
       return;
     }
 
     data = data.result;
     this.runButtonElem.disabled = false;
     if (data.stderr) {
-      // Todo: dhiraj
-      err = `STDERR =======================\n${data.stderr}`;
+      err = `${data.stderr}`;
       this.isError = true;
     }
 

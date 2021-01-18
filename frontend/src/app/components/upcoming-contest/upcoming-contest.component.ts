@@ -78,17 +78,23 @@ export class UpcomingContestComponent implements OnInit {
 
     let searchData = [];
     this.copyAllData2.forEach(b => {
-      let ok: boolean = false;
+      let cnt: number = 0;
       terms.forEach(term => {
         if (b.name.toLowerCase().includes(term) || b.site.toLowerCase().includes(term)) {
-          ok = true;
+          cnt++;
         }
       });
-      if (ok) {
-        searchData.push(b);
+      if (cnt) {
+        searchData.push({ data: b, cnt });
       }
     });
-    this.allData = searchData;
+    searchData.sort((x, y) => {
+      return (y.cnt - x.cnt);
+    });
+    this.allData = [];
+    searchData.forEach(contest => {
+      this.allData.push(contest.data);
+    });
   }
 
   /**

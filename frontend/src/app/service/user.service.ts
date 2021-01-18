@@ -122,6 +122,9 @@ export class UserService {
   saveCode(data): Observable<any> {
     return this.http.post<any>(this.apiUrl + '/code/save', data);
   }
+  updateCode(id, data): Observable<any> {
+    return this.http.put<any>(this.apiUrl + `/code/update/${id}`, data);
+  }
   getDefaultTemplates(): Observable<any> {
     return this.http.get<any>(this.apiUrl + '/code/defaults');
   }
