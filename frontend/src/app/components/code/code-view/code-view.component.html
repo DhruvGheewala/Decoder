@@ -5,17 +5,20 @@
                 <div class="col">
                     <div class="border">
                         <div class="row mt-2 mb-2 ml-0 mr-0">
-                            <div class="col-sm-3 b">
-                                <div class="font-weight-bold icon-size" data-toggle="Decoder" title="Share your code">
+                            <div class="col-sm-3">
+                                <div class="ml-1 icon-size" data-toggle="Decoder" title="Share your code">
                                     <i class="fas fa-code"></i>
-                                    code -
-                                    <a routerLink="/profile/{{code_data.author}}" data-toggle="tooltip" title="Author">
+                                    {{code_data.title}}
+                                    <!-- <a routerLink="/profile/{{code_data.author}}" data-toggle="tooltip" title="Author">
                                         {{code_data.author}}
-                                    </a>
+                                    </a> -->
                                 </div>
                             </div>
                             <div class="col-sm-9 d-flex">
                                 <div class="ml-auto">
+                                    <a routerLink="/profile/{{code_data.author}}" data-toggle="tooltip" title="Author">
+                                        {{code_data.author}}
+                                    </a>
                                     <a class="btn-sm btn-default icon-size" data-toggle="tooltip"
                                         (click)="downloadCode()" title="Download code">
                                         <i class="fas fa-download"></i>
@@ -30,8 +33,9 @@
                                     <span class="ml-2 font4" data-toggle="tooltip" title="Theme">
                                         {{code_data.theme}}
                                     </span>
-                                    <button class="ml-2 btn btn-sm btn-info">edit</button>
-                                    <button class="ml-2 btn btn-sm btn-danger">delete</button>
+                                    <button class="ml-2 btn btn-sm btn-info" (click)="editButtonClick()">edit</button>
+                                    <button class="ml-2 btn btn-sm btn-danger"
+                                        (click)="deleteButtonClick()">delete</button>
                                 </div>
                             </div>
                         </div>
@@ -41,7 +45,7 @@
         </div>
 
         <div class="row">
-            <div class="ml-2 col-sm-8" #codeEditor></div>
+            <div class="col" #codeEditor></div>
             <div class="col">
                 <div class="row">
                     <div class="col">
@@ -92,7 +96,7 @@
             </div>
         </div>
 
-        <div [ngClass]="code_data.error ? '' : 'hide'">
+        <div [ngClass]="code_data.stderr ? '' : 'hide'">
             <div class="border">
                 <div class="row ml-2 mr-2">
                     <div class="col">

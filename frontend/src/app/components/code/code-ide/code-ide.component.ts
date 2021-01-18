@@ -307,11 +307,10 @@ export class CodeIdeComponent implements OnInit {
     this.userData.compileRun(codeObj).subscribe((data) => {
       let err = '';
       if (data.err) {
-        // Todo: dhiraj
         const errData = data.err;
-        err = `- Killed: ${errData.killed}\n`;
-        err += `- Signal: ${errData.siganl}\n`;
-        err += `ERROR =======================\n${errData.stderr}\n`;
+        err = `- Killed : ${errData.killed}\n`;
+        err += `- Signal : ${errData.siganl}\n`;
+        err += `ERROR :\n${errData.stderr}\n`;
         this.isError = true;
         return;
       }
@@ -319,8 +318,7 @@ export class CodeIdeComponent implements OnInit {
       data = data.result;
       this.runButtonElem.disabled = false;
       if (data.stderr) {
-        // Todo: dhiraj
-        err = `STDERR =======================\n${data.stderr}`;
+        err = `${data.stderr}`;
         this.isError = true;
       }
 

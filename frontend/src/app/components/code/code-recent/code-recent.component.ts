@@ -19,6 +19,9 @@ export class CodeRecentComponent implements OnInit {
       this.all_codes.sort((a, b) => {
         return new Date(b.time).valueOf() - new Date(a.time).valueOf();
       });
+      if (this.all_codes.length >= 30) {
+        this.all_codes.length = 30;
+      }
     });
   }
 
@@ -50,7 +53,7 @@ export class CodeRecentComponent implements OnInit {
     this.copy_all_codes.forEach(b => {
       let ok: boolean = false;
       terms.forEach(term => {
-        if (b.author.toLowerCase().includes(term) || b.language.toLowerCase().includes(term)) {
+        if (b.author.toLowerCase().includes(term) || b.language.toLowerCase().includes(term) || b.title.toLowerCase().includes(term)) {
           ok = true;
         }
       });

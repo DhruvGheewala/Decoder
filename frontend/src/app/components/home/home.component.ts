@@ -7,7 +7,7 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 })
 export class HomeComponent implements OnInit {
 
-  @ViewChild("code") codeEle: ElementRef;
+  // @ViewChild("code") codeEle: ElementRef;
   constructor() { }
 
   title: string = "</Decoder>";
@@ -25,6 +25,6 @@ export class HomeComponent implements OnInit {
   }
 
   ngAfterViewInit() {
-    this.codeEle.nativeElement.innerHTML = this.default_code;
+    // this.codeEle.nativeElement.innerHTML = this.default_code;
   }
 }

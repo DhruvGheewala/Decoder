@@ -1,5 +1,5 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 // Ace Editor
 import * as ace from 'ace-builds';
@@ -84,14 +84,22 @@ export class CodeViewComponent implements OnInit {
   constructor(
     private userData: UserService,
     private adminData: AdminService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private router: Router,
   ) { this.code_id = route.snapshot.params.id; }
 
   ngOnInit(): void {
     $('[data-toggle="tooltip"]').tooltip();
 
     this.userData.getCodeById(this.code_id).subscribe((data) => {
+
+      console.log(data);
+
       this.code_data = data.result;
+
+      if (!this.code_data) {
+        this.router.navigate['/error'];
+      }
       this.availableLanguages = this.adminData.getLanguages();
 
       { // editor configuration
@@ -112,13 +120,15 @@ export class CodeViewComponent implements OnInit {
         });
         this.inputEditor = ace.edit(inputEditorElem, {
           highlightActiveLine: true,
-          minLines: 13,
-          maxLines: 13,
+          minLines: 12.1,
+          maxLines: 12.1,
+          wrap: 50
         });
         this.outputEditor = ace.edit(outputEditorElem, {
           highlightActiveLine: true,
-          minLines: 13,
-          maxLines: 13,
+          minLines: 12.1,
+          maxLines: 12.1,
+          wrap: 50
         });
 
         codeEditorElem.style.fontSize = '18px';
@@ -167,7 +177,7 @@ export class CodeViewComponent implements OnInit {
 
   public downloadCode() {
     let code = this.code_data.code;
-    let filename = "code" + this.findExtension(this.code_data.language);
+    let filename = this.code_data.title + this.findExtension(this.code_data.language);
 
     let a = document.createElement('a');
     let blob = new Blob([code], { type: 'text' });
@@ -210,5 +220,17 @@ export class CodeViewComponent implements OnInit {
     selBox.select();
     document.execCommand('copy');
     document.body.removeChild(selBox);
+  }
+
+  editButtonClick() {
+    this.router.navigate[`/ide/edit/${this.code_data.id}`];
+  }
+  deleteButtonClick() {
+    this.userData.deleteCodeById(this.code_data.id).subscribe(data => {
+      if (data) {
+        console.log(data);
+        this.router.navigate(['/home']);
+      }
+    });
   }
 }
