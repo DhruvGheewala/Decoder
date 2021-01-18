@@ -1,3 +1,5 @@
+.gitignore
+
 # custom
 backend/code/*.exe
 backend/code/*.txt

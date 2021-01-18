@@ -37,6 +37,7 @@ const routes: Routes = [
   {
     path: 'ide/edit/:id',
     component: CodeIdeComponent,
+    // canActivate: [AuthGuard]
   },
   {
     path: 'code/view/:id',

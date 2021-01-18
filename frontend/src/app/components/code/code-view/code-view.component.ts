@@ -77,9 +77,7 @@ export class CodeViewComponent implements OnInit {
 
   availableLanguages: any;
   code_id: string = null;
-  code_data: any = {
-    author: ''
-  };
+  code_data: any = null;
 
   constructor(
     private userData: UserService,
@@ -93,9 +91,8 @@ export class CodeViewComponent implements OnInit {
 
     this.userData.getCodeById(this.code_id).subscribe((data) => {
 
-      console.log(data);
-
       this.code_data = data.result;
+      console.log(this.code_data);
 
       if (!this.code_data) {
         this.router.navigate['/error'];
@@ -223,7 +220,7 @@ export class CodeViewComponent implements OnInit {
   }
 
   editButtonClick() {
-    this.router.navigate[`/ide/edit/${this.code_data.id}`];
+    this.router.navigate([`/ide/edit/${this.code_data.id}`]);
   }
   deleteButtonClick() {
     this.userData.deleteCodeById(this.code_data.id).subscribe(data => {
