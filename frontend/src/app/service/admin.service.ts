@@ -92,7 +92,4 @@ export class AdminService {
   getLanguages() {
     return this.languages;
   }
-
-  private auth = { name: 'tourist_is_noob', password: 'this_is_temporary', };
-  authenticateAdmin(name: string, password: string): boolean { return name === this.auth.name && password === this.auth.password; }
 }

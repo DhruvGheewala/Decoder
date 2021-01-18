@@ -6,6 +6,7 @@ backend/code/Decoder.js
 backend/controllers/problems.controller.js
 Decoder.code-snippets
 components/problems/*
+*.out
 
 # Logs
 logs

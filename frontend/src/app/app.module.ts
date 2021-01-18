@@ -29,7 +29,6 @@ import { CodeRecentComponent } from './components/code/code-recent/code-recent.c
 import { UserService } from "./service/user.service";
 import { AdminService } from "./service/admin.service";
 import { CodeUserComponent } from './components/code/code-user/code-user.component';
-import { ProblemsComponent } from './components/problems/problems.component';
 import { AuthInterceptor } from './service/authconfig.interceptor';
 
 @NgModule({
@@ -53,14 +52,13 @@ import { AuthInterceptor } from './service/authconfig.interceptor';
     CodeRecentComponent,
     CodeIdeComponent,
     CodeUserComponent,
-    ProblemsComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
   ],
   providers: [
     AdminService,
