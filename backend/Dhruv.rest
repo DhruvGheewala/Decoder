@@ -7,3 +7,13 @@ GET http://localhost:3000/api/code/defaults/ca++ HTTP/1.1
 ###
 
 GET http://localhost:3000/api/code/defaults HTTP/1.1
+
+###
+
+POST http://localhost:3000/api/code/compile
+content-type: application/json
+
+{
+    "content": "print('Hello')",
+    "language": "c++"
+}

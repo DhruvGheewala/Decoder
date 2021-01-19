@@ -345,8 +345,14 @@ export class CodeIdeComponent implements OnInit {
     this.runButtonElem.disabled = true;
     this.outputEditor.setValue("Running your code ...");
 
+    let data: any = {};
     const observer = this.userData.compileRun(codeObj);
-    let data = await observer.toPromise();
+    try {
+      data = await observer.toPromise();
+    } catch (err) {
+      data.err = err;
+    }
+    this.runButtonElem.disabled = false;
 
     let err = '';
     if (data.err) {
@@ -360,7 +366,6 @@ export class CodeIdeComponent implements OnInit {
     }
 
     data = data.result;
-    this.runButtonElem.disabled = false;
     if (data.stderr) {
       err = `${data.stderr}`;
       this.isError = true;

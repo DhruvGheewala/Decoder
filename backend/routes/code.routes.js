@@ -14,8 +14,8 @@ router.post('/compile', async (req, res) => {
     stdin = stdin ? stdin : '';
     content = content ? content : '';
     const result = await controller.runFile({ language, code: content, stdin });
-    if (!result) return sendResponse('Bad Request', res, 400);
-    if (result.err) return sendResponse(result.err, res);
+    if (!result) return sendResponse('Bad Request', res);
+    if (result.err) return sendResponse(result.err, res, 404);
     sendResponse(result, res);
 });
 
