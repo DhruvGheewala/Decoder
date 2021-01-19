@@ -8,9 +8,12 @@
     "concurrently": "^5.3.0",
     "pm2": "^4.5.1"
   },
+  "engines": {
+    "node": "14.6.0"
+  },
   "scripts": {
     "client": "cd frontend && npm start",
-    "server": "cd backend && pm2 start server",
+    "server": "node backend/index.js",
     "start": "concurrently \"npm run client\" \"npm run server\" ",
     "client-install": "cd frontend && npm install",
     "server-install": "cd backend && npm install",
