@@ -1,6 +1,6 @@
 const os = require('os');
 const { fs, errorToJSON, exec } = require('../utils/global');
-const { node, python } = require('compile-run');
+const { c, cpp, java, node, python } = require('compile-run');
 
 const osCompile = {
     'exe': ['windows_nt'],
@@ -88,9 +88,9 @@ class Java {
     }
 };
 
-const c = new C();
-const cpp = new Cpp();
-const java = new Java();
+// const c = new C();
+// const cpp = new Cpp();
+// const java = new Java();
 
 module.exports = {
     c,
