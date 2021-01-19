@@ -3,8 +3,9 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { of } from 'rxjs';
-import { debounce, debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
+import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
 import { UserService } from 'src/app/service/user.service';
+import { environment } from 'src/environments/environment';
 
 const validateuser = (httpClient: HttpClient, type: string) => (c: FormControl) => {
 
@@ -14,7 +15,7 @@ const validateuser = (httpClient: HttpClient, type: string) => (c: FormControl) 
   const val = c.value;
 
   return httpClient
-    .get('http://localhost:3000/auth/getAllUsernames')
+    .get(`${environment.prefix}/auth/getAllUsernames`)
     .pipe(
       debounceTime(500),
       distinctUntilChanged(),
