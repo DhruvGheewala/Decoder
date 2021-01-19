@@ -43,7 +43,8 @@ exports.signupUser = async (req, res) => {
         const jwtToken = generateToken(user);
         if (method === "local") {
             await userSchema.findByIdAndUpdate(user._id, { mailToken: jwtToken });
-            const url = "http://localhost:4200/?token=" + jwtToken;
+            // const url = "http://localhost:4200/?token=" + jwtToken;
+            const url = "https://decoderforces.netlify.app/?token=" + jwtToken;
             sendMail(user.email, "Verify your email!", "confirm-email", user.username, url);
             return sendResponse('Email successfully sent', res, 200);
         } else {
