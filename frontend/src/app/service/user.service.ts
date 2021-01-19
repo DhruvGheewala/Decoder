@@ -7,12 +7,12 @@ import { Observable, Subject } from 'rxjs';
   providedIn: 'root'
 })
 export class UserService {
-  private apiUrl: string = 'http://localhost:3000/api';
+  private apiUrl: string = '/api';
 
   headers = new HttpHeaders().set('Content-Type', 'application/json');
 
   // api request url at backend
-  private authUrl: string = 'http://localhost:3000/auth';
+  private authUrl: string = '/auth';
 
   private defaultLanguage = 'C++';
   private defaultTheme = 'monokai';

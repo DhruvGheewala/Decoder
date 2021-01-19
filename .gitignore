@@ -9,6 +9,8 @@ backend/controllers/problems.controller.js
 Decoder.code-snippets
 components/problems/*
 *.out
+temp.html
+prank.js
 
 # Logs
 logs

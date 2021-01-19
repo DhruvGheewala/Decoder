@@ -30,7 +30,9 @@ module.exports = async (toMail, subject, htmlFile, name, url) => {
       name: name
     }
   }
-  transporter.sendMail(mail, (err) => {
-    console.log(err);
+  transporter.sendMail(mail, (err, info) => {
+    console.log('File: sendMail.js');
+    console.log(`Error: ${err}`);
+    console.log(`Information: ${JSON.stringify(info)}`);
   });
 }
