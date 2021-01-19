@@ -14,7 +14,7 @@
   "scripts": {
     "client-install": "cd frontend && npm install",
     "install": "npm run client-install",
-    "build-client": "cd frontend && ng build",
+    "build-client": "cd frontend && ng build --prod",
     "build": "npm run build-client"
   },
   "repository": {
