@@ -12,14 +12,9 @@
     "node": "14.6.0"
   },
   "scripts": {
-    "client": "cd frontend && npm start",
-    "server": "node backend/index.js",
-    "start": "concurrently \"npm run client\" \"npm run server\" ",
-    "client-install": "cd frontend && npm install",
+    "start": "node backend/index.js",
     "server-install": "cd backend && npm install",
-    "install": "npm run client-install && npm run server-install",
-    "build-client": "cd frontend && ng build",
-    "build": "npm run build-client && npm run server"
+    "install": "npm run server-install"
   },
   "repository": {
     "type": "git",
