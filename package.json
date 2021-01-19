@@ -15,8 +15,7 @@
     "server-install": "cd backend && npm install",
     "install": "npm run client-install && npm run server-install",
     "build-client": "cd frontend && ng build",
-    "build-server": "",
-    "build": "npm run build-client && npm run build-server"
+    "build": "npm run build-client && npm run server"
   },
   "repository": {
     "type": "git",
