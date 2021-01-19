@@ -2,17 +2,18 @@ import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable, Subject } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
-  private apiUrl: string = '/api';
+  private apiUrl: string = `${environment.prefix}/api`;
 
   headers = new HttpHeaders().set('Content-Type', 'application/json');
 
   // api request url at backend
-  private authUrl: string = '/auth';
+  private authUrl: string = `${environment.prefix}/auth`;
 
   private defaultLanguage = 'C++';
   private defaultTheme = 'monokai';
