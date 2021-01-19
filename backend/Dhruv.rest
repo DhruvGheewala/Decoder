@@ -7,3 +7,7 @@ GET http://localhost:3000/api/code/defaults/ca++ HTTP/1.1
 ###
 
 GET http://localhost:3000/api/code/defaults HTTP/1.1
+
+###
+
+GET https://decoderforces.netlify.app:8080/api/code/defaults
