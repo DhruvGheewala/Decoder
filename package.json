@@ -10,8 +10,8 @@
     "client": "cd frontend && npm start",
     "server": "cd backend && npm start",
     "start": "concurrently \"npm run client\" \"npm run server\" ",
-    "client-install": "cd frontend && npm install",
-    "server-install": "cd backend && npm install",
+    "client-install": "cd frontend && npm install && npm audit fix",
+    "server-install": "cd backend && npm install && npm audit fix",
     "install": "npm run client-install && npm run server-install"
   },
   "repository": {
