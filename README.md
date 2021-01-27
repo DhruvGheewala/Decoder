@@ -1,6 +1,7 @@
 #### 🔴 **_Site Under Development_**
+#### **_You can see its development version [here](decoderforces.netlify.app)._**
 
-<img src="./screenshots/logo.PNG" alt="Decoder"/>
+<img src="assets/screenshots/logo.png" alt="Decoder"/>
 
 ### Table of Contents
 - [Decoder - A Competitive Programming Portal](#decoder---a-competitive-programming-portal)
@@ -51,8 +52,9 @@ git clone https://github.com/DhruvGheewala/Decoder.git
 npm install
 ```
 
-```diff
-- Make sure you have node(javascript), gcc(c), g++(c++), jdk(java) & python installed in your system / server (which will compile code).
+```python
+# Ignore this !!
+# Make sure you have node(javascript), gcc(c), g++(c++), jdk(java) & python installed in your system / server (which will compile code).
 ```
 
 ## Environment Variable Structure
@@ -71,4 +73,4 @@ npm start
 ```
 
 ## Screenshots
-- comming soon :)
+- Screenshots are coming :)

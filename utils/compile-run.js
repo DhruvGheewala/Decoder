@@ -13,21 +13,21 @@ class C {
 
         // compiling...
         try {
-            if (osCompile.exe.indexOf(osType) >= 0) await exec(`gcc ${path} -o code/c.exe`);
-            else if (osCompile.out.indexOf(osType) >= 0) await exec(`gcc ${path} -o code/c.out`);
+            if (osCompile.exe.indexOf(osType) >= 0) await exec(`gcc ${path} -o assets/code/c.exe`);
+            else if (osCompile.out.indexOf(osType) >= 0) await exec(`gcc ${path} -o assets/code/c.out`);
         } catch (err) {
             return errorToJSON(err);
         }
 
         // Writing stdin into input file
-        await fs.writeFileAsync('code/input.txt', stdin);
+        await fs.writeFileAsync('assets/code/input.txt', stdin);
 
         // Running...
         let result = null;
 
         const startTime = new Date();
-        if (osCompile.exe.indexOf(osType) >= 0) result = await exec('cd code && c.exe < input.txt');
-        else if (osCompile.out.indexOf(osType) >= 0) result = await exec('cd code && ./c.out < input.txt');
+        if (osCompile.exe.indexOf(osType) >= 0) result = await exec('cd assets/code && c.exe < input.txt');
+        else if (osCompile.out.indexOf(osType) >= 0) result = await exec('cd assets/code && ./c.out < input.txt');
         const endTime = new Date();
 
         const runTime = endTime.getTime() - startTime.getTime();
@@ -42,21 +42,21 @@ class Cpp {
 
         // compiling...
         try {
-            if (osCompile.exe.indexOf(osType) >= 0) await exec(`g++ ${path} -o code/cpp.exe`);
-            else if (osCompile.out.indexOf(osType) >= 0) await exec(`g++ ${path} -o code/cpp.out`);
+            if (osCompile.exe.indexOf(osType) >= 0) await exec(`g++ ${path} -o assets/code/cpp.exe`);
+            else if (osCompile.out.indexOf(osType) >= 0) await exec(`g++ ${path} -o assets/code/cpp.out`);
         } catch (err) {
             return errorToJSON(err);
         }
 
         // Writing stdin into input file
-        await fs.writeFileAsync('code/input.txt', stdin);
+        await fs.writeFileAsync('assets/code/input.txt', stdin);
 
         // Running...
         let result = null;
 
         const startTime = new Date();
-        if (osCompile.exe.indexOf(osType) >= 0) result = await exec('cd code && cpp.exe < input.txt');
-        else if (osCompile.out.indexOf(osType) >= 0) result = await exec('cd code && ./cpp.out < input.txt');
+        if (osCompile.exe.indexOf(osType) >= 0) result = await exec('cd assets/code && cpp.exe < input.txt');
+        else if (osCompile.out.indexOf(osType) >= 0) result = await exec('cd assets/code && ./cpp.out < input.txt');
         const endTime = new Date();
 
         const runTime = endTime.getTime() - startTime.getTime();
@@ -75,11 +75,11 @@ class Java {
         }
 
         // Writing stdin into input file
-        await fs.writeFileAsync('code/input.txt', stdin);
+        await fs.writeFileAsync('assets/code/input.txt', stdin);
 
         // Running...
         const startTime = new Date();
-        let result = await exec('cd code && java Decoder < input.txt');
+        let result = await exec('cd assets/code && java Decoder < input.txt');
         const endTime = new Date();
 
         const runTime = endTime.getTime() - startTime.getTime();
