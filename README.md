@@ -58,12 +58,18 @@ npm install
 ```
 
 ## Environment Variable Structure
-```dotenv
-PORT = ****
-DB_PATH = ****
-SECRETKEY = ****
-EMAIL_ID = ****
-EMAIL_PASSWORD = ****
+```python
+PORT = *****
+EMAIL_ID = *****
+EMAIL_PASSWORD = *****
+SECRETKEY = *****
+
+# For local mongodb server
+DB_PATH = *****
+
+# For hosted mongodb server
+DB_NAME = ***** # optional
+DB_PASS = ***** # optional
 ```
 
 ## How to run ?
