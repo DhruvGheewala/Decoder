@@ -4,7 +4,8 @@
   "description": "Backend server for decoder",
   "main": "index.js",
   "scripts": {
-    "client": "cd frontend && ng build --prod",
+    "build-client": "cd frontend && ng build --prod",
+    "client": "cd frontend && ng serve --prod -o",
     "dev-client": "cd frontend && ng serve -o",
     "client-install": "cd frontend && npm install && npm audit fix",
     "server": "node index.js",
