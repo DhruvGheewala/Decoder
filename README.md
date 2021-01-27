@@ -1,7 +1,7 @@
 #### 🔴 **_Site Under Development_**
-#### **_You can see its development version [here](decoderforces.netlify.app)._**
+#### **_You can see its development version [here](https://decoderforces.netlify.app)._**
 
-<img src="assets/screenshots/logo.png" alt="Decoder"/>
+<img src="./assets/screenshots/logo.PNG" alt="Decoder"/>
 
 ### Table of Contents
 - [Decoder - A Competitive Programming Portal](#decoder---a-competitive-programming-portal)
