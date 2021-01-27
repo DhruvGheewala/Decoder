@@ -6,13 +6,13 @@
   "scripts": {
     "client": "cd frontend && ng build --prod",
     "dev-client": "cd frontend && ng serve -o",
-    "install-client": "cd frontend && npm install && npm audit fix",
+    "client-install": "cd frontend && npm install && npm audit fix",
     "server": "node index.js",
     "dev-server": "nodemon index.js",
-    "install-server": "npm audit fix",
+    "server-install": "npm audit fix",
     "start": "npm run server && npm run client",
     "dev-start": "npm run dev-server && npm run dev-client",
-    "install": "npm run install-client && npm run install-server"
+    "install": "npm run client-install && npm run server-install"
   },
   "nodemonConfig": {
     "ignore": [
@@ -38,5 +38,6 @@
   "devDependencies": {
     "@types/nodemailer": "^6.4.0",
     "nodemon": "^2.0.7"
-  }
+  },
+  "homepage": "https://github.com/DhruvGheewala/Decoder#readme"
 }

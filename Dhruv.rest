@@ -11,3 +11,25 @@ GET http://localhost:3000/api/code/defaults HTTP/1.1
 ###
 
 GET https://decoderforces.netlify.app:8080/api/code/defaults
+POST http://localhost:3000/api/code/compile
+content-type: application/json
+
+{
+    "content": "print('Hello')",
+    "language": "c++"
+}
+
+###
+
+POST http://localhost/submissions/?base64_encoded=false&wait=false HTTP/1.1
+Content-Type: application/json
+
+{
+  "source_code": "print('Hello ', input())",
+  "language_id": 71,
+  "stdin": "world"
+}
+
+###
+
+GET http://localhost/submissions/:id/?base64_encoded=false&fields=stdout,stderr,status_id,language_id HTTP/1.1

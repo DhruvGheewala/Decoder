@@ -23,7 +23,4 @@ const codeRoute = require('./routes/code.routes');
 const authRoute = require('./routes/user.routes');
 app.use('/api/code', codeRoute);
 app.use('/auth', authRoute);
-
-app.use('/', (req, res) => {
-    res.send('Hello World !!');
-});
+app.use('/', (_req, res) => res.send('Backend is active !!'));
