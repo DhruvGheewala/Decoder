@@ -4,8 +4,15 @@
   "description": "Backend server for decoder",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
-    "dev-start": "nodemon index.js"
+    "client": "cd frontend && ng build --prod",
+    "dev-client": "cd frontend && ng serve -o",
+    "install-client": "cd frontend && npm install && npm audit fix",
+    "server": "node index.js",
+    "dev-server": "nodemon index.js",
+    "install-server": "npm audit fix",
+    "start": "npm run server && npm run client",
+    "dev-start": "npm run dev-server && npm run dev-client",
+    "install": "npm run install-client && npm run install-server"
   },
   "nodemonConfig": {
     "ignore": [
