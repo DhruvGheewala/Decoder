@@ -173,7 +173,7 @@ export class CodeViewComponent implements OnInit {
   }
 
   public downloadCode() {
-    let code = this.code_data.code;
+    let code = this.code_data.content;
     let filename = this.code_data.title + this.findExtension(this.code_data.language);
 
     let a = document.createElement('a');
