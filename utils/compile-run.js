@@ -1,6 +1,6 @@
 const os = require('os');
 const { fs, errorToJSON, exec } = require('../utils/global');
-const { c, cpp, java, node, python } = require('compile-run');
+const { c, node, python } = require('compile-run');
 
 const osCompile = {
     'exe': ['windows_nt'],
@@ -88,9 +88,59 @@ class Java {
     }
 };
 
+// const axios = require('axios').default;
+
+var request = require('request');
+class CppApi {
+    runFile = async (path, { stdin }) => {
+        // compiling...
+        try {
+            const code = await fs.readFileAsync(path, { encoding: 'utf-8' });
+            const program = {
+                script: code,
+                language: "cpp14",
+                versionIndex: "0",
+                clientId: process.env.compileClient,
+                clientSecret: process.env.compileClientSecret
+            };
+
+            request({
+                url: 'https://api.jdoodle.com/v1/execute',
+                method: "POST",
+                json: program
+            }, (error, response, body) => {
+                console.log('error:', error);
+                console.log('statusCode:', response && response.statusCode);
+                console.log('body:', body);
+            });
+        } catch (err) {
+            return errorToJSON(err);
+        }
+
+        // Writing stdin into input file
+        await fs.writeFileAsync('assets/code/input.txt', stdin);
+
+        // Running...
+        const startTime = new Date();
+        let result = await exec('cd assets/code && java Decoder < input.txt');
+        const endTime = new Date();
+
+        const runTime = endTime.getTime() - startTime.getTime();
+        result.manualrunTime = runTime;
+        return result;
+    };
+};
+
+class JavaApi {
+
+};
+
 // const c = new C();
 // const cpp = new Cpp();
 // const java = new Java();
+
+const cpp = new CppApi();
+const java = new JavaApi();
 
 module.exports = {
     c,
