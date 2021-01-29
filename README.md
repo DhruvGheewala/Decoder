@@ -70,6 +70,11 @@ DB_PATH = *****
 # For hosted mongodb server
 DB_NAME = ***** # optional
 DB_PASS = ***** # optional
+
+# Secrect keys given by API: https://www.jdoodle.com/
+# Please set it before using application, other cpp and java won't work
+compileClientId = *****
+compileClientSecret = *****
 ```
 
 ## How to run ?
