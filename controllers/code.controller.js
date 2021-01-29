@@ -99,7 +99,6 @@ async function runFile({ language, code, stdin }) {
 
     if (!runner) return null;
     const path = generateFilePath('Decoder', language);
-    console.log(path, code);
     await fs.writeFileAsync(path, code);
 
     const startTime = new Date();

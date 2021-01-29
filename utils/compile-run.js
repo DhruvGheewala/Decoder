@@ -1,4 +1,5 @@
 const os = require('os');
+const _ = require('lodash');
 const { fs, errorToJSON, exec } = require('../utils/global');
 const { c, node, python } = require('compile-run');
 
@@ -88,51 +89,63 @@ class Java {
     }
 };
 
-// const axios = require('axios').default;
-
-var request = require('request');
+const { default: axios } = require('axios');
 class CppApi {
     runFile = async (path, { stdin }) => {
-        // compiling...
         try {
             const code = await fs.readFileAsync(path, { encoding: 'utf-8' });
             const program = {
                 script: code,
-                language: "cpp14",
-                versionIndex: "0",
-                clientId: process.env.compileClient,
+                language: 'cpp17',
+                stdin,
+                versionIndex: '0',
+                clientId: process.env.compileClientId,
                 clientSecret: process.env.compileClientSecret
             };
 
-            request({
-                url: 'https://api.jdoodle.com/v1/execute',
-                method: "POST",
-                json: program
-            }, (error, response, body) => {
-                console.log('error:', error);
-                console.log('statusCode:', response && response.statusCode);
-                console.log('body:', body);
-            });
+            let result = await axios.post('https://api.jdoodle.com/v1/execute', program);
+            result = result.data;
+
+            const data = {
+                'stderr': '',
+                'stdout': result.output,
+                'manualrunTime': result.cpuTime,
+            };
+
+            return data;
         } catch (err) {
             return errorToJSON(err);
         }
-
-        // Writing stdin into input file
-        await fs.writeFileAsync('assets/code/input.txt', stdin);
-
-        // Running...
-        const startTime = new Date();
-        let result = await exec('cd assets/code && java Decoder < input.txt');
-        const endTime = new Date();
-
-        const runTime = endTime.getTime() - startTime.getTime();
-        result.manualrunTime = runTime;
-        return result;
     };
 };
 
 class JavaApi {
+    runFile = async (path, { stdin }) => {
+        try {
+            const code = await fs.readFileAsync(path, { encoding: 'utf-8' });
+            const program = {
+                script: code,
+                language: 'java',
+                stdin,
+                versionIndex: '3',
+                clientId: process.env.compileClientId,
+                clientSecret: process.env.compileClientSecret
+            };
 
+            let result = await axios.post('https://api.jdoodle.com/v1/execute', program);
+            result = result.data;
+
+            const data = {
+                'stderr': '',
+                'stdout': result.output,
+                'manualrunTime': result.cpuTime,
+            };
+
+            return data;
+        } catch (err) {
+            return errorToJSON(err);
+        }
+    };
 };
 
 // const c = new C();
