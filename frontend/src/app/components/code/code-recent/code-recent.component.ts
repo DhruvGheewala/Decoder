@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+
+// Services
 import { UserService } from "src/app/service/user.service";
+import { NgxSpinnerService } from "ngx-spinner";
 
 @Component({
   selector: 'app-code-recent',
@@ -8,12 +11,18 @@ import { UserService } from "src/app/service/user.service";
 })
 export class CodeRecentComponent implements OnInit {
 
-  constructor(private userService: UserService) { }
+  constructor(
+    private userService: UserService,
+    private spinner: NgxSpinnerService
+  ) { }
 
   all_codes = null;
   copy_all_codes = null;
+  loadingMsg = '';
 
   ngOnInit(): void {
+    this.loadingMsg = 'Fetching Codes...';
+    this.spinner.show();
     this.userService.getAllPublicCodes().subscribe((data) => {
       this.all_codes = this.copy_all_codes = data.result;
       this.all_codes.sort((a, b) => {
@@ -22,6 +31,7 @@ export class CodeRecentComponent implements OnInit {
       if (this.all_codes.length >= 30) {
         this.all_codes.length = 30;
       }
+      this.spinner.hide();
     });
   }
 

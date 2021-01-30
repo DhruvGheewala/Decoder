@@ -2,6 +2,9 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
+// Services
+// import { NgxSpinnerService } from "ngx-spinner";
+
 @Component({
   selector: 'app-upcoming-contest',
   templateUrl: './upcoming-contest.component.html',
@@ -19,13 +22,20 @@ export class UpcomingContestComponent implements OnInit {
   hideSpinner: boolean = false;
 
   sites: Set<string>;
+  // loadingMsg = '';
   allData = null;
   copyAllData1 = null; // copy of all data receive from api
   copyAllData2 = null; // copy of allData variable => used for search
 
-  constructor(private http: HttpClient, private router: Router) { }
+  constructor(
+    private http: HttpClient,
+    private router: Router,
+    // private spinner: NgxSpinnerService
+  ) { }
 
   ngOnInit(): void {
+    // this.loadingMsg = 'Fetching the contest data';
+    // this.spinner.show();
     try {
       this.http.get<any>(this.urls[1]).subscribe((data) => {
         this.allData = this.copyAllData1 = data;
@@ -33,6 +43,9 @@ export class UpcomingContestComponent implements OnInit {
         this.sites = new Set();
         data.forEach(d => this.sites.add(d.site));
         this.hideSpinner = true;
+
+        // this.spinner.hide();
+        // setTimeout(() => this.spinner.hide(), 5000);
       });
       document.getElementById('All').click();
     } catch (err) {
@@ -41,6 +54,8 @@ export class UpcomingContestComponent implements OnInit {
   }
 
   getSiteData(event) {
+    // this.loadingMsg = 'Fetching the contest data';
+    // this.spinner.show();
     let classNames = ["btn-dark"];
     if (this.prvBtn) {
       classNames.forEach(c => {
@@ -70,6 +85,7 @@ export class UpcomingContestComponent implements OnInit {
       });
       this.copyAllData2 = this.allData;
     }
+    // this.spinner.hide();
   }
 
   filter(query: string) {

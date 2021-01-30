@@ -226,7 +226,7 @@ export class CodeViewComponent implements OnInit {
     this.userData.deleteCodeById(this.code_data.id).subscribe(data => {
       if (data) {
         console.log(data);
-        this.router.navigate(['/home']);
+        this.router.navigate(['/code/recent']);
       }
     });
   }

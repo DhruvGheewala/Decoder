@@ -128,8 +128,8 @@ class JavaApi {
                 language: 'java',
                 stdin,
                 versionIndex: '3',
-                clientId: process.env.compileClientId,
-                clientSecret: process.env.compileClientSecret
+                clientId: process.env.JDOODLE_CLIENT,
+                clientSecret: process.env.JDOODLE_CLIENT_SECRET
             };
 
             let result = await axios.post('https://api.jdoodle.com/v1/execute', program);
@@ -151,7 +151,6 @@ class JavaApi {
 // const c = new C();
 // const cpp = new Cpp();
 // const java = new Java();
-
 const cpp = new CppApi();
 const java = new JavaApi();
 

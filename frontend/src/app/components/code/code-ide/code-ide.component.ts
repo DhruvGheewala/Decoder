@@ -58,7 +58,8 @@ import 'ace-builds/src-noconflict/ext-beautify';
 import { AdminService } from "src/app/service/admin.service";
 import { UserService } from "src/app/service/user.service";
 import { ActivatedRoute, Router } from '@angular/router';
-import { viewClassName } from '@angular/compiler';
+import { NgxSpinnerService } from "ngx-spinner";
+
 declare var $: any;
 
 @Component({
@@ -99,17 +100,21 @@ export class CodeIdeComponent implements OnInit {
 
   isError: boolean;
   fileContent: any = '';
+  loadingMsg = '';
 
   code_id: string = null;
   constructor(
     private adminData: AdminService,
     private userData: UserService,
     private router: Router,
-    private route: ActivatedRoute,
+    route: ActivatedRoute,
+    private spinner: NgxSpinnerService
   ) {
     this.code_id = route.snapshot.params.id;
   }
   ngOnInit(): void {
+    this.loadingMsg = 'Configuring your IDE...'
+    this.spinner.show();
     $('[data-toggle="tooltip"]').tooltip({
       trigger: 'hover'
     });
@@ -172,6 +177,8 @@ export class CodeIdeComponent implements OnInit {
     if (this.code_id) {
       this.editCodeMode();
     }
+
+    this.spinner.hide();
   }
 
   editCodeMode() {
@@ -376,6 +383,8 @@ export class CodeIdeComponent implements OnInit {
   }
 
   public async shareCodeClick() {
+    this.loadingMsg = 'Generating link...';
+    this.spinner.show();
     await this.runClicked();
     let codeObj = {
       title: this.titleElem.value,
@@ -392,5 +401,6 @@ export class CodeIdeComponent implements OnInit {
     this.userData.saveCode(codeObj).subscribe((data) => {
       if (!data.err) this.router.navigate(['/code/view/' + data.result.id]);
     });
+    this.spinner.hide();
   }
 }

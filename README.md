@@ -49,7 +49,7 @@ git clone https://github.com/DhruvGheewala/Decoder.git
 (otherwise manually download this project)
 
 # will install all the dependencies for project
-npm install
+npm run install-dependecies
 ```
 
 ```python
@@ -72,9 +72,9 @@ DB_NAME = ***** # optional
 DB_PASS = ***** # optional
 
 # Secrect keys given by API: https://www.jdoodle.com/
-# Please set it before using application, other cpp and java won't work
-compileClientId = *****
-compileClientSecret = *****
+# Please set it before using application, otherwise cpp and java won't work
+JDOODLE_CLIENT = *****
+JDOODLE_CLIENT_SECRET = *****
 ```
 
 ## How to run ?

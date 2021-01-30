@@ -9,12 +9,10 @@
   - view for code/list, my codes & all codes
   - directory structure
 - dhruv
-  - api for code/list, folders and codes
-  - create folder.*.js
+  - spinner in upcomming contest
 - kushal
-  - complete authentication & autherization
-  - email varification
   - password reset
+  - alert message in login, register etc...
   - google auth
 
 ### frontend
