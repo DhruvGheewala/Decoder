@@ -9,12 +9,12 @@
             <form [formGroup]="loginForm" (ngSubmit)="loginUser()" class="pt-3 was-validated" method="post">
 
                 <div class="form-group">
-                    <label for="username">Name</label>
+                    <label for="username">Username or Email</label>
                     <input type="text" id="username" formControlName="username"
                         class="form-control form-control-sm custom-width" placeholder="Your name" required>
                     <div *ngIf="!userName.valid && (userName.dirty || userName.touched) && userName.errors">
                         <div *ngIf="userName.errors.required" class="text-danger font-italic">
-                            Username is required!!
+                            Username or Email is required!!
                         </div>
                     </div>
                     <!-- <small *ngIf="hasError('user')" class="text-danger font-italic">Username required!</small> -->

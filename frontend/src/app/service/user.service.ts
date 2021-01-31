@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable, Subject } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import {AlertService} from '@full-fledged/alerts';
 
 @Injectable({
   providedIn: 'root'
@@ -28,7 +29,11 @@ export class UserService {
   };
 
   curUser = { userData: { username: "" } };
-  constructor(private http: HttpClient, public router: Router) { }
+  constructor(
+    private http: HttpClient, 
+    public router: Router,
+    public _alertService: AlertService
+    ) { }
 
   getLanguage() {
     return this.choosen.language;
@@ -101,7 +106,8 @@ export class UserService {
     }
     this.http.post<any>(this.authUrl + '/verify-email', obj).subscribe((res) => {
       if (!res.err) {
-        alert("Email verified!");
+        // alert("Email verified!");
+        this._alertService.success('Email Verified!');
         this.router.navigate(['/login']);
       } else {
         alert("Invalid token or token expired!");

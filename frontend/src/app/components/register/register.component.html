@@ -6,15 +6,32 @@
                 Already have an account ?
                 <a routerLink="/login" class="link">login</a>
             </div>
-
+            <ff-alerts></ff-alerts>
             <form [formGroup]="signupForm" (ngSubmit)="signUpLocal()" class="pt-3 was-validated" method="post">
                 <div class="form-group">
-                    <label for="username">Name</label>
+                    <label for="username">Username</label>&nbsp;
+                    <i class="fas fa-info-circle" data-toggle="tooltip" data-original-title="This means your unique username (nickname) on decoderforces." data-placement="right"></i>
                     <input type="text" id="username" name="username" formControlName="username"
                         class="form-control form-control-sm custom-width" placeholder="Your name" required>
                     <div *ngIf="!userName.valid && (userName.dirty || userName.touched) && userName.errors">
+                        <div *ngIf="userName.errors.required" class="text-danger font-italic">
+                            Username is required!
+                        </div>
                         <div *ngIf="userName.errors.validateuser" class="text-danger font-italic">
                             Username already exist!
+                        </div>
+                        <div *ngIf="userName.errors.minlength" class="text-danger font-italic">
+                            Username minimum length allowed is 3.
+                        </div>
+                        <div *ngIf="userName.errors.pattern" class="text-danger font-italic">
+                            username can have: [A-Z], [a-z], [0-9], .(dot), _(underscore), - (hyphen)
+                            <br />
+                            username starting with: .(dot) or _(underscore) or - (hyphen) are invalid
+                            <br />
+                            username should be atleast 8 characters long
+                            <br />
+                            so much to read right? just try your nickname !!
+                            <br />
                         </div>
                     </div>
                     <!-- <small *ngIf="hasError('user')" class="text-danger font-italic">username required!</small> -->
@@ -25,6 +42,9 @@
                     <input type="email" id="email" formControlName="email"
                         class="form-control form-control-sm custom-width" placeholder="Your email" required>
                     <div *ngIf="!userEmail.valid && (userEmail.dirty || userEmail.touched) && userEmail.errors">
+                        <div *ngIf="userEmail.errors.required" class="text-danger font-italic">
+                            Email is required!
+                        </div>
                         <div *ngIf="userEmail.errors.validateuser" class="text-danger font-italic">
                             Email already exist!
                         </div>
@@ -39,6 +59,18 @@
                     <div *ngIf="!userPass.valid && (userPass.dirty || userPass.touched) && userPass.errors">
                         <div *ngIf="userPass.errors.required" class="text-danger font-italic">
                             Password is required!!
+                        </div>
+                        <div *ngIf="userPass.errors.invalidPassword" class="text-danger font-italic">
+                            Password must match following password pattern for good strength. 💪
+                            <br />
+                            The password should be a minimum of eight characters long.
+                            <br />
+                            It has at least one lower case letter.
+                            <br />
+                            It has at least one upper case letter.
+                            <br />
+                            It has at least one number.
+                            <br />
                         </div>
                     </div>
                     <!-- <small *ngIf="hasError('password')" class="text-danger font-italic">password required!</small> -->
@@ -65,3 +97,5 @@
         </div>
     </div>
 </div>
+{{signupForm.value | json}}
+{{signupForm.valid}}

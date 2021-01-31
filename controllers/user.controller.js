@@ -43,8 +43,7 @@ exports.signupUser = async (req, res) => {
         const jwtToken = generateToken(user);
         if (method === "local") {
             await userSchema.findByIdAndUpdate(user._id, { mailToken: jwtToken });
-            // const url = "http://localhost:4200/?token=" + jwtToken;
-            const url = "https://decoderforces.netlify.app/?token=" + jwtToken;
+            const url =  process.env.CLIENT_HOST +  "/?token=" + jwtToken;
             sendMail(user.email, "Verify your email!", "confirm-email", user.username, url);
             return sendResponse('Email successfully sent', res, 200);
         } else {
@@ -69,9 +68,14 @@ exports.signupUser = async (req, res) => {
  */
 exports.loginUser = async (req, res) => {
 
-    const { username, password, method, id } = req.body;
+    const { username, email, password, method, id } = req.body;
     try {
-        let user = await userSchema.findOne({ username });
+        let user;
+        if(!username) {
+            user = await userSchema.findOne({ email });
+        }else{
+            user = await userSchema.findOne({ username });
+        }
         if (!user) {
             return sendResponse('Authentication failed! No such user exist!', res, 404);
         }
@@ -200,7 +204,7 @@ exports.updateUser = async (req, res) => {
     }
 }
 
-exports.getAllUsernames = async (req, res) => {
+exports.getAllUsernames = async (req, res) => { 
     let userMap = {};
     let users = await userSchema.find({});
 

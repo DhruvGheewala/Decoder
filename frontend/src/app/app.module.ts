@@ -5,6 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgxSpinnerModule } from "ngx-spinner";
+import { AlertModule } from '@full-fledged/alerts';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 // Components
@@ -62,6 +63,7 @@ import { AuthInterceptor } from './service/authconfig.interceptor';
     FormsModule,
     ReactiveFormsModule,
     NgxSpinnerModule,
+    AlertModule.forRoot({maxMessages: 5, timeout: 5000, positionX: 'right'})
     BrowserAnimationsModule
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],

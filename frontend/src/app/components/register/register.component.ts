@@ -6,7 +6,19 @@ import { of } from 'rxjs';
 import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
 import { UserService } from 'src/app/service/user.service';
 import { environment } from 'src/environments/environment';
+import {AlertService} from '@full-fledged/alerts';
 
+declare var $: any;
+const invalidPassword = () => (c: FormControl) => {
+  if(!c || String(c.value).length === 0) {
+    return of(null);
+  }
+  const val = c.value;
+
+  const regex = new RegExp('^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$');
+  const valid = regex.test(val);
+  return valid ? null : {invalidPassword : true};
+}
 const validateuser = (httpClient: HttpClient, type: string) => (c: FormControl) => {
 
   if (!c || String(c.value).length === 0) {
@@ -15,7 +27,7 @@ const validateuser = (httpClient: HttpClient, type: string) => (c: FormControl) 
   const val = c.value;
 
   return httpClient
-    .get(`${environment.server}auth/getAllUsernames`)
+    .get(`${environment.server}/auth/getAllUsernames`)
     .pipe(
       debounceTime(500),
       distinctUntilChanged(),
@@ -57,12 +69,15 @@ export class RegisterComponent implements OnInit {
     public fb: FormBuilder,
     private _userService: UserService,
     public httpClient: HttpClient,
-    public router: Router
+    public router: Router,
+    public _alertService: AlertService
   ) {
+    this._alertService.success("welcome!");
     this.signupForm = new FormGroup({
       username: new FormControl('', [
         Validators.required,
         Validators.minLength(3),
+        Validators.pattern('^(?=.{3,20}$)(?![_.-])[a-zA-Z0-9._-]+(?<![_.])$')
       ], [validateuser(this.httpClient, 'username')]),
       email: new FormControl('', [
         Validators.required,
@@ -70,6 +85,7 @@ export class RegisterComponent implements OnInit {
       ], [validateuser(this.httpClient, 'email')]),
       password: new FormControl('', [
         Validators.required,
+        invalidPassword()
       ]),
       repassword: new FormControl('', [
         Validators.required,
@@ -79,6 +95,9 @@ export class RegisterComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    $('[data-toggle="tooltip"]').tooltip({
+      trigger: 'hover'
+    });
   }
 
   get userName() {
@@ -96,6 +115,7 @@ export class RegisterComponent implements OnInit {
 
   signUpLocal() {
     if (!this.signupForm.valid) {
+      console.log("user form is invalid!");
       return;
     }
     let userdata = this.signupForm.value;
