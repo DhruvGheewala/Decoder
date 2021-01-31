@@ -177,7 +177,6 @@ export class CodeIdeComponent implements OnInit {
     if (this.code_id) {
       this.editCodeMode();
     }
-
     this.spinner.hide();
   }
 
