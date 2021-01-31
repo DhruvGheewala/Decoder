@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 // Services
-// import { NgxSpinnerService } from "ngx-spinner";
+import { NgxSpinnerService } from "ngx-spinner";
 
 @Component({
   selector: 'app-upcoming-contest',
@@ -19,10 +19,8 @@ export class UpcomingContestComponent implements OnInit {
   ];
 
   prvBtn = null;
-  hideSpinner: boolean = false;
-
   sites: Set<string>;
-  // loadingMsg = '';
+  loadingMsg = '';
   allData = null;
   copyAllData1 = null; // copy of all data receive from api
   copyAllData2 = null; // copy of allData variable => used for search
@@ -30,32 +28,32 @@ export class UpcomingContestComponent implements OnInit {
   constructor(
     private http: HttpClient,
     private router: Router,
-    // private spinner: NgxSpinnerService
+    private spinner: NgxSpinnerService
   ) { }
 
   ngOnInit(): void {
-    // this.loadingMsg = 'Fetching the contest data';
-    // this.spinner.show();
+    this.loadingMsg = 'Fetching the contest data';
+    this.spinner.show();
     try {
       this.http.get<any>(this.urls[1]).subscribe((data) => {
         this.allData = this.copyAllData1 = data;
         this.copyAllData2 = this.allData;
         this.sites = new Set();
         data.forEach(d => this.sites.add(d.site));
-        this.hideSpinner = true;
 
-        // this.spinner.hide();
+        document.getElementById('All').click();
+        this.spinner.hide();
         // setTimeout(() => this.spinner.hide(), 5000);
       });
-      document.getElementById('All').click();
     } catch (err) {
       this.router.navigate(['/error']);
     }
   }
 
   getSiteData(event) {
-    // this.loadingMsg = 'Fetching the contest data';
-    // this.spinner.show();
+    this.loadingMsg = 'Fetching the contest data';
+    this.spinner.show();
+
     let classNames = ["btn-dark"];
     if (this.prvBtn) {
       classNames.forEach(c => {
@@ -85,7 +83,7 @@ export class UpcomingContestComponent implements OnInit {
       });
       this.copyAllData2 = this.allData;
     }
-    // this.spinner.hide();
+    this.spinner.hide();
   }
 
   filter(query: string) {
