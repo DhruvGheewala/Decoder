@@ -1,5 +1,5 @@
 #### 🔴 **_Site Under Development_**
-#### **_You can see its development version [here](https://decoderforces.netlify.app)._**
+#### **_You can see live demo(under development) [here](https://decoderforces.netlify.app)._**
 
 <img src="./assets/screenshots/logo.PNG" alt="Decoder"/>
 
@@ -66,6 +66,9 @@ SECRETKEY = *****
 
 # For local mongodb server
 DB_PATH = *****
+
+#For client host during development
+CLIENT_HOST = http://localhost:4200 
 
 # For hosted mongodb server
 DB_NAME = ***** # optional

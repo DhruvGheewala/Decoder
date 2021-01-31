@@ -29,7 +29,16 @@ export class LoginComponent implements OnInit {
     if (!this.loginForm.valid) {
       return;
     }
-    let userData = this.loginForm.value;
+    let userData = {};
+    const uniqueId = this.loginForm.get('username').value;
+    const password = this.loginForm.get('password').value;
+    const isemail = uniqueId.includes("@");
+    if(isemail) {
+      userData["email"] = uniqueId;
+    }else{
+      userData["username"] = uniqueId;
+    }
+    userData["password"] = password;
     userData["method"] = "local";
     this._userService.loginUser(userData);
   }
