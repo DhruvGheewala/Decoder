@@ -2,6 +2,8 @@
 */code/Decoder.*
 */code/input.txt
 */code/*.exe
+*assets/temporary/*
+.DS_Store
 
 # Logs
 logs

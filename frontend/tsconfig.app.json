@@ -11,6 +11,5 @@
   ],
   "include": [
     "src/**/*.d.ts"
-  ],
-  // "target": "es5"
+  ]
 }

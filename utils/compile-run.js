@@ -99,8 +99,8 @@ class CppApi {
                 language: 'cpp17',
                 stdin,
                 versionIndex: '0',
-                clientId: process.env.compileClientId,
-                clientSecret: process.env.compileClientSecret
+                clientId: process.env.JDOODLE_CLIENT,
+                clientSecret: process.env.JDOODLE_CLIENT_SECRET
             };
 
             let result = await axios.post('https://api.jdoodle.com/v1/execute', program);
