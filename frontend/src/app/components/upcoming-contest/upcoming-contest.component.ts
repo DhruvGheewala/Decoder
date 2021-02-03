@@ -24,16 +24,18 @@ export class UpcomingContestComponent implements OnInit {
   allData = null;
   copyAllData1 = null; // copy of all data receive from api
   copyAllData2 = null; // copy of allData variable => used for search
+  languages = null;
 
   constructor(
     private http: HttpClient,
     private router: Router,
-    private spinner: NgxSpinnerService
+    private spinner: NgxSpinnerService,
   ) { }
 
   ngOnInit(): void {
     this.loadingMsg = 'Fetching the contest data';
     this.spinner.show();
+
     try {
       this.http.get<any>(this.urls[1]).subscribe((data) => {
         this.allData = this.copyAllData1 = data;

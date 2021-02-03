@@ -1,3 +1,40 @@
 <div class="full">
-    <a routerLink="/code/recent">recent codes</a>
+    <div class="m-2 p-2">
+        <div class="row">
+            <button class="btn col btn-muted ml-2"> All </button>
+            <button class="btn col btn-muted ml-2" *ngFor="let lang of languages">
+                {{lang}}
+            </button>
+            <div class="col-lg-7">
+                <input type="text" class="form-control" #searchEle placeholder="Search Your Code ..." (keyup)="filter(searchEle.value)">
+            </div>
+        </div>
+        <div class="mt-3 p-3 border">
+            <div class="row">
+                <div class="col font4 font-weight-bold">Title</div>
+                <div class="col font4 font-weight-bold">Language</div>
+                <div class="col font4 font-weight-bold">Date</div>
+            </div>
+            <div *ngFor="let code of all_codes; let isEven = even">
+                <div class="row" [ngClass]="isEven ? '' : 'bg-gray'">
+                    <div class="col">
+                        <a routerLink="/code/view/{{code.id}}">
+                            {{code.title}}
+                        </a>
+                    </div>
+                    <div class="col">
+                        <a routerLink="/profile/{{code.author}}">
+                            {{code.author}}
+                        </a>
+                    </div>
+                    <div class="col">
+                        {{code.language}}
+                    </div>
+                    <div class="col">
+                        {{dateToHumanReadable(code.time)}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

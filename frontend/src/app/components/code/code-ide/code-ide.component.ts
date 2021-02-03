@@ -360,6 +360,8 @@ export class CodeIdeComponent implements OnInit {
     }
     this.runButtonElem.disabled = false;
 
+    console.log(data);
+    
     let err = '';
     if (data.err) {
       const errData = data.err;
