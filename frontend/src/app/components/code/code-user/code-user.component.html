@@ -1,8 +1,7 @@
 <div class="full">
     <div class="m-2 p-2">
         <div class="row">
-            <button class="btn col btn-muted ml-2"> All </button>
-            <button class="btn col btn-muted ml-2" *ngFor="let lang of languages">
+            <button class="btn col btn-muted ml-2" [id]="lang" *ngFor="let lang of languages" (click)="searchByLang($event)">
                 {{lang}}
             </button>
             <div class="col-lg-7">
@@ -10,8 +9,9 @@
             </div>
         </div>
         <div class="mt-3 p-3 border">
-            <div class="row">
+            <div class="row mb-2">
                 <div class="col font4 font-weight-bold">Title</div>
+                <div class="col font4 font-weight-bold">Author</div>
                 <div class="col font4 font-weight-bold">Language</div>
                 <div class="col font4 font-weight-bold">Date</div>
             </div>

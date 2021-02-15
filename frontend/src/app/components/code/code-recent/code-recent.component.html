@@ -3,14 +3,20 @@
         <p style="font-size: 20px; color: white">{{loadingMsg}}</p>
     </ngx-spinner>
     <div>
-        <div class="row mb-2">
-            <div class="col">
-                <input type="text" class="form-control" placeholder="Search" #searchEle
+        <div class="row m-1 mb-2">
+            <button class="btn col btn-muted ml-2" [id]="lang" *ngFor="let lang of languages" (click)="searchByLang($event)">
+                {{lang}}
+            </button>
+            <div class="col-lg-5">
+                <input type="text" class="form-control" placeholder="Search Code ..." #searchEle
                     (keyup)="filter(searchEle.value)">
             </div>
+            <button class="btn col btn-info ml-2" *ngIf="isLoogedIn()" routerLink="/code/{{getUserName()}}">
+                My Codes
+            </button>
         </div>
         <div class="p-3 border">
-            <div class="row">
+            <div class="row mb-2">
                 <div class="col font4 font-weight-bold">Title</div>
                 <div class="col font4 font-weight-bold">Author</div>
                 <div class="col font4 font-weight-bold">Language</div>
