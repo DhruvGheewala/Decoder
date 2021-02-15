@@ -93,7 +93,7 @@ router.get('/view/:currentUser/:id', async (req, res) => {
 
 // *Complete
 router.put('/update/:id', async (req, res) => {
-    const codeData = _.pick(req.body, ['code', 'input', 'output', 'language', 'author', 'visibility']);
+    const codeData = _.pick(req.body, ['content', 'input', 'output', 'language', 'author', 'visibility']);
     const result = await controller.updateCode(req.params.id, codeData);
     if (!result) return sendResponse('Invalid id, Please try again', res, 404);
     if (result.err) return sendResponse(result.err, res, 400);
