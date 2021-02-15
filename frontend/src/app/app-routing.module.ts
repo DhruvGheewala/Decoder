@@ -35,7 +35,7 @@ const routes: Routes = [
   {
     path: 'ide/edit/:id',
     component: CodeIdeComponent,
-    // canActivate: [AuthGuard]
+    canActivate: [AuthGuard]
   },
   {
     path: 'code/view/:id',
@@ -46,9 +46,8 @@ const routes: Routes = [
     component: CodeRecentComponent,
   },
   {
-    path: 'code/:user/:id',
+    path: 'code/:user',
     component: CodeUserComponent,
-    canActivate: [AuthGuard]
   },
   {
     path: 'upcoming-contest',
@@ -87,7 +86,7 @@ const routes: Routes = [
   {
     path: 'profile/:user',
     component: ProfileComponent,
-    canActivate: [AuthGuard]
+    // canActivate: [AuthGuard]
   },
   {
     path: 'about',

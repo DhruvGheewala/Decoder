@@ -1,6 +1,6 @@
 <div class="full">
     <div>
-        <div>
+        <div *ngIf="code_data">
             <div class="row">
                 <div class="col">
                     <div class="border">
@@ -30,9 +30,11 @@
                                     <span class="ml-2 font4" data-toggle="tooltip" title="Theme">
                                         {{code_data.theme}}
                                     </span>
-                                    <button class="ml-2 btn btn-sm btn-info" (click)="editButtonClick()">edit</button>
-                                    <button class="ml-2 btn btn-sm btn-danger"
-                                        (click)="deleteButtonClick()">delete</button>
+                                    <div class="d-inline" *ngIf="isOk()">
+                                        <button class="ml-2 btn btn-sm btn-info" (click)="editButtonClick()">edit</button>
+                                        <button class="ml-2 btn btn-sm btn-danger"
+                                            (click)="deleteButtonClick()">delete</button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -93,7 +95,7 @@
             </div>
         </div>
 
-        <div [ngClass]="code_data.stderr ? '' : 'hide'">
+        <div [ngClass]="code_data && code_data.stderr ? '' : 'hide'">
             <div class="border">
                 <div class="row ml-2 mr-2">
                     <div class="col">

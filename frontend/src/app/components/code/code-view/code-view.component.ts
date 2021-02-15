@@ -92,7 +92,7 @@ export class CodeViewComponent implements OnInit {
     this.userData.getCodeById(this.code_id).subscribe((data) => {
 
       this.code_data = data.result;
-      console.log(this.code_data);
+      // console.log(this.code_data);
 
       if (!this.code_data) {
         this.router.navigate['/error'];
@@ -219,6 +219,9 @@ export class CodeViewComponent implements OnInit {
     document.body.removeChild(selBox);
   }
 
+  isOk() {
+    return this.code_data.author === this.userData.currentUser;
+  }
   editButtonClick() {
     this.router.navigate([`/ide/edit/${this.code_data.id}`]);
   }

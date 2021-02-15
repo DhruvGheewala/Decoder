@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 // Services
 import { UserService } from "src/app/service/user.service";
 import { NgxSpinnerService } from "ngx-spinner";
+import { AdminService } from 'src/app/service/admin.service';
 
 @Component({
   selector: 'app-code-recent',
@@ -13,12 +14,16 @@ export class CodeRecentComponent implements OnInit {
 
   constructor(
     private userService: UserService,
-    private spinner: NgxSpinnerService
+    private spinner: NgxSpinnerService,
+    private adminService: AdminService
   ) { }
 
-  all_codes = null;
-  copy_all_codes = null;
+  prvBtn = null;
+  languages = ["All", "C", "C++", "Java", "Python", "Javascript"];
   loadingMsg = '';
+  all_codes = null;
+  codes_by_lang = {};
+  copy_all_codes = null;
 
   ngOnInit(): void {
     this.loadingMsg = 'Fetching Codes...';
@@ -28,11 +33,45 @@ export class CodeRecentComponent implements OnInit {
       this.all_codes.sort((a, b) => {
         return new Date(b.time).valueOf() - new Date(a.time).valueOf();
       });
+      this.codes_by_lang = {};
+      this.languages.forEach(lang => {
+        this.codes_by_lang[lang] = [];
+      });
+      this.codes_by_lang["All"] = this.all_codes;
+      this.all_codes.forEach(code => {
+        this.codes_by_lang[code.language].push(code);
+      });
       if (this.all_codes.length >= 30) {
         this.all_codes.length = 30;
       }
       this.spinner.hide();
+      let btn = document.getElementById('All');
+      if(btn) btn.click();
     });
+  }
+
+  searchByLang(e) {
+    let classNames = ["btn-dark"];
+    if (this.prvBtn) {
+      classNames.forEach(c => {
+        let className = this.prvBtn.className;
+        let ind = className.indexOf(c);
+        if (ind != -1) {
+          let newClassName = className.substring(0, ind) + className.substring(ind + c.length);
+          this.prvBtn.className = newClassName;
+        }
+      });
+    }
+    this.prvBtn = e.toElement;
+    classNames.forEach(c => this.prvBtn.className += ` ${c}`);
+    this.all_codes = this.codes_by_lang[e.toElement.innerText];
+  }
+
+  isLoogedIn() {
+    return this.userService.isLoggedIn;
+  }
+  getUserName() {
+    return this.userService.currentUser;
   }
 
   dateToHumanReadable(date) {

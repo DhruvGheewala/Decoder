@@ -184,7 +184,7 @@ export class CodeIdeComponent implements OnInit {
     this.userData.getCodeById(this.code_id).subscribe((data) => {
       if (data && data.result) {
         data = data.result;
-        console.log(data);
+        // console.log(data);
 
         this.codeEditor.setValue(data.content);
         this.inputEditor.setValue(data.stdin);
@@ -359,7 +359,8 @@ export class CodeIdeComponent implements OnInit {
       data.err = err;
     }
     this.runButtonElem.disabled = false;
-
+    // console.log(data);
+    
     let err = '';
     if (data.err) {
       const errData = data.err;
@@ -401,5 +402,28 @@ export class CodeIdeComponent implements OnInit {
       if (!data.err) this.router.navigate(['/code/view/' + data.result.id]);
     });
     this.spinner.hide();
+  }
+
+  public async updateCode() {
+    await this.runClicked();
+    let codeObj = {
+      title: this.titleElem.value,
+      content: this.codeEditor.getValue(),
+      language: this.selectedLanguage,
+      stdin: this.inputEditor.getValue(),
+      stdout: this.outputEditor.getValue(),
+      stderr: this.errorEditorElem.value,
+      theme: this.selectedTheme,
+      author: localStorage.getItem('currentUserName') || 'Guest',  // Todo: security issue
+      visibility: 'public'  // Todo
+    };
+    console.log(codeObj);
+    
+    this.userData.updateCode(this.code_id, codeObj).subscribe((data) => {
+      console.log(data);
+      if(!data.err) {
+        // this.router.navigate(['/code/view/' + this.code_id]);
+      }
+    });
   }
 }
