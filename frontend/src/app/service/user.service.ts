@@ -123,7 +123,7 @@ export class UserService {
   getCodeById(id: string): Observable<any> {
     return this.http.get<any>(this.apiUrl + '/code/view/public/' + id);
   }
-  getCodeByUser(user: string): Observable<any> {
+  getCodesByUser(user: string): Observable<any> {
     return this.http.get<any>(this.apiUrl + '/code/view/' + user);
   }
   saveCode(data): Observable<any> {

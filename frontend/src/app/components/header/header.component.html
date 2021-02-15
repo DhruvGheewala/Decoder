@@ -33,11 +33,11 @@
 
         <ng-template #elseBlock>
             <ul class="navbar-nav ml-auto">
-                <li class="nav-item">
+                <!-- <li class="nav-item">
                     <a class="nav-link text-white" routerLink="/code/Guest/Default">My codes</a>
-                </li>
+                </li> -->
                 <li class="nav-item">
-                    <a class="nav-link text-white" routerLink="/profile/#">
+                    <a class="nav-link text-white" routerLink="/profile/{{this._userService.currentUser}}">
                         {{this._userService.currentUser || "Profile"}}
                     </a>
                 </li>

@@ -27,7 +27,6 @@ router.get('/getAllUsernames', userController.getAllUsernames);
 
 
 router.post('/save-settings',);
-
 //All related to code-environment
 
 //code controller add middleware for auth
@@ -35,7 +34,5 @@ router.post('/save-code',);
 
 //code controller add middleware for auth
 router.delete('/delete-code/:id',);
-
-
 
 module.exports = router;
