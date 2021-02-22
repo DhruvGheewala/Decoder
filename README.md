@@ -87,4 +87,5 @@ npm start
 ```
 
 ## Screenshots
-- Screenshots are coming :)
+<!-- - Screenshots are here :) -->
+  ![Decoder](assets/screenshots/decoder.gif)
