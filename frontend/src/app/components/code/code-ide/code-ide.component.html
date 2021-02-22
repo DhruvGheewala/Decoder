@@ -23,8 +23,8 @@
                             <div class="row">
                                 <div class="col text-right">
                                     <a class=" btn-sm btn-default icon-size" data-toggle="tooltip"
-                                        title="Share your code" (click)="shareCodeClick()">
-                                        <i class="fas fa-share-square"></i>
+                                        title="Save your code" (click)="shareCodeClick()">
+                                        <i class="fas fa-save"></i>
                                     </a>
                                     <a class=" btn-sm btn-default icon-size" data-toggle="tooltip"
                                         (click)="beautifyContent()" title="Indent your code">
@@ -43,14 +43,14 @@
                                         (click)="copyToClipboard('code')" title="copy code">
                                         <i class="fas fa-copy"></i>
                                     </a>
-                                    <a class=" btn-sm btn-default icon-size" data-toggle="tooltip"
+                                    <!-- <a class=" btn-sm btn-default icon-size" data-toggle="tooltip"
                                         title="save user settings">
                                         <i class="fas fa-user-cog"></i>
                                     </a>
                                     <a class=" btn-sm btn-default icon-size" data-toggle="tooltip"
                                         title="save as template">
                                         <i class="fas fa-save"></i>
-                                    </a>
+                                    </a> -->
 
                                     <input type="file" id="codeUpload" class="hide"
                                         (change)="onChangeFile($event.target.files)" />

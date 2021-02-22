@@ -383,7 +383,7 @@ export class CodeIdeComponent implements OnInit {
   }
 
   public async shareCodeClick() {
-    this.loadingMsg = 'Generating link...';
+    this.loadingMsg = 'Saving Code...';
     this.spinner.show();
     await this.runClicked();
     let codeObj = {
@@ -395,7 +395,7 @@ export class CodeIdeComponent implements OnInit {
       stderr: this.errorEditorElem.value,
       theme: this.selectedTheme,
       author: localStorage.getItem('currentUserName') || 'Guest',  // Todo: security issue
-      visibility: 'public'  // Todo
+      visibility: 'private'  // Todo
     };
 
     this.userData.saveCode(codeObj).subscribe((data) => {

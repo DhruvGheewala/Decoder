@@ -6,7 +6,7 @@
                 Already have an account ?
                 <a routerLink="/login" class="link">login</a>
             </div>
-            <ff-alerts></ff-alerts>
+            <!-- <ff-alerts></ff-alerts> -->
             <form [formGroup]="signupForm" (ngSubmit)="signUpLocal()" class="pt-3 was-validated" method="post">
                 <div class="form-group">
                     <label for="username">Username</label>&nbsp;
@@ -97,5 +97,3 @@
         </div>
     </div>
 </div>
-{{signupForm.value | json}}
-{{signupForm.valid}}
