@@ -99,6 +99,7 @@ export class UserService {
   doLogout() {
     let removeToken = localStorage.removeItem('access_token');
     let removeUser = localStorage.removeItem('currentUser');
+    localStorage.removeItem('currentUserName');
     if (removeToken == null && removeUser == null) {
       this.router.navigate(['/login']);
     }
@@ -128,7 +129,10 @@ export class UserService {
     return this.http.get<any>(this.apiUrl + `/code/view/${data.currentUser}/${data.id}`);
   }
   getCodesByUser(user: string): Observable<any> {
-    return this.http.get<any>(this.apiUrl + '/code/view/' + user);
+    if (this.currentUser == user)
+      return this.http.get<any>(this.apiUrl + '/code/view/' + user);
+    else
+      return this.http.get<any>(this.apiUrl + '/code/view/public');
   }
   saveCode(data): Observable<any> {
     return this.http.post<any>(this.apiUrl + '/code/save', data);

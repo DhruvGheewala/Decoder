@@ -105,7 +105,7 @@ export class CodeIdeComponent implements OnInit {
   code_id: string = null;
   constructor(
     private adminData: AdminService,
-    private userData: UserService,
+    public userData: UserService,
     private router: Router,
     route: ActivatedRoute,
     private spinner: NgxSpinnerService
@@ -360,7 +360,7 @@ export class CodeIdeComponent implements OnInit {
     }
     this.runButtonElem.disabled = false;
     // console.log(data);
-    
+
     let err = '';
     if (data.err) {
       const errData = data.err;
@@ -418,10 +418,10 @@ export class CodeIdeComponent implements OnInit {
       visibility: 'public'  // Todo
     };
     console.log(codeObj);
-    
+
     this.userData.updateCode(this.code_id, codeObj).subscribe((data) => {
       console.log(data);
-      if(!data.err) {
+      if (!data.err) {
         // this.router.navigate(['/code/view/' + this.code_id]);
       }
     });

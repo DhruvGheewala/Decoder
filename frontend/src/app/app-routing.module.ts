@@ -48,6 +48,7 @@ const routes: Routes = [
   {
     path: 'code/:user',
     component: CodeUserComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'upcoming-contest',
