@@ -12,12 +12,12 @@ export class CodeUserComponent implements OnInit, AfterViewInit {
   constructor(
     private userService: UserService,
     private route: ActivatedRoute,
-  ) { this.user = route.snapshot.params.user;}
+  ) { this.user = route.snapshot.params.user; }
 
   user: null;
   prvBtn = null;
   languages = ["All", "C", "C++", "Java", "Python", "Javascript"];
-  all_codes = null;
+  all_codes = undefined;
   copy_all_codes = null;
   codes_by_lang = {};
 
@@ -25,6 +25,7 @@ export class CodeUserComponent implements OnInit, AfterViewInit {
     console.log(this.user);
     this.userService.getCodesByUser(this.user).subscribe((data) => {
       this.all_codes = this.copy_all_codes = data.result;
+
       this.sortByDate(this.all_codes);
       this.codes_by_lang = {};
       this.languages.forEach(lang => {
@@ -36,11 +37,11 @@ export class CodeUserComponent implements OnInit, AfterViewInit {
       });
     });
   }
-  
+
   ngAfterViewInit() {
     let btn = document.getElementById('All');
-    if(btn) {
-        btn.click();
+    if (btn) {
+      btn.click();
     }
   }
 

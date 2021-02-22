@@ -41,10 +41,10 @@ const routes: Routes = [
     path: 'code/view/:id',
     component: CodeViewComponent,
   },
-  {
-    path: 'code/recent',
-    component: CodeRecentComponent,
-  },
+  // {
+  //   path: 'code/recent',
+  //   component: CodeRecentComponent,
+  // },
   {
     path: 'code/:user',
     component: CodeUserComponent,

@@ -63,7 +63,7 @@ import { AuthInterceptor } from './service/authconfig.interceptor';
     FormsModule,
     ReactiveFormsModule,
     NgxSpinnerModule,
-    AlertModule.forRoot({maxMessages: 5, timeout: 5000, positionX: 'right'}),
+    AlertModule.forRoot({ maxMessages: 5, timeout: 5000, positionX: 'right' }),
     BrowserAnimationsModule
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],

@@ -4,7 +4,8 @@
     </ngx-spinner>
     <div>
         <div class="row m-1 mb-2">
-            <button class="btn col btn-muted ml-2" [id]="lang" *ngFor="let lang of languages" (click)="searchByLang($event)">
+            <button class="btn col btn-muted ml-2" [id]="lang" *ngFor="let lang of languages"
+                (click)="searchByLang($event)">
                 {{lang}}
             </button>
             <div class="col-lg-5">

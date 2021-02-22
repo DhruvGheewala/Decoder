@@ -57,8 +57,11 @@ async function deleteCode(id) {
 
 //* Complete
 async function getAllPublicCodes(currentUser) {
-    if (currentUser) return await Code.find({ author: currentUser, visibility: 'public' });
-    return await Code.find({ visibility: 'public' });
+    if (currentUser) return await Code.find({ author: currentUser });
+    // return await Code.find({ visibility: 'public' });
+    return {
+        err: "invalid request !!"
+    };
 }
 
 //* Complete

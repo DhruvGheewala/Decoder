@@ -85,6 +85,7 @@ router.get('/view/:currentUser', async (req, res) => {
  */
 router.get('/view/:currentUser/:id', async (req, res) => {
     const { id, currentUser } = req.params;
+    console.log(id, currentUser);
     const codeData = await controller.getCode(id, currentUser);
     if (!codeData) return sendResponse('Code not found, Please try again', res, 404);
     if (codeData.err) return sendResponse(codeData.err, res, 500);

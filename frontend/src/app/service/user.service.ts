@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable, Subject, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import {AlertService} from '@full-fledged/alerts';
+import { AlertService } from '@full-fledged/alerts';
 
 @Injectable({
   providedIn: 'root'
@@ -30,10 +30,10 @@ export class UserService {
 
   curUser = { userData: { username: "" } };
   constructor(
-    private http: HttpClient, 
+    private http: HttpClient,
     public router: Router,
     public _alertService: AlertService
-    ) { }
+  ) { }
 
   getLanguage() {
     return this.choosen.language;
@@ -73,7 +73,7 @@ export class UserService {
       this._alertService.success("welcome!");
       this.router.navigate(['/']);
     }, err => {
-      this.handleError(err.error.err,err.status);
+      this.handleError(err.error.err, err.status);
     });
   }
   itemValue = new Subject<string>();
@@ -124,8 +124,8 @@ export class UserService {
   getAllPublicCodes(): Observable<any> {
     return this.http.get<any>(this.apiUrl + '/code/all');
   }
-  getCodeById(id: string): Observable<any> {
-    return this.http.get<any>(this.apiUrl + '/code/view/public/' + id);
+  getCodeById(data): Observable<any> {
+    return this.http.get<any>(this.apiUrl + `/code/view/${data.currentUser}/${data.id}`);
   }
   getCodesByUser(user: string): Observable<any> {
     return this.http.get<any>(this.apiUrl + '/code/view/' + user);
