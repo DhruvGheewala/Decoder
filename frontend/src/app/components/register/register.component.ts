@@ -72,7 +72,7 @@ export class RegisterComponent implements OnInit {
     public router: Router,
     public _alertService: AlertService
   ) {
-    this._alertService.success("welcome!");
+    // this._alertService.success("welcome!");
     this.signupForm = new FormGroup({
       username: new FormControl('', [
         Validators.required,
@@ -123,9 +123,10 @@ export class RegisterComponent implements OnInit {
     userdata["id"] = "";
     this._userService.signupUser(this.signupForm.value).subscribe((res) => {
       if (res.err) {
-        alert(res.err);
+        // alert(res.err);
+        this._alertService.danger("Server Error Occured!");
       } else {
-        alert(res.result);
+        this._alertService.success(res.result);
         this.router.navigate(['login']);
       }
     })

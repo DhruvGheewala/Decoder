@@ -12,10 +12,12 @@ export class HeaderComponent implements OnInit {
   title: string = "</Decoder>";
   brandClass: string = "navbar-brand text-warning";
   colorClass: string[] = ["text-primary", "text-success", "text-danger", "text-warning", "text-info"];
-
+  username = "";
   constructor(public _userService: UserService) { }
 
-  ngOnInit(): void { }
+  ngOnInit(): void { 
+    this.username = this._userService.currentUser;
+  }
 
   /**
   * Returns a random integer between min (inclusive) and max (inclusive).

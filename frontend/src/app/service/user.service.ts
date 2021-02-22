@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable, Subject } from 'rxjs';
+import { Observable, Subject, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import {AlertService} from '@full-fledged/alerts';
 
@@ -70,7 +70,10 @@ export class UserService {
       this.curUser = res.result;
       console.log(this.curUser);
       this.currentUser = this.curUser.userData;
+      this._alertService.success("welcome!");
       this.router.navigate(['/']);
+    }, err => {
+      this.handleError(err.error.err,err.status);
     });
   }
   itemValue = new Subject<string>();
@@ -110,7 +113,8 @@ export class UserService {
         this._alertService.success('Email Verified!');
         this.router.navigate(['/login']);
       } else {
-        alert("Invalid token or token expired!");
+        // alert("Invalid token or token expired!");
+        this._alertService.warning("Invalid token or token expired!");
       }
     });
   }
@@ -137,5 +141,12 @@ export class UserService {
   }
   deleteCodeById(id: string): Observable<any> {
     return this.http.delete<any>(this.apiUrl + `/code/delete/${id}`);
+  }
+  handleError(error, port) {
+    let errorMessage = '';
+    errorMessage = `Error Code: ${port}\nMessage: ${error}`;
+    this._alertService.danger(errorMessage);
+    // window.alert(errorMessage);
+    return throwError(errorMessage);
   }
 }
