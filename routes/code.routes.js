@@ -5,8 +5,8 @@ const router = express.Router();
 const _ = require('lodash');
 const sendResponse = require('../utils/sendResponse');
 const controller = require('../controllers/code.controller');
+const authenticate = require('../middlewares/auth.middelware');
 const { fs } = require('../utils/global');
-
 
 // *Complete
 router.post('/compile', async (req, res) => {
@@ -23,7 +23,7 @@ router.post('/compile', async (req, res) => {
  * *Complete
  * Todo: send request to save code in user Database too !!
  */
-router.post('/save', async (req, res) => {
+router.post('/save', authenticate, async (req, res) => {
     const codeData = _.pick(req.body, ['content', 'stdin', 'stdout', 'language', 'author', 'visibility', 'title', 'stderr']);
     const result = await controller.insertCode(codeData);
     if (!result) return sendResponse('Bad Request', res, 400);
@@ -65,13 +65,13 @@ router.get('/defaults', async (_req, res) => {
 });
 
 // *Complete
-router.get('/all', async (_req, res) => {
+router.get('/all', authenticate, async (_req, res) => {
     const result = await controller.getAllPublicCodes();
     sendResponse(result, res);
 });
 
 // *Complete
-router.get('/view/:currentUser', async (req, res) => {
+router.get('/view/:currentUser', authenticate, async (req, res) => {
     const { currentUser } = req.params;
     const allData = await controller.getAllPublicCodes(currentUser);
     if (!allData) return sendResponse('User not found, Please try again', res, 404);
@@ -83,7 +83,7 @@ router.get('/view/:currentUser', async (req, res) => {
  * !Private codes will be send back only iff code[id].author === currentUser
  * *Complete
  */
-router.get('/view/:currentUser/:id', async (req, res) => {
+router.get('/view/:currentUser/:id', authenticate, async (req, res) => {
     const { id, currentUser } = req.params;
     console.log(id, currentUser);
     const codeData = await controller.getCode(id, currentUser);
@@ -93,7 +93,7 @@ router.get('/view/:currentUser/:id', async (req, res) => {
 });
 
 // *Complete
-router.put('/update/:id', async (req, res) => {
+router.put('/update/:id', authenticate, async (req, res) => {
     const codeData = _.pick(req.body, ['content', 'input', 'output', 'language', 'author', 'visibility']);
     const result = await controller.updateCode(req.params.id, codeData);
     if (!result) return sendResponse('Invalid id, Please try again', res, 404);
@@ -105,7 +105,7 @@ router.put('/update/:id', async (req, res) => {
  * *Complete
  * *will not return an error on no deletion
  */
-router.delete('/delete/:id', async (req, res) => {
+router.delete('/delete/:id', authenticate, async (req, res) => {
     const result = await controller.deleteCode(req.params.id);
     sendResponse(result, res);
 });

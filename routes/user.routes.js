@@ -1,6 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const userController = require('../controllers/user.controller');
+const authenticate = require('../middlewares/auth.middelware');
+
 //user controller
 router.post('/signup', userController.signupUser);
 
@@ -17,22 +19,19 @@ router.post('/forgot-password', userController.forgotPassword);
 //user controller
 router.post('/reset-password', userController.resetPassword);
 
-
 //user controller add middleware for auth
-router.put('/update-profile', userController.updateUser);
+router.put('/update-profile', authenticate, userController.updateUser);
 
 //get all users
 router.get('/getAllUsernames', userController.getAllUsernames);
 
-
-
-router.post('/save-settings',);
+// router.post('/save-settings',);
 //All related to code-environment
 
 //code controller add middleware for auth
-router.post('/save-code',);
+// router.post('/save-code',);
 
 //code controller add middleware for auth
-router.delete('/delete-code/:id',);
+// router.delete('/delete-code/:id',);
 
 module.exports = router;
