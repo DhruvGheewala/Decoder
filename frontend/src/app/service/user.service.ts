@@ -129,10 +129,13 @@ export class UserService {
     return this.http.get<any>(this.apiUrl + `/code/view/${data.currentUser}/${data.id}`);
   }
   getCodesByUser(user: string): Observable<any> {
-    if (this.currentUser == user)
+    console.log(user, this.currentUser);
+    console.log(this.apiUrl + '/code/view/' + user);
+
+    if (this.currentUser === user)
       return this.http.get<any>(this.apiUrl + '/code/view/' + user);
-    else
-      return this.http.get<any>(this.apiUrl + '/code/view/public');
+    // else
+    // return this.http.get<any>(this.apiUrl + '/code/view/public');
   }
   saveCode(data): Observable<any> {
     return this.http.post<any>(this.apiUrl + '/code/save', data);

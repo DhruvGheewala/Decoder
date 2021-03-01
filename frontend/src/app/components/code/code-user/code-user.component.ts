@@ -24,6 +24,7 @@ export class CodeUserComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {
     console.log(this.user);
     this.userService.getCodesByUser(this.user).subscribe((data) => {
+      console.log(data);
       this.all_codes = this.copy_all_codes = data.result;
 
       this.sortByDate(this.all_codes);
