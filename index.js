@@ -17,7 +17,7 @@ connectWithDatabase().then(() => {
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json());
-app.use(require('./middlewares/auth.middelware'));
+// app.use(require('./middlewares/auth.middelware'));
 
 // Routes
 const codeRoute = require('./routes/code.routes');
