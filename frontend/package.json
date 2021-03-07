@@ -22,7 +22,7 @@
     "@full-fledged/alerts": "^11.0.0",
     "@reactivex/rxjs": "^6.6.6",
     "ace-builds": "^1.4.12",
-    "jquery": "^3.5.1",
+    "jquery": "^3.6.0",
     "ngx-spinner": "^10.0.1",
     "popper.js": "^1.16.1",
     "rxjs": "~6.6.6",
