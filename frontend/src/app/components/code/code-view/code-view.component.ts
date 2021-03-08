@@ -57,6 +57,8 @@ import 'ace-builds/src-noconflict/ext-beautify';
 // Services
 import { UserService } from "src/app/service/user.service";
 import { AdminService } from 'src/app/service/admin.service';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { environment } from 'src/environments/environment';
 declare var $: any;
 
 @Component({
@@ -78,17 +80,21 @@ export class CodeViewComponent implements OnInit {
   availableLanguages: any;
   code_id: string = null;
   code_data: any = null;
+  loadingMsg = '';
 
   constructor(
     private userData: UserService,
     private adminData: AdminService,
     private route: ActivatedRoute,
     private router: Router,
+    private spinner: NgxSpinnerService,
   ) { this.code_id = route.snapshot.params.id; }
 
   ngOnInit(): void {
-    $('[data-toggle="tooltip"]').tooltip();
+    this.loadingMsg = 'Loading...';
+    this.spinner.show();
 
+    $('[data-toggle="tooltip"]').tooltip();
     console.log(this.code_id);
     this.userData.getCodeById({ id: this.code_id, currentUser: this.userData.currentUser }).subscribe((data) => {
 
@@ -132,6 +138,12 @@ export class CodeViewComponent implements OnInit {
         codeEditorElem.style.fontSize = '18px';
         inputEditorElem.style.fontSize = '18px';
         outputEditorElem.style.fontSize = '18px';
+
+        if (environment.production) {
+          this.spinner.hide();
+        } else {
+          setTimeout(() => this.spinner.hide(), 2000);
+        }
       }
 
       this.setTheme(this.code_data.theme || "monokai");

@@ -6,16 +6,12 @@
         <h2> {{username}} </h2>
         <ul>
             <li>
-                <h2>
-                    <a routerLink="/code/{{username}}">codes</a>
-                </h2>
+                <a routerLink="/code/{{username}}">Your Saved Codes</a>
             </li>
             <li>
-                <h2>
-                    <a [routerLink]="['/blog/recent']" [queryParams]="{ user: username}">
-                        Blogs
-                    </a>
-                </h2>
+                <a [routerLink]="['/blog/recent']" [queryParams]="{ user: username}">
+                    Your Blogs
+                </a>
             </li>
         </ul>
     </div>

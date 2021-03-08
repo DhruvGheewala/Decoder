@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 
 // Services
 import { NgxSpinnerService } from "ngx-spinner";
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-upcoming-contest',
@@ -44,8 +45,11 @@ export class UpcomingContestComponent implements OnInit {
         data.forEach(d => this.sites.add(d.site));
 
         document.getElementById('All').click();
-        this.spinner.hide();
-        // setTimeout(() => this.spinner.hide(), 5000);
+        if (environment.production) {
+          this.spinner.hide();
+        } else {
+          setTimeout(() => this.spinner.hide(), 2000);
+        }
       });
     } catch (err) {
       this.router.navigate(['/error']);
@@ -85,7 +89,11 @@ export class UpcomingContestComponent implements OnInit {
       });
       this.copyAllData2 = this.allData;
     }
-    this.spinner.hide();
+    if (environment.production) {
+      this.spinner.hide();
+    } else {
+      setTimeout(() => this.spinner.hide(), 2000);
+    }
   }
 
   filter(query: string) {

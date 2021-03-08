@@ -179,3 +179,14 @@ GET http://localhost:3000/api/code/view/DhruvGheewala/5ff0bd98f07fd90d6817b39e
 GET http://localhost:3000/api/code/view/Dhruv_Gheewala/5ff1b8ef70e1bd0a0ce3f6df
 
 ###
+
+POST http://localhost:3000/api/blog/create/ HTTP/1.1
+Content-Type: application/json
+
+{
+    "author": "this.blogForm.controls.author.value",
+    "published": "this.dateFormat()",
+    "title": "this.blogForm.controls.title.value",
+    "description": "this.blogForm.controls.description.value",
+    "content": "this.blogForm.controls.content.value",
+}

@@ -1,4 +1,8 @@
 <div class="full">
+    <ngx-spinner type="line-spin-clockwise-fade">
+        <p style="font-size: 20px; color: white">{{loadingMsg}}</p>
+    </ngx-spinner>
+
     <div class="m-2 p-2">
         <div class="row">
             <button class="btn col btn-muted ml-2" [id]="lang" *ngFor="let lang of languages"

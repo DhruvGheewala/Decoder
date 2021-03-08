@@ -1,6 +1,8 @@
 import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { NgxSpinnerService } from 'ngx-spinner';
 import { UserService } from "src/app/service/user.service";
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-code-user',
@@ -12,6 +14,7 @@ export class CodeUserComponent implements OnInit, AfterViewInit {
   constructor(
     private userService: UserService,
     private route: ActivatedRoute,
+    private spinner: NgxSpinnerService,
   ) { this.user = route.snapshot.params.user; }
 
   user: null;
@@ -19,9 +22,13 @@ export class CodeUserComponent implements OnInit, AfterViewInit {
   languages = ["All", "C", "C++", "Java", "Python", "Javascript"];
   all_codes = undefined;
   copy_all_codes = null;
+  loadingMsg = '';
   codes_by_lang = {};
 
   ngOnInit(): void {
+    this.loadingMsg = 'Fetching your codes...';
+    this.spinner.show();
+
     console.log(this.user);
     this.userService.getCodesByUser(this.user).subscribe((data) => {
       console.log(data);
@@ -36,6 +43,12 @@ export class CodeUserComponent implements OnInit, AfterViewInit {
       this.all_codes.forEach(code => {
         this.codes_by_lang[code.language].push(code);
       });
+
+      if (environment.production) {
+        this.spinner.hide();
+      } else {
+        setTimeout(() => this.spinner.hide(), 2000);
+      }
     });
   }
 

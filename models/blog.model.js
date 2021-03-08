@@ -32,6 +32,8 @@ const BlogSchema = new mongoose.Schema({
     content: {
         type: String
     },
+}, {
+    collection: 'blogs'
 });
 
-module.exports = mongoose.model('blog', BlogSchema, 'blogs');
+module.exports = mongoose.model('blog', BlogSchema);

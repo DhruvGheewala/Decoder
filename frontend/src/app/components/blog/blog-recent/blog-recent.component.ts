@@ -4,6 +4,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { IBlog } from '../../../models/blog';
 import { BlogService } from '../../../service/blog.service';
 import { UserService } from 'src/app/service/user.service';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-blog-recent',
@@ -15,59 +17,64 @@ export class BlogRecentComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private blogService: BlogService,
-    public userService: UserService
+    public userService: UserService,
+    private spinner: NgxSpinnerService,
   ) { }
 
   blogs: IBlog[];
   copyBlogs: IBlog[];
+  loadingMsg = '';
 
   ngOnInit(): void {
+    this.loadingMsg = "Please wait, Don't think of purple hippos...";
+    this.spinner.show();
+
     this.blogs = [];
     this.copyBlogs = [];
 
     let user = this.route.snapshot.queryParamMap.get('user');
     if (user) {
-      console.log(user);
       this.blogService.getBlogsByUser(user).subscribe((data) => {
         this.blogs = data;
-        console.log(data);
+        if (environment.production) {
+          this.spinner.hide();
+        } else {
+          setTimeout(() => this.spinner.hide(), 2000);
+        }
       });
     }
     else {
       this.blogService.getBlogs().subscribe((data) => {
         this.blogs = data;
-        console.log(data);
+        if (environment.production) {
+          this.spinner.hide();
+        } else {
+          setTimeout(() => this.spinner.hide(), 2000);
+        }
       });
     }
 
     this.route.queryParams.subscribe((params) => {
       if (params.user && params.search) {
-        console.log("both", params.user, params.search);
         this.blogService.getBlogsByUser(params.user).subscribe((data) => {
           this.blogs = this.copyBlogs = data;
-          console.log(this.blogs);
           this.filter(params.search);
         });
       }
       else if (params.user) {
-        console.log("user", params.user);
         this.blogService.getBlogsByUser(params.user).subscribe((data) => {
           this.blogs = this.copyBlogs = data;
-          console.log(this.blogs);
         });
       }
       else if (params.search) {
-        console.log("search", params.search);
         this.blogService.getBlogs().subscribe((data) => {
           this.blogs = this.copyBlogs = data;
-          console.log(this.blogs);
           this.filter(params.search);
         });
       }
       else {
         this.blogService.getBlogs().subscribe((data) => {
           this.blogs = this.copyBlogs = data;
-          console.log(this.blogs);
         });
       }
     });

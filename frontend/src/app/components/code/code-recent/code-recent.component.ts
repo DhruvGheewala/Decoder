@@ -4,6 +4,7 @@ import { Component, OnInit } from '@angular/core';
 import { UserService } from "src/app/service/user.service";
 import { NgxSpinnerService } from "ngx-spinner";
 import { AdminService } from 'src/app/service/admin.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-code-recent',
@@ -44,9 +45,13 @@ export class CodeRecentComponent implements OnInit {
       if (this.all_codes.length >= 30) {
         this.all_codes.length = 30;
       }
-      this.spinner.hide();
+      if (environment.production) {
+        this.spinner.hide();
+      } else {
+        setTimeout(() => this.spinner.hide(), 2000);
+      }
       let btn = document.getElementById('All');
-      if(btn) btn.click();
+      if (btn) btn.click();
     });
   }
 

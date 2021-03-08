@@ -1,23 +1,10 @@
 <div class="pl-5 pr-5 pb-5 full">
-    <!-- search -->
-    <!-- <div class="pt-3 pb-3">
-        <div class="row">
-            <div class="col-10">
-                <div class="input-group">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text" routerLink="./" [queryParams]="{search : searchEle.value}" queryParamsHandling="merge">
-                            <i class="fa fa-search"></i>
-                        </span>
-                    </div>
-                    <input class="form-control" #searchEle placeholder="Search here blog, author, published date .." (keyup)="filter(searchEle.value)">
-                </div>
-            </div>
-            <div class="col-2 text-left">
-                <button class="btn btn-dark" routerLink="/blog/create">Create Blog</button>
-                <button class="btn btn-dark" [routerLink]="'/blog/edit'">Create Blog</button>
-            </div>
-        </div>
-    </div> -->
+    <ngx-spinner type="ball-zig-zag-deflect">
+        <div>&nbsp;</div>
+        <div>&nbsp;</div>
+        <p style="font-size: 20px; color: white">{{loadingMsg}}</p>
+    </ngx-spinner>
+
     <div class="input-group mb-3 mt-3">
         <div class="input-group-prepend">
             <span class="input-group-text" routerLink="./" [queryParams]="{search : searchEle.value}"
@@ -36,8 +23,7 @@
             <li class="list-group-item" [ngClass]="isEven ? '' : 'bg-gray'">
                 <div>
                     <div class="row">
-                        <div class="col link author font-italic" routerLink="./" [queryParams]="{user : b.author}"
-                            queryParamsHandling="merge">
+                        <div class="col link author font-italic" routerLink="/profile/{{b.author}}">
                             Author :
                             <span class="font-weight-bold blue-hover">
                                 {{b.author}}

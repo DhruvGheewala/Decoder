@@ -42,7 +42,7 @@ router.post('/create', (req, res) => {
                 return res.json('error !!');
             }
             else {
-                res.json(data);
+                return res.json(data);
             }
         });
 });
@@ -54,7 +54,6 @@ router.get('/get/:id', (req, res) => {
             return res.json("error !!");
         }
         else {
-            console.log(data);
             return res.json(data);
         }
     });
@@ -92,7 +91,6 @@ router.delete('/delete/:id', (req, res) => {
                 return res.json({ _id: '-1' });
             }
             else {
-                console.log(data);
                 return res.json(data);
             }
         });
