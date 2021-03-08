@@ -9,12 +9,12 @@ import { UserService } from 'src/app/service/user.service';
 })
 export class ProfileComponent implements OnInit {
 
-  user: string = null;
+  username: string = null;
   constructor(
     private userService: UserService,
     private route: ActivatedRoute
   ) {
-    this.user = route.snapshot.params.user;
+    this.username = route.snapshot.params.user;
   }
 
   ngOnInit(): void {

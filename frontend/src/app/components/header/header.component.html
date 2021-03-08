@@ -11,11 +11,19 @@
             <!-- <li class="nav-item">
                 <a class="nav-link text-white" routerLink="/code/recent">Recent codes</a>
             </li> -->
-            <!-- <li class="nav-item">
-                <a class="nav-link text-white" routerLink="/blog/recent">Blogs</a>
-            </li> -->
+            <li class="nav-item">
+                <a class="nav-link text-white" routerLink="/blog/recent">Blog</a>
+            </li>
             <li *ngIf="this._userService.isLoggedIn" class="nav-item">
-                <a class="nav-link text-white" routerLink="/code/{{this._userService.currentUser}}">My codes</a>
+                <a class="nav-link text-white" routerLink="/code/{{this._userService.currentUser}}">
+                    My codes
+                </a>
+            </li>
+            <li *ngIf="this._userService.isLoggedIn" class="nav-item">
+                <a class="nav-link text-white" routerLink="/blog/recent"
+                    [queryParams]="{user : this._userService.currentUser}">
+                    My Blogs
+                </a>
             </li>
             <li class="nav-item">
                 <a class="nav-link text-white" routerLink="/upcoming-contest">Upcoming Contests</a>

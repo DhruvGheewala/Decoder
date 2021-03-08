@@ -1,3 +1,52 @@
-<section>
-    <p>blog-create works!</p>
-</section>
+<div class="m-4 border rounded">
+    <div class="p-4">
+        <h3 class="clr1">Create Blog</h3>
+        <form [formGroup]="blogForm" method="post">
+            <div class="row">
+                <div class="col form-group">
+                    <label for="author" class="text-info">Author</label>
+                    <input type="text" id="author" class="form-control form-control-sm"
+                        formControlName="author" disabled>
+                </div>
+                <div class="col form-group">
+                    <label for="date" class="text-info">Date</label>
+                    <input type="text" id="date" class="form-control form-control-sm" value="{{dateFormat()}}" disabled>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="title" class="text-info">Title</label>
+                <input type="text" formControlName="title" id="title" class="form-control form-control-sm code"
+                    placeholder="blog title" required>
+                <small *ngIf="hasError('title')" class="text-danger font-italic">blog title required!</small>
+            </div>
+            <div class="form-group">
+                <label for="description" class="text-info">Description</label>
+                <textarea id="description" formControlName="description" class="form-control form-control-sm code"
+                    rows="3" placeholder="blog description" required></textarea>
+                <small *ngIf="hasError('description')" class="text-danger font-italic">blog description
+                    required!</small>
+            </div>
+
+            <div>
+                <div>
+                    <button class="btn btn-sm border btn-info" (click)="previewOff()">Edit</button>
+                    <button class="btn btn-sm border btn-secondary ml-2" (click)="previewOn()">Preview</button>
+                </div>
+                <div class="mt-2">
+                    <div class="form-group" *ngIf="!previewMode">
+                        <textarea id="content" formControlName="content" class="font2 form-control form-control-sm code"
+                            rows="35" placeholder="blog content" required></textarea>
+                        <small *ngIf="hasError('content')" class="text-danger font-italic">blog content
+                            required!</small>
+                    </div>
+                    <div class="col" *ngIf="previewMode">
+                        <markdown [data]="this.blogForm.controls.content.value"></markdown>
+                    </div>
+                </div>
+            </div>
+
+            <button class="btn btn-sm btn-dark" routerLink="/blog/recent">Cancel</button>
+            <button class="btn btn-sm btn-primary ml-2" [disabled]="blogForm.invalid" (click)="createBlog()">Create</button>
+        </form>
+    </div>
+</div>

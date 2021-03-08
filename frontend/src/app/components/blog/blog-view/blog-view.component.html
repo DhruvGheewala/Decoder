@@ -1,3 +1,43 @@
-<section>
-    <p>blog-view works!</p>
-</section>
+<div class="m-4 border rounded">
+    <div class="m-4" *ngIf="blog">
+        <div>
+            <div class="link author font-italic font-weight-bold" routerLink="/blog/recent"
+                [queryParams]="{user : blog.author}">
+                Author : {{blog.author}}
+            </div>
+            <div class="published text-gray font-italic">
+                Published : {{blog.published}}
+            </div>
+            <hr>
+        </div>
+        <div>
+            <div>
+                <div class="title">
+                    <small class="font-italic text-info">blog title</small>
+                    <div class="h3 font3 clr1">
+                        {{blog.title}}
+                    </div>
+                </div>
+                <div class="description">
+                    <small class="font-italic text-info">blog description</small>
+                    <div>
+                        {{blog.description}}
+                    </div>
+                </div>
+                <hr>
+                <div class="content">
+                    <small class="font-italic text-info">blog content</small>
+                    <div>
+                        <markdown [data]="blog.content"></markdown>
+                        <!-- <pre class="wrap">
+                        {{blog.content}}
+                    </pre> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div *ngIf="isSameAuthor()">
+            <button class="btn btn-sm btn-primary" routerLink="/blog/edit/{{blog_id}}">Edit</button>
+            <button class="btn btn-sm btn-danger ml-2" (click)="deleteBlog()">Delete</button>
+        </div>
+    </div>

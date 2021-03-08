@@ -50,7 +50,6 @@ a:hover {
 }
 .link {
   cursor: pointer;
-  color: blue !important;
 }
 
 .text-blue {
@@ -104,4 +103,19 @@ section {
 
 .hide {
   display: none !important;
+}
+
+.clr1 {
+  color: #1abc9C;
+}
+
+.link:hover {
+  /* text-decoration: underline; */
+  cursor: pointer;
+}
+.pointer {
+  cursor: pointer;
+}
+.code {
+  font-family: Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace, serif;
 }

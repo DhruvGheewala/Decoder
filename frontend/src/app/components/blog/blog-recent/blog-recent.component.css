@@ -1,0 +1,11 @@
+.bg-gray {
+    /* background-color: #f2f2f2; */
+    background-color: #faf9f9;
+}
+.clr1 {
+    color: #1abc9C;
+}
+.blue-hover:hover {
+    color: #1dbff0;
+    /* color: #385dfd; */
+}

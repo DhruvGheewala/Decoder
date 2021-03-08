@@ -22,6 +22,9 @@ app.use(bodyParser.json());
 // Routes
 const codeRoute = require('./routes/code.routes');
 const authRoute = require('./routes/user.routes');
+const blogRoute = require('./routes/blog.routes');
+
 app.use('/api/code', codeRoute);
+app.use('/api/blog', blogRoute);
 app.use('/auth', authRoute);
 app.use('/', (_req, res) => res.send('Backend is alive !!'));
