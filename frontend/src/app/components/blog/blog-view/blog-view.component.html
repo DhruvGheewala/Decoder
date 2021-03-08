@@ -1,4 +1,8 @@
-<div class="m-4 border rounded">
+<div class="m-4 border rounded full">
+    <ngx-spinner type="ball-pulse-sync">
+        <p style="font-size: 20px; color: white">{{loadingMsg}}</p>
+    </ngx-spinner>
+
     <div class="m-4" *ngIf="blog">
         <div>
             <div class="link author font-italic font-weight-bold" routerLink="/profile/{{blog.author}}">

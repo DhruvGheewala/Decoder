@@ -20,4 +20,10 @@ export class ProfileComponent implements OnInit {
   ngOnInit(): void {
     // console.log(this.user);
   }
+
+  isSameAuthor() {
+    // console.log("Login : ", this.userService.currentUser);
+    // console.log("Author : ", this.username);
+    return this.userService.currentUser === this.username;
+  }
 }

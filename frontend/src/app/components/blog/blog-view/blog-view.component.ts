@@ -4,6 +4,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { IBlog } from '../../../models/blog';
 import { BlogService } from '../../../service/blog.service';
 import { UserService } from 'src/app/service/user.service';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-blog-view',
@@ -18,12 +20,18 @@ export class BlogViewComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private blogService: BlogService,
-    public userService: UserService
+    public userService: UserService,
+    private spinner: NgxSpinnerService
   ) {
     this.blog_id = this.route.snapshot.params.id;
   }
 
+  loadingMsg = '';
+
   ngOnInit(): void {
+    this.loadingMsg = 'Loading...';
+    this.spinner.show();
+
     console.log(this.blog_id);
     this.blogService.getBlogById(this.blog_id).subscribe((data) => {
       this.blog = data;
@@ -34,6 +42,11 @@ export class BlogViewComponent implements OnInit {
       }
       else {
         this.errorPage();
+      }
+      if (environment.production) {
+        this.spinner.hide();
+      } else {
+        setTimeout(() => this.spinner.hide(), 2000);
       }
     });
   }

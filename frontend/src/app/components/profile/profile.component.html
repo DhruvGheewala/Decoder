@@ -5,12 +5,12 @@
         </div>
         <h2> {{username}} </h2>
         <ul>
-            <li>
-                <a routerLink="/code/{{username}}">Your Saved Codes</a>
+            <li *ngIf="isSameAuthor()">
+                <a routerLink="/code/{{username}}">Your saved Codes</a>
             </li>
             <li>
                 <a [routerLink]="['/blog/recent']" [queryParams]="{ user: username}">
-                    Your Blogs
+                    {{isSameAuthor() ? 'Your ' : username + "'s "}} Blogs
                 </a>
             </li>
         </ul>

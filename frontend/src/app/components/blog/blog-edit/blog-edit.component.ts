@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { IBlog } from '../../../models/blog';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { environment } from 'src/environments/environment';
 import { BlogService } from '../../../service/blog.service';
 
 @Component({
@@ -14,17 +15,22 @@ export class BlogEditComponent implements OnInit {
   blog_id: string;
   blogForm: FormGroup;
   previewMode: boolean = false;
+  loadingMsg = '';
 
   constructor(
     private formBuilder: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
-    private blogService: BlogService
+    private blogService: BlogService,
+    private spinner: NgxSpinnerService
   ) {
     this.blog_id = this.route.snapshot.params.id;
   }
 
   ngOnInit(): void {
+    this.loadingMsg = 'Loading...';
+    this.spinner.show();
+
     this.previewMode = false;
     this.blogService.getBlogById(this.blog_id).subscribe((data) => {
       if (data) {
@@ -44,6 +50,12 @@ export class BlogEditComponent implements OnInit {
       }
       else {
         this.errorPage();
+      }
+
+      if (environment.production) {
+        this.spinner.hide();
+      } else {
+        setTimeout(() => this.spinner.hide(), 2000);
       }
     });
   }

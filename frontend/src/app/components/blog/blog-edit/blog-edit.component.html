@@ -1,4 +1,8 @@
-<div class="border p-3 m-4 rounded">
+<div class="border p-3 m-4 rounded full">
+    <ngx-spinner type="ball-pulse-sync">
+        <p style="font-size: 20px; color: white">{{loadingMsg}}</p>
+    </ngx-spinner>
+
     <div class="p-2">
         <h3 class="clr1">Edit Blog</h3>
         <div *ngIf="blogForm">

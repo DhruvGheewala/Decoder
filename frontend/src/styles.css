@@ -2,7 +2,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Open+Sans&display=swap");
 @import "../node_modules/@fortawesome/fontawesome-free/css/all.css";
-@import 'prismjs/themes/prism-okaidia.css';
+@import "prismjs/themes/prism-okaidia.css";
 
 * {
   font-weight: normal;
@@ -36,9 +36,22 @@ html {
   background-size: cover;
 }
 .img3 {
+  background-image: url("./assets/images/bg3.jpg");
+  background-size: cover;
+}
+.img3bw {
   background-image: url("./assets/images/bg3.png");
   background-size: cover;
 }
+.img4 {
+  background-image: url("./assets/images/bg4.jpg");
+  background-size: cover;
+}
+.img4 {
+  background-image: url("./assets/images/bg5.png");
+  background-size: cover;
+}
+
 .bg-black {
   background-color: #000;
 }
@@ -107,7 +120,7 @@ section {
 }
 
 .clr1 {
-  color: #1abc9C;
+  color: #1abc9c;
 }
 
 .link:hover {
@@ -118,5 +131,6 @@ section {
   cursor: pointer;
 }
 .code {
-  font-family: Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace, serif;
+  font-family: Menlo, Monaco, Consolas, "Liberation Mono", "Courier New",
+    monospace, serif;
 }
