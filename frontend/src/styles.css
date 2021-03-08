@@ -2,6 +2,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Open+Sans&display=swap");
 @import "../node_modules/@fortawesome/fontawesome-free/css/all.css";
+@import 'prismjs/themes/prism-okaidia.css';
 
 * {
   font-weight: normal;
