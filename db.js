@@ -1,7 +1,8 @@
 const mongoose = require('mongoose');
 const DB_PATH = process.env.DB_PATH || `mongodb+srv://Decoder:${process.env.DB_PASS}@decodercluster.eyv5r.mongodb.net/${process.env.DB_NAME}?retryWrites=true&w=majority`;  //* Url for node
 // const DB_PATH = `mongodb+srv://Decoder:${process.env.DB_PASS}@decodercluster.eyv5r.mongodb.net/test`;  //* Url For Compass
-// console.log('DB Path: ', DB_PATH);
+
+// console.log('DB Path : ', DB_PATH);
 
 module.exports.connectWithDatabase = async () => {
     try {

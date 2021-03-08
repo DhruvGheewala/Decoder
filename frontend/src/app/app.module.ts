@@ -2,7 +2,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
-import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
+import { HttpClientModule, HttpClient, HTTP_INTERCEPTORS } from "@angular/common/http";
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgxSpinnerModule } from "ngx-spinner";
 import { AlertModule } from '@full-fledged/alerts';
@@ -31,8 +31,26 @@ import { CodeRecentComponent } from './components/code/code-recent/code-recent.c
 // Service
 import { UserService } from "./service/user.service";
 import { AdminService } from "./service/admin.service";
+import { BlogService } from "./service/blog.service";
 import { CodeUserComponent } from './components/code/code-user/code-user.component';
 import { AuthInterceptor } from './service/authconfig.interceptor';
+
+import { SecurityContext } from '@angular/core';
+import { MarkdownModule } from 'ngx-markdown';
+
+import 'prismjs';
+import 'prismjs/components/prism-c.min.js';
+import 'prismjs/components/prism-cpp.min.js';
+import 'prismjs/components/prism-csharp.min.js';
+import 'prismjs/components/prism-css.min.js';
+import 'prismjs/components/prism-java.min.js';
+import 'prismjs/components/prism-typescript.min.js';
+import 'prismjs/components/prism-javascript.min.js';
+import 'prismjs/components/prism-json.min.js';
+import 'prismjs/components/prism-latex.min.js';
+import 'prismjs/components/prism-markdown.min.js';
+import 'prismjs/components/prism-mongodb.min.js';
+import 'prismjs/components/prism-python.min.js';
 
 @NgModule({
   declarations: [
@@ -64,6 +82,10 @@ import { AuthInterceptor } from './service/authconfig.interceptor';
     ReactiveFormsModule,
     NgxSpinnerModule,
     AlertModule.forRoot({ maxMessages: 5, timeout: 5000, positionX: 'right' }),
+    MarkdownModule.forRoot({
+      loader: HttpClient,
+      sanitize: SecurityContext.NONE
+    }),
     BrowserAnimationsModule
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
