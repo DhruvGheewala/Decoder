@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { BlogService } from '../../../service/blog.service';
 import { UserService } from 'src/app/service/user.service';
 
+declare var $;
 @Component({
   selector: 'app-blog-create',
   templateUrl: './blog-create.component.html',
@@ -101,5 +102,17 @@ int main()
 
   hasError(input: string): boolean {
     return this.blogForm.get(input).hasError('required') && this.blogForm.get(input).touched;
+  }
+
+  keyDownContent(e) {
+    if (e.key == 'Tab') {
+      e.preventDefault();
+      var curPos = $('#contentTextArea')[0].selectionStart;
+      let x = $('#contentTextArea').val();
+      let text_to_insert = '\t';
+      $('#contentTextArea').val(x.slice(0, curPos) + text_to_insert + x.slice(curPos));
+      $('#contentTextArea')[0].selectionStart = curPos + text_to_insert.length;
+      $('#contentTextArea')[0].selectionEnd = curPos + text_to_insert.length;
+    }
   }
 }

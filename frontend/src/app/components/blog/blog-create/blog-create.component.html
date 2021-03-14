@@ -5,8 +5,8 @@
             <div class="row">
                 <div class="col form-group">
                     <label for="author" class="text-info">Author</label>
-                    <input type="text" id="author" class="form-control form-control-sm"
-                        formControlName="author" disabled>
+                    <input type="text" id="author" class="form-control form-control-sm" formControlName="author"
+                        disabled>
                 </div>
                 <div class="col form-group">
                     <label for="date" class="text-info">Date</label>
@@ -35,7 +35,8 @@
                 <div class="mt-2">
                     <div class="form-group" *ngIf="!previewMode">
                         <textarea id="content" formControlName="content" class="font2 form-control form-control-sm code"
-                            rows="35" placeholder="doubt content" required></textarea>
+                            rows="35" placeholder="doubt content" id="contentTextArea"
+                            (keydown)="keyDownContent($event)" required></textarea>
                         <small *ngIf="hasError('content')" class="text-danger font-italic">content
                             required!</small>
                     </div>
@@ -46,7 +47,8 @@
             </div>
 
             <button class="btn btn-sm btn-dark" routerLink="/blog/recent">Cancel</button>
-            <button class="btn btn-sm btn-primary ml-2" [disabled]="blogForm.invalid" (click)="createBlog()">Create</button>
+            <button class="btn btn-sm btn-primary ml-2" [disabled]="blogForm.invalid"
+                (click)="createBlog()">Create</button>
         </form>
     </div>
 </div>

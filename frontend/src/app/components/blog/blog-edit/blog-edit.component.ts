@@ -5,6 +5,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { environment } from 'src/environments/environment';
 import { BlogService } from '../../../service/blog.service';
 
+declare var $;
 @Component({
   selector: 'app-blog-edit',
   templateUrl: './blog-edit.component.html',
@@ -27,6 +28,8 @@ export class BlogEditComponent implements OnInit {
     this.blog_id = this.route.snapshot.params.id;
   }
 
+  textAreaContent: string = '';
+
   ngOnInit(): void {
     this.loadingMsg = 'Loading...';
     this.spinner.show();
@@ -46,6 +49,7 @@ export class BlogEditComponent implements OnInit {
             description: [data.description, Validators.required],
             content: [data.content, Validators.required],
           });
+          this.textAreaContent = data.content;
         }
       }
       else {
@@ -96,5 +100,17 @@ export class BlogEditComponent implements OnInit {
 
   hasError(input: string): boolean {
     return this.blogForm.get(input).hasError('required') && this.blogForm.get(input).touched;
+  }
+
+  keyDownContent(e) {
+    if (e.key == 'Tab') {
+      e.preventDefault();
+      var curPos = $('#contentTextArea')[0].selectionStart;
+      let x = $('#contentTextArea').val();
+      let text_to_insert = '\t';
+      $('#contentTextArea').val(x.slice(0, curPos) + text_to_insert + x.slice(curPos));
+      $('#contentTextArea')[0].selectionStart = curPos + text_to_insert.length;
+      $('#contentTextArea')[0].selectionEnd = curPos + text_to_insert.length;
+    }
   }
 }

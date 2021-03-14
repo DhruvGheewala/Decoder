@@ -39,9 +39,9 @@
                     </div>
                     <div class="mt-2">
                         <div class="form-group" *ngIf="!previewMode">
-                            <textarea formControlName="content" class="font1 form-control form-control-sm code"
-                                rows="20"></textarea>
-                            <small *ngIf="hasError('content')" class="text-danger font-italic">content
+                            <textarea formControlName="content" id="contentTextArea" (keydown)="keyDownContent($event)"
+                                class="font1 form-control form-control-sm code" rows="20"></textarea>
+                            <small *ngIf=" hasError('content')" class="text-danger font-italic">content
                                 required!</small>
                         </div>
                         <div class="col" *ngIf="previewMode">
