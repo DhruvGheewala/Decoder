@@ -12,7 +12,7 @@
                 <i class="fa fa-search"></i>
             </span>
         </div>
-        <input class="form-control" #searchEle placeholder="Search..." (keyup)="filter(searchEle.value)">
+        <input class="form-control" #searchEle placeholder="Search questions or author ..." (keyup)="filter(searchEle.value)">
         <div class="col-2 text-left" *ngIf="this.userService.isLoggedIn">
             <button class="btn btn-outline-dark col" routerLink="/questions/create">Ask Doubt</button>
         </div>
