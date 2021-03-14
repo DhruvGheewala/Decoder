@@ -22,13 +22,13 @@
                     <label for="title" class="text-info">Title</label>
                     <input type="text" formControlName="title" id="title" class="form-control form-control-sm code"
                         required>
-                    <small *ngIf="hasError('title')" class="text-danger font-italic">blog title required!</small>
+                    <small *ngIf="hasError('title')" class="text-danger font-italic">title required!</small>
                 </div>
                 <div class="form-group">
                     <label for="description" class="text-info">Description</label>
                     <textarea id="description" formControlName="description" class="form-control form-control-sm code"
                         rows="3" required></textarea>
-                    <small *ngIf="hasError('description')" class="text-danger font-italic">blog description
+                    <small *ngIf="hasError('description')" class="text-danger font-italic">description
                         required!</small>
                 </div>
 
@@ -41,7 +41,7 @@
                         <div class="form-group" *ngIf="!previewMode">
                             <textarea formControlName="content" class="font1 form-control form-control-sm code"
                                 rows="20"></textarea>
-                            <small *ngIf="hasError('content')" class="text-danger font-italic">blog content
+                            <small *ngIf="hasError('content')" class="text-danger font-italic">content
                                 required!</small>
                         </div>
                         <div class="col" *ngIf="previewMode">

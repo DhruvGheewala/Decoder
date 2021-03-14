@@ -32,6 +32,10 @@ const BlogSchema = new mongoose.Schema({
     content: {
         type: String
     },
+    comments: {
+        type: Array,
+        default: []
+    }
 }, {
     collection: 'blogs'
 });

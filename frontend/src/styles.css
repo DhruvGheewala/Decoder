@@ -22,7 +22,9 @@ html {
   font-family: Arial, Helvetica, sans-serif;
   overflow-x: hidden;
 }
-
+* {
+  outline: none;
+}
 .icon-size {
   font-size: 20px !important;
 }

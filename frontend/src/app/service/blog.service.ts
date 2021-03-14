@@ -19,6 +19,8 @@ export class BlogService {
     createBlog: this.url + '/blog/create/',
     deleteBlog: this.url + '/blog/delete/',
     updateBlog: this.url + '/blog/update/',
+    addComment: this.url + '/blog/add/comment/',
+    deleteComment: this.url + '/blog/delete/comment/'
   };
 
   constructor(private http: HttpClient) { }
@@ -45,5 +47,13 @@ export class BlogService {
 
   public updateBlog(data): Observable<IBlog> {
     return this.http.put<IBlog>(this.urls.updateBlog + data._id, data);
+  }
+
+  public addComment(data): Observable<IBlog> {
+    return this.http.post<IBlog>(this.urls.addComment + data._id, data);
+  }
+
+  public deleteComment(blog_id, comment_id): Observable<IBlog> {
+    return this.http.delete<IBlog>(this.urls.deleteComment + blog_id + "/" + comment_id);
   }
 }

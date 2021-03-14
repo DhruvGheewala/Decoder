@@ -6,4 +6,5 @@ export interface IBlog {
     published: string;
     content: string;
     __v: number;
+    comments: Array<any>;
 }

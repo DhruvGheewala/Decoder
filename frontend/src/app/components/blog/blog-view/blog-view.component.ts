@@ -32,7 +32,7 @@ export class BlogViewComponent implements OnInit {
     this.loadingMsg = 'Loading...';
     this.spinner.show();
 
-    console.log(this.blog_id);
+    // console.log(this.blog_id);
     this.blogService.getBlogById(this.blog_id).subscribe((data) => {
       this.blog = data;
       if (this.blog) {
@@ -51,6 +51,9 @@ export class BlogViewComponent implements OnInit {
     });
   }
 
+  isLoggedIn() {
+    return this.userService.isLoggedIn;
+  }
   deleteBlog() {
     if (confirm("Are you sure to delete ?")) {
       this.blogService.deleteBlog(this.blog_id).subscribe((data) => {
@@ -68,5 +71,44 @@ export class BlogViewComponent implements OnInit {
     // console.log("Login : ", this.userService.currentUser);
     // console.log("Author : ", this.blog.author);
     return this.userService?.currentUser === this.blog?.author;
+  }
+
+  dateFormat() {
+    let months = [
+      "Jan", "Feb", "Mar", "Apr",
+      "May", "Jun", "Jul", "Aug",
+      "Sep", "Oct", "Nov", "Dec"
+    ];
+    let d = new Date();
+    let day = d.getDate();
+    let month = months[d.getMonth()];
+    let year = d.getFullYear();
+    return `${day}-${month}-${year}`;
+  }
+
+  addComment(content) {
+    let data = {
+      _id: this.blog_id,
+      comment: {
+        author: this.userService.currentUser,
+        content: content,
+        published: this.dateFormat()
+      }
+    };
+    if(content != "") {
+      this.blogService.addComment(data).subscribe((data) => {
+        // this.router.navigate([`/blog/view/${this.blog_id}`]);
+        window.location.reload();
+      });
+    }
+  }
+  deleteComment(e) {
+    let target = e.target || e.srcElement || e.currentTarget;
+    let id = target.attributes.id;
+    let comment_id = id.nodeValue;
+    this.blogService.deleteComment(this.blog_id, comment_id).subscribe(data => {
+      // this.router.navigate([`/blog/view/${this.blog_id}`]);
+      window.location.reload();
+    });
   }
 }
