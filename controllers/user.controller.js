@@ -189,11 +189,11 @@ exports.resetPassword = async (req, res) => {
 
 
 exports.updateUser = async (req, res) => {
-    const { usremail, fullname, bio } = req.body;
+    const { username, fullname, bio } = req.body;
     try {
-        let user = await userSchema.findOne({ email: usremail });
+        let user = await userSchema.findOne({ username: username});
         if (!user) {
-            return sendResponse("User with this email does not exist!", res, 404);
+            return sendResponse("User with this username does not exist!", res, 404);
         }
         user.fullName = fullname;
         user.bio = bio;
@@ -204,6 +204,24 @@ exports.updateUser = async (req, res) => {
     }
 }
 
+exports.getUserInfo = async(req, res) => {
+    const {username} = req.body;
+    try {
+        let  user = await userSchema.findOne({username: username});
+        if(!user) {
+            return sendResponse("User with this username does not exist!", res, 404);
+        }
+        var data = {
+            'fullName':  user.fullName,
+            'bio': user.bio,
+            'email': user.email
+        };
+        JSON.parse(JSON.stringify(data));
+        return sendResponse(data,res);
+    }catch(err) {
+        return sendResponse(err,res,500);
+    }
+}
 exports.getAllUsernames = async (req, res) => { 
     let userMap = {};
     let users = await userSchema.find({});

@@ -25,6 +25,9 @@ router.put('/update-profile', authenticate, userController.updateUser);
 //get all users
 router.get('/getAllUsernames', userController.getAllUsernames);
 
+//get user info by username
+router.post('/getUserInfo', userController.getUserInfo);
+
 // router.post('/save-settings',);
 //All related to code-environment
 
