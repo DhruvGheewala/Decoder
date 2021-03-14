@@ -6,110 +6,61 @@
         template="<img src='https://media.giphy.com/media/o8igknyuKs6aY/giphy.gif' />"
     </ngx-spinner> -->
     <div>
-        <div class="row">
-            <div class="col">
-                <div class="border">
-                    <div class="row center mt-2 mb-2 ml-0 mr-0">
-                        <div class="col-sm-3">
-                            <div class="row">
-                                <div class="col">
-                                    <i class="fas fa-code"></i>
-                                    <input class="ml-2 form-control-sm border" type="text"
-                                        placeholder="Title (undefined)" #title style="width: 15em;">
-                                </div>
-                            </div>
+        <div class="m-2">
+            <div class="row">
+                <div class="col">
+                    <i class="fas fa-code"></i>
+                    <input class="ml-2 form-control-sm border code" type="text" placeholder="Title (undefined)" #title
+                        style="width: 25rem;">
+                    
+                    <a *ngIf="this.userData.isLoggedIn" class="ml-2 btn-sm btn-default icon-size" data-toggle="tooltip"
+                        title="Save your code" (click)="shareCodeClick()">
+                        <i class="fas fa-save"></i>
+                    </a>
+                    <a class=" btn-sm btn-default icon-size" data-toggle="tooltip" (click)="beautifyContent()" title="Indent your code">
+                        <i class="fa fa-indent"></i>
+                    </a>
+                    <a (click)="uploadFileClick()" class=" btn-sm btn-default icon-size" data-toggle="tooltip" title="Upload code">
+                        <i class="fas fa-upload"></i>
+                    </a>
+                    
+                    <a class=" btn-sm btn-default icon-size" data-toggle="tooltip" (click)="downloadCode()" title="Download code">
+                        <i class="fas fa-download"></i>
+                    </a>
+                    <a class=" btn-sm btn-default icon-size" data-toggle="tooltip" (click)="copyToClipboard('code')" title="copy code">
+                        <i class="fas fa-copy"></i>
+                    </a>
+                    <input type="file" id="codeUpload" class="hide" (change)="onChangeFile($event.target.files)" />
+                </div>
+                <div class="col">
+                    <div class="row">
+                        <div class="col">
+                            <!-- <small>Language</small> -->
+                            <select data-toggle="tooltip" title="Languages" class="form-control form-control-sm"
+                                (change)="setMode(modeSelect.value)" [value]='selectedLanguage' #modeSelect>
+                                <option [value]='language.key' *ngFor="let language of availableLanguages | keyvalue"
+                                    [selected]='language.key === selectedLanguage ? "selected" : ""'>
+                                    {{language.key}}
+                                </option>
+                            </select>
                         </div>
-                        <div class="col-sm-9">
-                            <div class="row">
-                                <div class="col text-right">
-                                    <a *ngIf="this.userData.isLoggedIn" class=" btn-sm btn-default icon-size"
-                                        data-toggle="tooltip" title="Save your code" (click)="shareCodeClick()">
-                                        <i class="fas fa-save"></i>
-                                    </a>
-                                    <a class=" btn-sm btn-default icon-size" data-toggle="tooltip"
-                                        (click)="beautifyContent()" title="Indent your code">
-                                        <i class="fa fa-indent"></i>
-                                    </a>
-                                    <a (click)="uploadFileClick()" class=" btn-sm btn-default icon-size"
-                                        data-toggle="tooltip" title="Upload code">
-                                        <i class="fas fa-upload"></i>
-                                    </a>
-
-                                    <a class=" btn-sm btn-default icon-size" data-toggle="tooltip"
-                                        (click)="downloadCode()" title="Download code">
-                                        <i class="fas fa-download"></i>
-                                    </a>
-                                    <a class=" btn-sm btn-default icon-size" data-toggle="tooltip"
-                                        (click)="copyToClipboard('code')" title="copy code">
-                                        <i class="fas fa-copy"></i>
-                                    </a>
-                                    <!-- <a class=" btn-sm btn-default icon-size" data-toggle="tooltip"
-                                        title="save user settings">
-                                        <i class="fas fa-user-cog"></i>
-                                    </a>
-                                    <a class=" btn-sm btn-default icon-size" data-toggle="tooltip"
-                                        title="save as template">
-                                        <i class="fas fa-save"></i>
-                                    </a> -->
-
-                                    <input type="file" id="codeUpload" class="hide"
-                                        (change)="onChangeFile($event.target.files)" />
-                                </div>
-                                <!-- <div class="col-sm-2">
-                                    <i class="fas fa-folder"></i>
-                                    <select class="ml-2 form-select form-control-sm" data-toggle="tooltip"
-                                        title="Select folder" aria-label="Default select example">
-                                        <option selected>Default</option>
-                                        <option value="1">C++</option>
-                                        <option value="2">C</option>
-                                        <option value="3">Java</option>
-                                        <option value="4">Python</option>
-                                        <option value="5">Javascript</option>
-                                    </select>
-                                </div> -->
-                                <div class="col-sm-2">
-                                    <div>
-                                        <!-- <small>Language</small> -->
-                                        <select data-toggle="tooltip" title="Languages"
-                                            class="form-control form-control-sm" (change)="setMode(modeSelect.value)"
-                                            [value]='selectedLanguage' #modeSelect>
-                                            <option [value]='language.key'
-                                                *ngFor="let language of availableLanguages | keyvalue"
-                                                [selected]='language.key === selectedLanguage ? "selected" : ""'>
-                                                {{language.key}}
-                                            </option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-sm-2">
-                                    <div>
-                                        <!-- <small>Theme</small> -->
-                                        <select data-toggle="tooltip" title="Themes"
-                                            class="form-control form-control-sm" (change)="setTheme(themeSelect.value)"
-                                            #themeSelect>
-                                            <option [value]='theme.name' *ngFor="let theme of availableThemes"
-                                                [selected]='theme.name === selectedTheme ? "selected" : ""'>
-                                                {{theme.caption}}
-                                            </option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-sm-2">
-                                    <!-- Run -->
-                                    <button data-toggle="tooltip" title="Ctrl + b" type="button" id="runButton"
-                                        class="col btn btn-outline-primary btn-sm" (click)="runClicked()" #runButton>
-                                        <i class="fas fa-play"></i>
-                                        <span class="ml-1"> Run </span>
-                                    </button>
-                                </div>
-                                <!-- <div *ngIf="this.userData.isLoggedIn" class="col-sm-2">
-                                    <button type="button" id="runButton" class="col btn btn-outline-info btn-sm"
-                                        (click)="updateCode()" #runButton>
-                                        <i class="fas fa-edit"></i>
-                                        <span class="ml-1"> Update </span>
-                                    </button>
-                                </div> -->
-                            </div>
+                        <div class="col">
+                            <!-- <small>Theme</small> -->
+                            <select data-toggle="tooltip" title="Themes" class="form-control form-control-sm"
+                                (change)="setTheme(themeSelect.value)" #themeSelect>
+                                <option [value]='theme.name' *ngFor="let theme of availableThemes"
+                                    [selected]='theme.name === selectedTheme ? "selected" : ""'>
+                                    {{theme.caption}}
+                                </option>
+                            </select>
+                        </div>
+                        <div class="col">
+                            <!-- Run -->
+                            <button data-toggle="tooltip" title="Ctrl + b" type="button" id="runButton"
+                                class="col btn btn-outline-primary btn-sm" (click)="runClicked()" #runButton>
+                                <i class="fas fa-play"></i>
+                                <span class="ml-1"> Run </span>
+                            </button>
                         </div>
                     </div>
                 </div>
