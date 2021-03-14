@@ -5,9 +5,9 @@
 
     <div class="m-4" *ngIf="blog">
         <div class="row">
-            <div class="col link author font-italic font-weight-bold" routerLink="/profile/{{blog.author}}">
+            <a class="col link hover-link author font-italic" routerLink="/profile/{{blog.author}}">
                 Author : {{blog.author}}
-            </div>
+            </a>
             <div class="col text-right published text-gray font-italic">
                 Published : {{blog.published}}
             </div>
@@ -52,7 +52,7 @@
                     <li class="list-group-item" *ngFor="let comment of blog.comments; let isEven = even" [ngClass]="isEven ? '' : 'bg-gray'">
                         <div>
                             <small class="row">
-                                <a class="col text-primary" routerLink="/profile/{{blog.author}}">
+                                <a class="col text-primary" routerLink="/profile/{{comment.author}}">
                                     {{comment.author}} 
                                 </a>
                                 <div class="col text-right">
