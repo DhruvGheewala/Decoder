@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable, Subject, throwError } from 'rxjs';
+import { EMPTY, Observable, Subject, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { AlertService } from '@full-fledged/alerts';
 
@@ -68,7 +68,6 @@ export class UserService {
     return this.http.post<any>(this.authUrl + '/signin', data).subscribe((res: any) => {
       localStorage.setItem('access_token', res.result.token);
       this.curUser = res.result;
-      console.log(this.curUser);
       this.currentUser = this.curUser.userData;
       this._alertService.success("welcome!");
       this.router.navigate(['/']);
@@ -81,7 +80,6 @@ export class UserService {
     return JSON.parse(localStorage.getItem('userData'));
   }
   set currentUser(data: any) {
-    console.log(data);
     this.itemValue.next(data);
     localStorage.setItem('userData', JSON.stringify(data));
     localStorage.setItem('currentUserName', data.username);
@@ -129,13 +127,19 @@ export class UserService {
     return this.http.get<any>(this.apiUrl + `/code/view/${data.currentUser}/${data.id}`);
   }
   getCodesByUser(user: string): Observable<any> {
-    console.log(user, this.currentUser);
-    console.log(this.apiUrl + '/code/view/' + user);
-
     if (this.currentUser === user)
       return this.http.get<any>(this.apiUrl + '/code/view/' + user);
     // else
     // return this.http.get<any>(this.apiUrl + '/code/view/public');
+  }
+  updateUser(data){
+    return this.http.put<any>(this.authUrl + '/update-profile',data).subscribe((res: any) => {
+    }, err => {
+      this.handleError(err.error.err, err.status);
+    });
+  }
+  getUserInfo(data): Observable<any> {
+    return this.http.post(this.authUrl + '/getUserInfo',data);
   }
   saveCode(data): Observable<any> {
     return this.http.post<any>(this.apiUrl + '/code/save', data);

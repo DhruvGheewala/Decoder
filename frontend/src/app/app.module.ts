@@ -81,7 +81,7 @@ import 'prismjs/components/prism-python.min.js';
     FormsModule,
     ReactiveFormsModule,
     NgxSpinnerModule,
-    AlertModule.forRoot({ maxMessages: 5, timeout: 5000, positionX: 'right' }),
+    AlertModule.forRoot({ maxMessages: 5, timeout: 2000, positionX: 'left' }),
     MarkdownModule.forRoot({
       loader: HttpClient,
       sanitize: SecurityContext.NONE

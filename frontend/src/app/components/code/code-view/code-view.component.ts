@@ -59,6 +59,7 @@ import { UserService } from "src/app/service/user.service";
 import { AdminService } from 'src/app/service/admin.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { environment } from 'src/environments/environment';
+import { AlertService } from '@full-fledged/alerts';
 declare var $: any;
 
 @Component({
@@ -88,6 +89,7 @@ export class CodeViewComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private spinner: NgxSpinnerService,
+    private _alertService: AlertService
   ) { this.code_id = route.snapshot.params.id; }
 
   ngOnInit(): void {
@@ -230,6 +232,7 @@ export class CodeViewComponent implements OnInit {
     selBox.select();
     document.execCommand('copy');
     document.body.removeChild(selBox);
+    this._alertService.success( editor + " copied into to the clipboard");
   }
 
   isOk() {
