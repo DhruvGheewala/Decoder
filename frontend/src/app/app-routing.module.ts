@@ -55,20 +55,20 @@ const routes: Routes = [
     component: UpcomingContestComponent,
   },
   {
-    path: 'blog/recent',
+    path: 'questions/recent',
     component: BlogRecentComponent,
   },
   {
-    path: 'blog/create',
+    path: 'questions/create',
     component: BlogCreateComponent,
     canActivate: [AuthGuard]
   },
   {
-    path: 'blog/view/:id',
+    path: 'questions/view/:id',
     component: BlogViewComponent,
   },
   {
-    path: 'blog/edit/:id',
+    path: 'questions/edit/:id',
     component: BlogEditComponent,
     canActivate: [AuthGuard]
   },

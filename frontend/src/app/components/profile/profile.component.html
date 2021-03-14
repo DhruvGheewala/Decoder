@@ -24,7 +24,7 @@
       <div class="e-navlist e-navlist--active-bg">
         <ul class="nav">
           <li class="nav-item" *ngIf="isSameAuthor()"><a class="nav-link px-2 active" routerLink="/code/{{username}}"><i class="fas fa-code mr-1"></i><span class="ml-1">My Codes</span></a></li>
-          <li class="nav-item"><a class="nav-link px-2" [routerLink]="['/blog/recent']" [queryParams]="{ user: username}"><i class="fas fa-blog mr-1"></i><span class="ml-1">{{isSameAuthor() ? 'My ' : username + "'s "}} Doubts</span></a></li>
+          <li class="nav-item"><a class="nav-link px-2" [routerLink]="['/questions/recent']" [queryParams]="{ user: username}"><i class="fas fa-blog mr-1"></i><span class="ml-1">{{isSameAuthor() ? 'My ' : username + "'s "}} Questions</span></a></li>
           <!-- <li class="nav-item"><a class="nav-link px-2" href="./settings.html"><i class="fa fa-fw fa-cog mr-1"></i><span>My Blogs</span></a></li> -->
         </ul>
       </div>

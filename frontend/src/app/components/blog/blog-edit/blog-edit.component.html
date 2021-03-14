@@ -4,7 +4,7 @@
     </ngx-spinner>
 
     <div class="p-2">
-        <h3 class="clr1">Edit</h3>
+        <h3 class="clr1">Edit Doubt</h3>
         <div *ngIf="blogForm">
             <form [formGroup]="blogForm" method="post">
                 <div class="row">
@@ -51,7 +51,7 @@
                 </div>
 
                 <div>
-                    <button class="btn btn-sm btn-dark" routerLink="/blog/view/{{blog_id}}">Cancel</button>
+                    <button class="btn btn-sm btn-dark" routerLink="/questions/view/{{blog_id}}">Cancel</button>
                     <button class="btn btn-sm btn-primary ml-2" [disabled]="blogForm.invalid"
                         (click)="updateBlog()">Update</button>
                 </div>

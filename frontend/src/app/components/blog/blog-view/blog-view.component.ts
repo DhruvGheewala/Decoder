@@ -58,7 +58,7 @@ export class BlogViewComponent implements OnInit {
     if (confirm("Are you sure to delete ?")) {
       this.blogService.deleteBlog(this.blog_id).subscribe((data) => {
         this.blog = null;
-        this.router.navigate(['/blog/recent']);
+        this.router.navigate(['/questions/recent']);
       });
     }
   }

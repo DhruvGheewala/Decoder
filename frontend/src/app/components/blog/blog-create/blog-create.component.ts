@@ -88,7 +88,7 @@ int main()
       }
 
       this.blogService.createBlog(blog_data).subscribe((data) => {
-        this.router.navigate(['/blog/view/' + data._id]);
+        this.router.navigate(['/questions/view/' + data._id]);
       });
     }
   }

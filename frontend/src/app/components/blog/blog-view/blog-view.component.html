@@ -8,8 +8,12 @@
             <a class="col link hover-link author font-italic" routerLink="/profile/{{blog.author}}">
                 Author : {{blog.author}}
             </a>
-            <div class="col text-right published text-gray font-italic">
+            <div class="col-sm-2 text-right published text-gray font-italic">
                 Published : {{blog.published}}
+            </div>
+            <div *ngIf="isSameAuthor()" class="col-sm-2 text-right">
+                <button class="btn btn-sm btn-primary" routerLink="/questions/edit/{{blog_id}}">Edit</button>
+                <button class="btn btn-sm btn-danger ml-2" (click)="deleteBlog()">Delete</button>
             </div>
             <hr>
         </div>
@@ -36,10 +40,11 @@
                 </div>
             </div>
         </div>
-        <div *ngIf="isSameAuthor()">
-            <button class="btn btn-sm btn-primary" routerLink="/blog/edit/{{blog_id}}">Edit</button>
+        <!-- <div *ngIf="isSameAuthor()">
+            <button class="btn btn-sm btn-primary" routerLink="/questions/edit/{{blog_id}}">Edit</button>
             <button class="btn btn-sm btn-danger ml-2" (click)="deleteBlog()">Delete</button>
-        </div>
+        </div> -->
+        <hr>
         <div class="mt-2" *ngIf="isLoggedIn()">
             <textarea name="comment" class="form-control code" rows="5" #comment></textarea>
             <br>

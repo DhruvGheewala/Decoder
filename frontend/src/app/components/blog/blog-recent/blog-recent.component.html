@@ -14,7 +14,7 @@
         </div>
         <input class="form-control" #searchEle placeholder="Search..." (keyup)="filter(searchEle.value)">
         <div class="col-2 text-left" *ngIf="this.userService.isLoggedIn">
-            <button class="btn btn-outline-dark col" routerLink="/blog/create">Ask Doubt</button>
+            <button class="btn btn-outline-dark col" routerLink="/questions/create">Ask Doubt</button>
         </div>
     </div>
     <div>
@@ -32,7 +32,7 @@
                             Published : {{b.published}}
                         </div>
                     </div>
-                    <div class="pointer mt-1" routerLink="/blog/view/{{b._id}}">
+                    <div class="pointer mt-1" routerLink="/questions/view/{{b._id}}">
                         <div class="h4 font3 clr1 blue-hover">
                             {{b.title}}
                         </div>

@@ -65,7 +65,6 @@ export class BlogEditComponent implements OnInit {
   }
 
   updateBlog() {
-    console.log("update");
     if (!this.blogForm.invalid) {
       // let contentEle = this.blogForm.controls.content.value.replace(/^\s+|\s+$/g, '');
       const blog_data = {
@@ -77,7 +76,7 @@ export class BlogEditComponent implements OnInit {
       }
 
       this.blogService.updateBlog(blog_data).subscribe((data) => {
-        this.router.navigate(['/blog/view/' + blog_data._id]);
+        this.router.navigate(['/questions/view/' + blog_data._id]);
       });
     }
     else {
