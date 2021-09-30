@@ -56,23 +56,66 @@ export class UpcomingContestComponent implements OnInit {
     }
   }
 
+  ngAfterViewInit(): void { this.prvBtn = document.getElementById('All'); }
+  // getSiteData(event) {
+  //   this.loadingMsg = 'Fetching the contest data';
+  //   this.spinner.show();
+
+  //   let classNames = ["btn-dark"];
+  //   if (this.prvBtn) {
+  //     classNames.forEach(c => {
+  //       let className = this.prvBtn.className;
+  //       let ind = className.indexOf(c);
+  //       if (ind >= 0) {
+  //         let newClassName = className.substring(0, ind) + className.substring(ind + c.length);
+  //         this.prvBtn.className = newClassName;
+  //       }
+  //     });
+  //   }
+  //   this.prvBtn = event.toElement;
+  //   classNames.forEach(c => this.prvBtn.className += ` ${c}`);
+
+  //   let site = event.target.outerText;
+
+  //   if (site === 'All') {
+  //     this.allData = this.copyAllData1;
+  //     this.copyAllData2 = this.allData;
+  //   }
+  //   else {
+  //     this.allData = [];
+  //     this.copyAllData1.forEach(data => {
+  //       if (data.site === site) {
+  //         this.allData.push(data);
+  //       }
+  //     });
+  //     this.copyAllData2 = this.allData;
+  //   }
+  //   if (environment.production) {
+  //     this.spinner.hide();
+  //   } else {
+  //     setTimeout(() => this.spinner.hide(), 2000);
+  //   }
+  // }
   getSiteData(event) {
     this.loadingMsg = 'Fetching the contest data';
     this.spinner.show();
 
-    let classNames = ["btn-dark"];
+    const style = "btn-dark";
     if (this.prvBtn) {
-      classNames.forEach(c => {
-        let className = this.prvBtn.className;
-        let ind = className.indexOf(c);
-        if (ind >= 0) {
-          let newClassName = className.substring(0, ind) + className.substring(ind + c.length);
-          this.prvBtn.className = newClassName;
-        }
-      });
+      let className = this.prvBtn.className;
+      let ind = className.indexOf(style);
+      if(ind >= 0) {
+        let newClass = className.substring(0, ind) + className.substring(ind + style.length);
+        this.prvBtn.className = newClass;
+      }
     }
-    this.prvBtn = event.toElement;
-    classNames.forEach(c => this.prvBtn.className += ` ${c}`);
+
+    console.log(event);
+    this.prvBtn = event.srcElement;
+    if(this.prvBtn.className)
+      this.prvBtn.className += ' ' + style;
+    else
+      this.prvBtn.className = style;
 
     let site = event.target.outerText;
 
